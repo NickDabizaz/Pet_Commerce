@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Okt 2023 pada 14.59
+-- Waktu pembuatan: 31 Okt 2023 pada 16.10
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.1.6
 
@@ -49,6 +49,18 @@ CREATE TABLE `kategoris` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `kategoris`
+--
+
+INSERT INTO `kategoris` (`kategori_id`, `nama_kategori`, `createdAt`, `updatedAt`) VALUES
+('1', 'Makanan', '2023-10-31 21:46:14', '2023-10-31 21:46:14'),
+('2', 'Mainan', '2023-10-31 21:46:14', '2023-10-31 21:46:14'),
+('3', 'Cemilan', '2023-10-31 21:46:14', '2023-10-31 21:46:14'),
+('4', 'Aksesoris', '2023-10-31 21:46:14', '2023-10-31 21:46:14'),
+('5', 'Pakaian Hewan', '2023-10-31 21:46:14', '2023-10-31 21:46:14'),
+('6', 'Obat dan Vitamin', '2023-10-31 21:46:14', '2023-10-31 21:46:14');
 
 -- --------------------------------------------------------
 
@@ -189,6 +201,13 @@ CREATE TABLE `tokos` (
   `updatedAt` datetime NOT NULL,
   `user_id` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tokos`
+--
+
+INSERT INTO `tokos` (`toko_id`, `nama_toko`, `deskripsi_toko`, `createdAt`, `updatedAt`, `user_id`) VALUES
+('1', 'Toko Baru', 'Deskripsi Toko Baru', '2023-10-31 14:34:08', '2023-10-31 14:34:08', '1');
 
 -- --------------------------------------------------------
 
