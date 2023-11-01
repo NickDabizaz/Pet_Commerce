@@ -15,6 +15,7 @@ models.sequelize.sync().then(() => {
   app.use('/users', require('./routes/userRoutes'));
   app.use('/products', require('./routes/productRoutes'));
   app.use('/sellers', require('./routes/sellerRoutes'));
+  app.use('/admin', require('./routes/adminRoutes'));
   // Tambahkan routing lainnya di sini
 
   // Jalankan server
