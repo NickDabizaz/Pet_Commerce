@@ -10,6 +10,10 @@ function Homepage(props) {
       <button onClick={() => props.setRoute("mockupbrowse")}>Browse</button>
       <br />
       <button onClick={() => props.setRoute("mockupdetail")}>Detail</button>
+      <br />
+      <button onClick={() => props.setRoute("mockupcommunity")}>
+        Community
+      </button>
     </>
   );
 }

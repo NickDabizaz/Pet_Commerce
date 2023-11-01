@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import MockupHome from "./components/MockupHome";
 import MockupBrowse from "./components/MockupBrowse";
 import MockupDetail from "./components/MockupDetail";
+import MockupCommunity from "./components/MockupCommunity";
 
 function App() {
   const [route, setRoute] = useState("homepage");
@@ -16,6 +17,7 @@ function App() {
       {route === "mockupbelom" && <MockupHome setRoute={setRoute} />}
       {route === "mockupbrowse" && <MockupBrowse setRoute={setRoute} />}
       {route === "mockupdetail" && <MockupDetail setRoute={setRoute} />}
+      {route === "mockupcommunity" && <MockupCommunity setRoute={setRoute} />}
     </>
   );
 }

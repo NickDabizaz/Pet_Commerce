@@ -84,49 +84,47 @@ function MockupDetail() {
       </nav>
       {/* ---------------------------------------------------------------------------------- */}
       {/* isi */}
-      <div style={{ display: "flex" }}>
-        <div>
-          <div style={{ flex: 8, display: "flex" }}>
+      <div className="m-4" style={{ display: "flex" }}>
+        <div style={{ flex: 8 }}>
+          <div style={{ display: "flex" }}>
             <div style={{ flex: 1 }}>
-              <div className="m-4">
-                <img
-                  src={shampoo}
-                  alt="shampoo"
-                  width={"80%"}
-                  style={{ marginLeft: "10%" }}
-                />
+              <img
+                src={shampoo}
+                alt="shampoo"
+                width={"80%"}
+                style={{ marginLeft: "10%" }}
+              />
 
-                <div className="m-4" style={{ display: "flex" }}>
-                  <div style={{ flex: 1 }}></div>
-                  <div style={{ flex: 3 }}>
-                    {" "}
-                    <img
-                      src={shampoo}
-                      alt="shampoo"
-                      style={{ rotate: "90deg" }}
-                      width={"80%"}
-                    />{" "}
-                  </div>
-                  <div style={{ flex: 1 }}></div>
-                  <div style={{ flex: 3 }}>
-                    <img
-                      src={shampoo}
-                      alt="shampoo"
-                      style={{ rotate: "180deg" }}
-                      width={"80%"}
-                    />
-                  </div>
-                  <div style={{ flex: 1 }}></div>
-                  <div style={{ flex: 3 }}>
-                    <img
-                      src={shampoo}
-                      alt="shampoo"
-                      style={{ rotate: "270deg" }}
-                      width={"80%"}
-                    />
-                  </div>
-                  <div style={{ flex: 1 }}></div>
+              <div className="m-4" style={{ display: "flex" }}>
+                <div style={{ flex: 1 }}></div>
+                <div style={{ flex: 3 }}>
+                  {" "}
+                  <img
+                    src={shampoo}
+                    alt="shampoo"
+                    style={{ rotate: "90deg" }}
+                    width={"80%"}
+                  />{" "}
                 </div>
+                <div style={{ flex: 1 }}></div>
+                <div style={{ flex: 3 }}>
+                  <img
+                    src={shampoo}
+                    alt="shampoo"
+                    style={{ rotate: "180deg" }}
+                    width={"80%"}
+                  />
+                </div>
+                <div style={{ flex: 1 }}></div>
+                <div style={{ flex: 3 }}>
+                  <img
+                    src={shampoo}
+                    alt="shampoo"
+                    style={{ rotate: "270deg" }}
+                    width={"80%"}
+                  />
+                </div>
+                <div style={{ flex: 1 }}></div>
               </div>
             </div>
 
@@ -157,10 +155,19 @@ function MockupDetail() {
 
           <div>
             <h4>Product Information</h4>
+
+            <table>
+              <tr>
+                <td>Indication</td>
+                <td></td>
+              </tr>
+            </table>
           </div>
         </div>
 
-        <div style={{ flex: 3 }}></div>
+        <div style={{ flex: 3, height: "1000px", backgroundColor: "red" }}>
+          a
+        </div>
       </div>
 
       {/* footer */}

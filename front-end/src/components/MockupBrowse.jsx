@@ -19,7 +19,7 @@ function MockupBrowse() {
             <input
               className="form-control me-3"
               type="search"
-              placeholder="Authentic dog food"
+              placeholder="Boneka untuk kucing super lembut"
               aria-label="Search"
             ></input>
             <button
@@ -84,7 +84,7 @@ function MockupBrowse() {
       </nav>
       {/* ---------------------------------------------------------------------------------- */}
       {/* isi */}
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", backgroundColor: "#F3F0F0" }}>
         <div className=" p-4" style={{ flex: 1 }} height="auto">
           <img src={filterIcon} alt="filter" height={"20px"} /> Search Filter :{" "}
           <br />
@@ -110,11 +110,10 @@ function MockupBrowse() {
                 color: "#1286ce",
               }}
             >
-              <div>Medicine and Vitamins</div>
+              <div>Toys</div>
               <div className="ms-4">x</div>
             </div>
           </div>
-          <hr />
           <h4>Categories :</h4>
           <div style={{ display: "flex" }}>
             <input
@@ -181,6 +180,7 @@ function MockupBrowse() {
                 flex: "1 0 20%",
                 border: "1px solid black",
                 borderRadius: "5px",
+                backgroundColor: "white",
               }}
             >
               <div className="m-2">
@@ -213,6 +213,7 @@ function MockupBrowse() {
                 flex: "1 0 20%",
                 border: "1px solid black",
                 borderRadius: "5px",
+                backgroundColor: "white",
               }}
             >
               <div className="m-2">
@@ -245,6 +246,7 @@ function MockupBrowse() {
                 flex: "1 0 20%",
                 border: "1px solid black",
                 borderRadius: "5px",
+                backgroundColor: "white",
               }}
             >
               <div className="m-2">
@@ -277,6 +279,7 @@ function MockupBrowse() {
                 flex: "1 0 20%",
                 border: "1px solid black",
                 borderRadius: "5px",
+                backgroundColor: "white",
               }}
             >
               <div className="m-2">
@@ -310,6 +313,7 @@ function MockupBrowse() {
                 flex: "1 0 20%",
                 border: "1px solid black",
                 borderRadius: "5px",
+                backgroundColor: "white",
               }}
             >
               <div className="m-2">
@@ -342,6 +346,7 @@ function MockupBrowse() {
                 flex: "1 0 20%",
                 border: "1px solid black",
                 borderRadius: "5px",
+                backgroundColor: "white",
               }}
             >
               <div className="m-2">
@@ -374,6 +379,7 @@ function MockupBrowse() {
                 flex: "1 0 20%",
                 border: "1px solid black",
                 borderRadius: "5px",
+                backgroundColor: "white",
               }}
             >
               <div className="m-2">
@@ -406,6 +412,7 @@ function MockupBrowse() {
                 flex: "1 0 20%",
                 border: "1px solid black",
                 borderRadius: "5px",
+                backgroundColor: "white",
               }}
             >
               <div className="m-2">
@@ -439,6 +446,7 @@ function MockupBrowse() {
                 flex: "1 0 20%",
                 border: "1px solid black",
                 borderRadius: "5px",
+                backgroundColor: "white",
               }}
             >
               <div className="m-2">
@@ -471,6 +479,7 @@ function MockupBrowse() {
                 flex: "1 0 20%",
                 border: "1px solid black",
                 borderRadius: "5px",
+                backgroundColor: "white",
               }}
             >
               <div className="m-2">
@@ -503,6 +512,7 @@ function MockupBrowse() {
                 flex: "1 0 20%",
                 border: "1px solid black",
                 borderRadius: "5px",
+                backgroundColor: "white",
               }}
             >
               <div className="m-2">
@@ -535,6 +545,7 @@ function MockupBrowse() {
                 flex: "1 0 20%",
                 border: "1px solid black",
                 borderRadius: "5px",
+                backgroundColor: "white",
               }}
             >
               <div className="m-2">
@@ -563,37 +574,61 @@ function MockupBrowse() {
           </div>
         </div>
       </div>
-      <hr />
 
       {/* footer */}
-      <div className="p-2 px-5">
+      <div className="p-2 px-5" style={{ backgroundColor: "#6CD4FF" }}>
         <div
           className="px-5"
           style={{
             width: "100%",
-            height: "100px",
+            height: "5vh",
             backgroundColor: "",
           }}
         >
-          <div style={{ display: "flex" }}>
-            <div className="p-2" style={{ flex: 9, backgroundColor: "" }}>
-              GAMBAR APA ITU GATAU
-            </div>
-            <div className="p-2" style={{ flex: 6, backgroundColor: "" }}>
-              APA JUGA GATAU
-            </div>
-            <div className="p-2" style={{ flex: 4, backgroundColor: "" }}>
-              Social Media
-            </div>
-            <div className="p-2" style={{ flex: 6, backgroundColor: "" }}>
-              Politik?
-            </div>
-            <div className="p-2" style={{ flex: 6, backgroundColor: "" }}>
-              Instusional?
-            </div>
-          </div>
-          <div style={{ fontSize: "0.7rem" }}>
-            Mimos pet - CNP <br /> Av. x000
+          <div className="d-flex justify-content-center mt-3">
+            <p
+              style={{
+                fontFamily: "Literata",
+                fontWeight: 700,
+                fontSize: "12pt",
+                color: "white",
+              }}
+            >
+              Melvin Audrey Adianto - 221116971
+            </p>
+            <p
+              style={{
+                fontFamily: "Literata",
+                fontWeight: 700,
+                fontSize: "12pt",
+                color: "white",
+                marginLeft: "2%",
+              }}
+            >
+              Nicklaus Dabizaz Fairlie - 221116978
+            </p>
+            <p
+              style={{
+                fontFamily: "Literata",
+                fontWeight: 700,
+                fontSize: "12pt",
+                color: "white",
+                marginLeft: "2%",
+              }}
+            >
+              Ramaditya Satriawan - 221116983
+            </p>
+            <p
+              style={{
+                fontFamily: "Literata",
+                fontWeight: 700,
+                fontSize: "12pt",
+                color: "white",
+                marginLeft: "2%",
+              }}
+            >
+              Steven Tenata - 221116992
+            </p>
           </div>
         </div>
       </div>

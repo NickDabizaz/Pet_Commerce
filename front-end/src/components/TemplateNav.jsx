@@ -7,56 +7,67 @@ function TemplateNav() {
       {/* nav */}
       <div
         className="container-fluid"
-        style={{ display: "flex", backgroundColor: "#6cd4ff" }}
+        style={{ display: "flex", backgroundColor: "#6CD4FF" }}
       >
         <img src={logo} style={{ width: "100px", height: "100px" }} />
         <nav
           className="navbar p-3"
-          style={{ backgroundColor: "#6cd4ff", width: "100%" }}
+          style={{ backgroundColor: "#6CD4FF", width: "100%" }}
         >
           <div style={{ display: "flex", flex: 4 }}>
             <input
               className="form-control me-3"
               type="search"
-              placeholder="Authentic dog food"
+              placeholder="Search"
               aria-label="Search"
+              style={{
+                fontFamily: "Literata",
+                fontSize: "12pt",
+                height: "2.5rem",
+              }}
             ></input>
             <button
-              className="btn align-center text-center icon-center"
+              className="btn btn-outline-success"
               type="submit"
+              style={{ backgroundColor: "#1286CE", height: "2.5rem" }}
             >
               <img
-                src={searchIcon}
-                alt="searchIcon"
-                style={{ height: "1rem" }}
+                src={searchlogo}
+                style={{ width: "30px", height: "30px", color: "white" }}
               />
             </button>
           </div>
 
-          <div style={{ flex: 4 }}></div>
+          <div style={{ flex: 2 }}></div>
 
-          <div style={{ flex: 1 }}>
+          <div>
             <button
-              className="p-1 px-4"
+              className="p-1 px-4 rounded me-3"
               style={{
                 border: "1px solid white",
-                borderRadius: "5px",
                 color: "white",
                 backgroundColor: "transparent",
+                height: "2.5rem",
+                fontFamily: "Literata",
+                fontWeight: 600,
+                fontSize: "14pt",
               }}
             >
               Register
             </button>
           </div>
 
-          <div style={{ flex: 1 }}>
+          <div>
             <button
-              className="p-1 px-4"
+              className="p-1 px-4 rounded"
               style={{
                 border: "1px solid white",
-                borderRadius: "5px",
                 color: "black",
                 backgroundColor: "white",
+                height: "2.5rem",
+                fontFamily: "Literata",
+                fontWeight: 600,
+                fontSize: "14pt",
               }}
             >
               Login
@@ -66,17 +77,38 @@ function TemplateNav() {
       </div>
       {/* -------------------------------------------------------------------------------- */}
       {/* sub-navbar */}
-      <nav className="navbar p-2" style={{ backgroundColor: "#1286ce" }}>
-        <div style={{ flex: 1 }}></div>
-        <div className="navbar-logo" style={{ flex: 2 }}>
-          HOME
+      <nav className="navbar p-2" style={{ backgroundColor: "#1286CE" }}>
+        <div
+          className="ms-5"
+          style={{
+            color: "white",
+            fontFamily: "Literata",
+            fontWeight: 600,
+            fontSize: "14pt",
+          }}
+        >
+          Home
         </div>
-        <div style={{ flex: 2 }}></div>
-        <div className="navbar-logo" style={{ flex: 4 }}>
-          COMMMUNITY
+        <div
+          style={{
+            color: "white",
+            fontFamily: "Literata",
+            fontWeight: 600,
+            fontSize: "14pt",
+            marginLeft: "6%",
+          }}
+        >
+          Community
         </div>
-        <div style={{ flex: 2 }}></div>
-        <div className="navbar-logo" style={{ flex: 2 }}>
+        <div
+          style={{
+            color: "white",
+            fontFamily: "Literata",
+            fontWeight: 600,
+            fontSize: "14pt",
+            marginLeft: "6%",
+          }}
+        >
           FAQ
         </div>
         <div style={{ flex: 30 }}></div>
@@ -85,34 +117,59 @@ function TemplateNav() {
       {/* isi */}
 
       {/* footer */}
-      <div className="p-2 px-5">
+      <div className="p-2 px-5" style={{ backgroundColor: "#6CD4FF" }}>
         <div
           className="px-5"
           style={{
             width: "100%",
-            height: "100px",
+            height: "5vh",
             backgroundColor: "",
           }}
         >
-          <div style={{ display: "flex" }}>
-            <div className="p-2" style={{ flex: 9, backgroundColor: "" }}>
-              GAMBAR APA ITU GATAU
-            </div>
-            <div className="p-2" style={{ flex: 6, backgroundColor: "" }}>
-              APA JUGA GATAU
-            </div>
-            <div className="p-2" style={{ flex: 4, backgroundColor: "" }}>
-              Social Media
-            </div>
-            <div className="p-2" style={{ flex: 6, backgroundColor: "" }}>
-              Politik?
-            </div>
-            <div className="p-2" style={{ flex: 6, backgroundColor: "" }}>
-              Instusional?
-            </div>
-          </div>
-          <div style={{ fontSize: "0.7rem" }}>
-            Mimos pet - CNP <br /> Av. x000
+          <div className="d-flex justify-content-center mt-3">
+            <p
+              style={{
+                fontFamily: "Literata",
+                fontWeight: 700,
+                fontSize: "12pt",
+                color: "white",
+              }}
+            >
+              Melvin Audrey Adianto - 221116971
+            </p>
+            <p
+              style={{
+                fontFamily: "Literata",
+                fontWeight: 700,
+                fontSize: "12pt",
+                color: "white",
+                marginLeft: "2%",
+              }}
+            >
+              Nicklaus Dabizaz Fairlie - 221116978
+            </p>
+            <p
+              style={{
+                fontFamily: "Literata",
+                fontWeight: 700,
+                fontSize: "12pt",
+                color: "white",
+                marginLeft: "2%",
+              }}
+            >
+              Ramaditya Satriawan - 221116983
+            </p>
+            <p
+              style={{
+                fontFamily: "Literata",
+                fontWeight: 700,
+                fontSize: "12pt",
+                color: "white",
+                marginLeft: "2%",
+              }}
+            >
+              Steven Tenata - 221116992
+            </p>
           </div>
         </div>
       </div>
