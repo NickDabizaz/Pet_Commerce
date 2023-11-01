@@ -1,48 +1,59 @@
 import React from "react";
 import logo from "../assets/logo.png";
+import searchlogo from "../assets/search.png";
+import banner from "../assets/banner.png";
+import banneranimal from "../assets/banneranimal.png";
+import dogfood from "../assets/dogfood.png";
 
 function MockupHome() {
   return (
     <>
-      <div className="container-fluid" style={{display: "flex", backgroundColor: "#6cd4ff"}}>
+      <div className="container-fluid" style={{display: "flex", backgroundColor: "#6CD4FF"}}>
         <img src={logo} style={{ width: "100px", height: "100px"}} />
-        <nav className="navbar p-3" style={{ backgroundColor: "#6cd4ff", width: "100%"}}>
+        <nav className="navbar p-3" style={{ backgroundColor: "#6CD4FF", width: "100%"}}>
           <div style={{ display: "flex", flex: 4 }}>
             <input
               className="form-control me-3"
               type="search"
-              placeholder="Authentic dog food"
+              placeholder="Colorful Dog Leash"
               aria-label="Search"
+              style={{fontFamily: "Literata", fontSize: "12pt", height: "2.5rem"}}            
             ></input>
-            <button className="btn btn-outline-success" type="submit">
-              Search
+            <button className="btn btn-outline-success" type="submit" style={{backgroundColor: "#1286CE", height: "2.5rem"}}>
+              <img src={searchlogo} style={{width: "30px", height: "30px", color:"white"}}/>
             </button>
           </div>
 
-          <div style={{ flex: 4 }}></div>
+          <div style={{ flex: 2 }}></div>
 
-          <div style={{ flex: 1 }}>
+          <div>
             <button
-              className="p-1 px-4"
+              className="p-1 px-4 rounded me-3"
               style={{
-                border: "1px solid white",
-                borderRadius: "5px",
+                border: "1px solid white",                
                 color: "white",
                 backgroundColor: "transparent",
+                height: "2.5rem",
+                fontFamily: "Literata",
+                fontWeight: 600,
+                fontSize: "14pt"
               }}
             >
               Register
             </button>
           </div>
 
-          <div style={{ flex: 1 }}>
+          <div>
             <button
-              className="p-1 px-4"
+              className="p-1 px-4 rounded"
               style={{
                 border: "1px solid white",
-                borderRadius: "5px",
                 color: "black",
                 backgroundColor: "white",
+                height: "2.5rem",
+                fontFamily: "Literata",
+                fontWeight: 600,
+                fontSize: "14pt"
               }}
             >
               Login
@@ -52,44 +63,43 @@ function MockupHome() {
       </div>
       {/* -------------------------------------------------------------------------------- */}
       {/* sub-navbar */}
-      <nav className="navbar p-2" style={{ backgroundColor: "#1286ce" }}>
-        <div style={{ flex: 1 }}></div>
-        <div className="navbar-logo" style={{ flex: 2 }}>
-          HOME
+      <nav className="navbar p-2" style={{ backgroundColor: "#1286CE" }}>
+        <div className="ms-5" style={{ color: "white", fontFamily: "Literata", fontWeight: 600, fontSize: "14pt"}}>
+          Home
         </div>
-        <div style={{ flex: 2 }}></div>
-        <div className="navbar-logo" style={{ flex: 4 }}>
-          COMMMUNITY
+        <div style={{ color: "white", fontFamily: "Literata", fontWeight: 600, fontSize: "14pt", marginLeft: "6%"}}>
+          Community
         </div>
-        <div style={{ flex: 2 }}></div>
-        <div className="navbar-logo" style={{ flex: 2 }}>
+        <div style={{ color: "white", fontFamily: "Literata", fontWeight: 600, fontSize: "14pt", marginLeft: "6%"}}>
           FAQ
         </div>
         <div style={{ flex: 30 }}></div>
       </nav>
-      <div style={{ backgroundColor: "red", height: "60vh" }}>
-        <div
+      <div style={{ backgroundImage: `url(${banner})`, height: "70vh", backgroundSize: "contain", display: "flex"}}>
+        <div className="rounded"
           style={{
             position: "relative",
-            left: "10vh",
+            left: "15vh",
             top: "15vh",
-            width: "30vw",
-            height: "30vh",
-            backgroundColor: "green",
+            width: "28vw",
+            height: "40vh",
+            backgroundColor: "#6CD4FF",
           }}
         >
-          asdasd
+          <p className="text-center mt-3" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "25pt"}}>Welcome To Pet-Commerce</p>
+          <p className="text-center mt-3" style={{ color: "white", fontFamily: "Literata", fontWeight: 600, fontSize: "18pt", marginLeft: "10%", width: "80%"}}>Don’t let your pets feel lonely. Give them a special gift from Pet-Commerce. We sell a variety of toys, treats, and accessories for your pets.</p>
         </div>
+        <img src={banneranimal} style={{width: "45rem", height: "22rem", marginTop: "4.5rem", marginLeft: "18%"}}  />
       </div>
 
-      <hr />
+      <hr className="border border-primary border-3"/>
 
       <div className="p-2 px-5">
         <div
           className="px-5"
           style={{ width: "100%", height: "100%", backgroundColor: "" }}
         >
-          <div className="fs-4 m-0 mb-3">Dog Section</div>
+          <div className="fs-4 m-0 mb-3" style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "25pt"}}>Dog Section</div>
           <div style={{ display: "flex" }}>
             <div
               style={{
@@ -100,27 +110,26 @@ function MockupHome() {
                 display: "flex",
               }}
             >
-              <div className="col-5 bg-info"></div>
-              <div className="col-7 p-2">
-                <div className="fs-5">Dog Food - Garlic Chicked Flavor</div>
-                <div style={{ marginTop: "0.4rem", fontSize: "0.7rem" }}>
-                  Authentic garlic chicken dog food
+              <img src={dogfood} style={{width: "18vh", height: "18vh", marginTop: "4vh"}} />
+              <div className="container-fluid">
+                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "14pt", marginTop: "1vh"}}>Dog Food - Chicken & Vegetable Flavor</div>
+                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "6.5vh"}}>
+                  Made from authentic chicken and vegetables
                 </div>
                 <div className="text-end" style={{ display: "block" }}>
                   <span
                     style={{
                       color: "red",
                       fontWeight: "bold",
-                      fontSize: "1.3rem",
+                      fontSize: "16pt",
                     }}
                   >
                     Rp 20.000
                   </span>
                   <br />
-                  <span style={{ fontSize: "0.7rem" }}>⭐⭐⭐⭐⭐</span>
-                  <br />
-                  <span style={{ fontSize: "0.7rem", color: "#6cd4ff" }}>
-                    100 sold
+                  <div style={{ fontSize: "0.6rem" }}>⭐⭐⭐⭐⭐</div>
+                  <span style={{ fontSize: "0.8rem", color: "#6CD4FF"}}>
+                    100 Sold
                   </span>
                 </div>
               </div>
@@ -133,31 +142,30 @@ function MockupHome() {
                 flex: 15,
                 border: "1px solid gray",
                 borderRadius: "5px",
-                height: "auto",
+                height: "12rem",
                 display: "flex",
               }}
             >
-              <div className="col-5 bg-info"></div>
-              <div className="col-7 p-2">
-                <div className="fs-5">Dog Food - Garlic Chicked Flavor</div>
-                <div style={{ marginTop: "0.4rem", fontSize: "0.7rem" }}>
-                  Authentic garlic chicken dog food
+              <img src={dogfood} style={{width: "18vh", height: "18vh", marginTop: "4vh"}} />
+              <div className="container-fluid">
+                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "14pt", marginTop: "1vh"}}>Dog Food - Chicken & Vegetable Flavor</div>
+                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "6.5vh"}}>
+                  Made from authentic chicken and vegetables
                 </div>
                 <div className="text-end" style={{ display: "block" }}>
                   <span
                     style={{
                       color: "red",
                       fontWeight: "bold",
-                      fontSize: "1.3rem",
+                      fontSize: "16pt",
                     }}
                   >
                     Rp 20.000
                   </span>
                   <br />
-                  <span style={{ fontSize: "0.7rem" }}>⭐⭐⭐⭐⭐</span>
-                  <br />
-                  <span style={{ fontSize: "0.7rem", color: "#6cd4ff" }}>
-                    100 sold
+                  <div style={{ fontSize: "0.6rem" }}>⭐⭐⭐⭐⭐</div>
+                  <span style={{ fontSize: "0.8rem", color: "#6CD4FF"}}>
+                    100 Sold
                   </span>
                 </div>
               </div>
@@ -170,31 +178,30 @@ function MockupHome() {
                 flex: 15,
                 border: "1px solid gray",
                 borderRadius: "5px",
-                height: "auto",
+                height: "12rem",
                 display: "flex",
               }}
             >
-              <div className="col-5 bg-info"></div>
-              <div className="col-7 p-2">
-                <div className="fs-5">Dog Food - Garlic Chicked Flavor</div>
-                <div style={{ marginTop: "0.4rem", fontSize: "0.7rem" }}>
-                  Authentic garlic chicken dog food
+              <img src={dogfood} style={{width: "18vh", height: "18vh", marginTop: "4vh"}} />
+              <div className="container-fluid">
+                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "14pt", marginTop: "1vh"}}>Dog Food - Chicken & Vegetable Flavor</div>
+                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "6.5vh"}}>
+                  Made from authentic chicken and vegetables
                 </div>
                 <div className="text-end" style={{ display: "block" }}>
                   <span
                     style={{
                       color: "red",
                       fontWeight: "bold",
-                      fontSize: "1.3rem",
+                      fontSize: "16pt",
                     }}
                   >
                     Rp 20.000
                   </span>
                   <br />
-                  <span style={{ fontSize: "0.7rem" }}>⭐⭐⭐⭐⭐</span>
-                  <br />
-                  <span style={{ fontSize: "0.7rem", color: "#6cd4ff" }}>
-                    100 sold
+                  <div style={{ fontSize: "0.6rem" }}>⭐⭐⭐⭐⭐</div>
+                  <span style={{ fontSize: "0.8rem", color: "#6CD4FF"}}>
+                    100 Sold
                   </span>
                 </div>
               </div>
@@ -207,31 +214,30 @@ function MockupHome() {
                 flex: 15,
                 border: "1px solid gray",
                 borderRadius: "5px",
-                height: "auto",
+                height: "12rem",
                 display: "flex",
               }}
             >
-              <div className="col-5 bg-info"></div>
-              <div className="col-7 p-2">
-                <div className="fs-5">Dog Food - Garlic Chicked Flavor</div>
-                <div style={{ marginTop: "0.4rem", fontSize: "0.7rem" }}>
-                  Authentic garlic chicken dog food
+              <img src={dogfood} style={{width: "18vh", height: "18vh", marginTop: "4vh"}} />
+              <div className="container-fluid">
+                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "14pt", marginTop: "1vh"}}>Dog Food - Chicken & Vegetable Flavor</div>
+                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "6.5vh"}}>
+                  Made from authentic chicken and vegetables
                 </div>
                 <div className="text-end" style={{ display: "block" }}>
                   <span
                     style={{
                       color: "red",
                       fontWeight: "bold",
-                      fontSize: "1.3rem",
+                      fontSize: "16pt",
                     }}
                   >
                     Rp 20.000
                   </span>
                   <br />
-                  <span style={{ fontSize: "0.7rem" }}>⭐⭐⭐⭐⭐</span>
-                  <br />
-                  <span style={{ fontSize: "0.7rem", color: "#6cd4ff" }}>
-                    100 sold
+                  <div style={{ fontSize: "0.6rem" }}>⭐⭐⭐⭐⭐</div>
+                  <span style={{ fontSize: "0.8rem", color: "#6CD4FF"}}>
+                    100 Sold
                   </span>
                 </div>
               </div>
@@ -241,38 +247,37 @@ function MockupHome() {
           <br />
           <br />
 
-          <div className="fs-4 m-0 mb-3">Cat Section</div>
+          <div className="fs-4 m-0 mb-3" style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "25pt"}}>Dog Section 2</div>
           <div style={{ display: "flex" }}>
             <div
               style={{
                 flex: 15,
                 border: "1px solid gray",
                 borderRadius: "5px",
-                height: "auto",
+                height: "12rem",
                 display: "flex",
               }}
             >
-              <div className="col-5 bg-info"></div>
-              <div className="col-7 p-2">
-                <div className="fs-5">Dog Food - Garlic Chicked Flavor</div>
-                <div style={{ marginTop: "0.4rem", fontSize: "0.7rem" }}>
-                  Authentic garlic chicken dog food
+              <img src={dogfood} style={{width: "18vh", height: "18vh", marginTop: "4vh"}} />
+              <div className="container-fluid">
+                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "14pt", marginTop: "1vh"}}>Dog Food - Chicken & Vegetable Flavor</div>
+                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "6.5vh"}}>
+                  Made from authentic chicken and vegetables
                 </div>
                 <div className="text-end" style={{ display: "block" }}>
                   <span
                     style={{
                       color: "red",
                       fontWeight: "bold",
-                      fontSize: "1.3rem",
+                      fontSize: "16pt",
                     }}
                   >
                     Rp 20.000
                   </span>
                   <br />
-                  <span style={{ fontSize: "0.7rem" }}>⭐⭐⭐⭐⭐</span>
-                  <br />
-                  <span style={{ fontSize: "0.7rem", color: "#6cd4ff" }}>
-                    100 sold
+                  <div style={{ fontSize: "0.6rem" }}>⭐⭐⭐⭐⭐</div>
+                  <span style={{ fontSize: "0.8rem", color: "#6CD4FF"}}>
+                    100 Sold
                   </span>
                 </div>
               </div>
@@ -285,31 +290,30 @@ function MockupHome() {
                 flex: 15,
                 border: "1px solid gray",
                 borderRadius: "5px",
-                height: "auto",
+                height: "12rem",
                 display: "flex",
               }}
             >
-              <div className="col-5 bg-info"></div>
-              <div className="col-7 p-2">
-                <div className="fs-5">Dog Food - Garlic Chicked Flavor</div>
-                <div style={{ marginTop: "0.4rem", fontSize: "0.7rem" }}>
-                  Authentic garlic chicken dog food
+              <img src={dogfood} style={{width: "18vh", height: "18vh", marginTop: "4vh"}} />
+              <div className="container-fluid">
+                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "14pt", marginTop: "1vh"}}>Dog Food - Chicken & Vegetable Flavor</div>
+                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "6.5vh"}}>
+                  Made from authentic chicken and vegetables
                 </div>
                 <div className="text-end" style={{ display: "block" }}>
                   <span
                     style={{
                       color: "red",
                       fontWeight: "bold",
-                      fontSize: "1.3rem",
+                      fontSize: "16pt",
                     }}
                   >
                     Rp 20.000
                   </span>
                   <br />
-                  <span style={{ fontSize: "0.7rem" }}>⭐⭐⭐⭐⭐</span>
-                  <br />
-                  <span style={{ fontSize: "0.7rem", color: "#6cd4ff" }}>
-                    100 sold
+                  <div style={{ fontSize: "0.6rem" }}>⭐⭐⭐⭐⭐</div>
+                  <span style={{ fontSize: "0.8rem", color: "#6CD4FF"}}>
+                    100 Sold
                   </span>
                 </div>
               </div>
@@ -322,31 +326,30 @@ function MockupHome() {
                 flex: 15,
                 border: "1px solid gray",
                 borderRadius: "5px",
-                height: "auto",
+                height: "12rem",
                 display: "flex",
               }}
             >
-              <div className="col-5 bg-info"></div>
-              <div className="col-7 p-2">
-                <div className="fs-5">Dog Food - Garlic Chicked Flavor</div>
-                <div style={{ marginTop: "0.4rem", fontSize: "0.7rem" }}>
-                  Authentic garlic chicken dog food
+              <img src={dogfood} style={{width: "18vh", height: "18vh", marginTop: "4vh"}} />
+              <div className="container-fluid">
+                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "14pt", marginTop: "1vh"}}>Dog Food - Chicken & Vegetable Flavor</div>
+                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "6.5vh"}}>
+                  Made from authentic chicken and vegetables
                 </div>
                 <div className="text-end" style={{ display: "block" }}>
                   <span
                     style={{
                       color: "red",
                       fontWeight: "bold",
-                      fontSize: "1.3rem",
+                      fontSize: "16pt",
                     }}
                   >
                     Rp 20.000
                   </span>
                   <br />
-                  <span style={{ fontSize: "0.7rem" }}>⭐⭐⭐⭐⭐</span>
-                  <br />
-                  <span style={{ fontSize: "0.7rem", color: "#6cd4ff" }}>
-                    100 sold
+                  <div style={{ fontSize: "0.6rem" }}>⭐⭐⭐⭐⭐</div>
+                  <span style={{ fontSize: "0.8rem", color: "#6CD4FF"}}>
+                    100 Sold
                   </span>
                 </div>
               </div>
@@ -359,31 +362,30 @@ function MockupHome() {
                 flex: 15,
                 border: "1px solid gray",
                 borderRadius: "5px",
-                height: "auto",
+                height: "12rem",
                 display: "flex",
               }}
             >
-              <div className="col-5 bg-info"></div>
-              <div className="col-7 p-2">
-                <div className="fs-5">Dog Food - Garlic Chicked Flavor</div>
-                <div style={{ marginTop: "0.4rem", fontSize: "0.7rem" }}>
-                  Authentic garlic chicken dog food
+              <img src={dogfood} style={{width: "18vh", height: "18vh", marginTop: "4vh"}} />
+              <div className="container-fluid">
+                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "14pt", marginTop: "1vh"}}>Dog Food - Chicken & Vegetable Flavor</div>
+                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "6.5vh"}}>
+                  Made from authentic chicken and vegetables
                 </div>
                 <div className="text-end" style={{ display: "block" }}>
                   <span
                     style={{
                       color: "red",
                       fontWeight: "bold",
-                      fontSize: "1.3rem",
+                      fontSize: "16pt",
                     }}
                   >
                     Rp 20.000
                   </span>
                   <br />
-                  <span style={{ fontSize: "0.7rem" }}>⭐⭐⭐⭐⭐</span>
-                  <br />
-                  <span style={{ fontSize: "0.7rem", color: "#6cd4ff" }}>
-                    100 sold
+                  <div style={{ fontSize: "0.6rem" }}>⭐⭐⭐⭐⭐</div>
+                  <span style={{ fontSize: "0.8rem", color: "#6CD4FF"}}>
+                    100 Sold
                   </span>
                 </div>
               </div>
@@ -393,8 +395,144 @@ function MockupHome() {
           <br />
           <br />
 
-          <div className="fs-4 m-0 mb-3">Check Our Threads</div>
-          <div style={{ height: "15rem" }}></div>
+          <div className="fs-4 m-0 mb-3" style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "25pt"}}>Hot Topics</div>
+          <div style={{ display: "flex" }}>
+            <div
+              style={{
+                flex: 15,
+                border: "1px solid gray",
+                borderRadius: "5px",
+                height: "12rem",
+                display: "flex",
+              }}
+            >
+              <div className="container-fluid">
+                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "16pt", marginTop: "1vh"}}>How to Take Care of Our Pets</div>
+                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "10vh"}}>
+                  For pet lovers out there, please provide the best solution for this problem
+                </div>
+                <div className="text-end" style={{ display: "block" }}>
+                  <span
+                    style={{
+                      color: "#1286CE",
+                      fontWeight: "bold",
+                      fontSize: "14pt",
+                    }}
+                  >
+                    10,782 Replies
+                  </span>                  
+                </div>
+              </div>
+            </div>
+
+            <div style={{ flex: 1 }}></div>
+
+            <div
+              style={{
+                flex: 15,
+                border: "1px solid gray",
+                borderRadius: "5px",
+                height: "12rem",
+                display: "flex",
+              }}
+            >
+              <img src={dogfood} style={{width: "18vh", height: "18vh", marginTop: "4vh"}} />
+              <div className="container-fluid">
+                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "14pt", marginTop: "1vh"}}>Dog Food - Chicken & Vegetable Flavor</div>
+                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "6.5vh"}}>
+                  Made from authentic chicken and vegetables
+                </div>
+                <div className="text-end" style={{ display: "block" }}>
+                  <span
+                    style={{
+                      color: "red",
+                      fontWeight: "bold",
+                      fontSize: "16pt",
+                    }}
+                  >
+                    Rp 20.000
+                  </span>
+                  <br />
+                  <div style={{ fontSize: "0.6rem" }}>⭐⭐⭐⭐⭐</div>
+                  <span style={{ fontSize: "0.8rem", color: "#6CD4FF"}}>
+                    100 Sold
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ flex: 1 }}></div>
+
+            <div
+              style={{
+                flex: 15,
+                border: "1px solid gray",
+                borderRadius: "5px",
+                height: "12rem",
+                display: "flex",
+              }}
+            >
+              <img src={dogfood} style={{width: "18vh", height: "18vh", marginTop: "4vh"}} />
+              <div className="container-fluid">
+                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "14pt", marginTop: "1vh"}}>Dog Food - Chicken & Vegetable Flavor</div>
+                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "6.5vh"}}>
+                  Made from authentic chicken and vegetables
+                </div>
+                <div className="text-end" style={{ display: "block" }}>
+                  <span
+                    style={{
+                      color: "red",
+                      fontWeight: "bold",
+                      fontSize: "16pt",
+                    }}
+                  >
+                    Rp 20.000
+                  </span>
+                  <br />
+                  <div style={{ fontSize: "0.6rem" }}>⭐⭐⭐⭐⭐</div>
+                  <span style={{ fontSize: "0.8rem", color: "#6CD4FF"}}>
+                    100 Sold
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ flex: 1 }}></div>
+
+            <div
+              style={{
+                flex: 15,
+                border: "1px solid gray",
+                borderRadius: "5px",
+                height: "12rem",
+                display: "flex",
+              }}
+            >
+              <img src={dogfood} style={{width: "18vh", height: "18vh", marginTop: "4vh"}} />
+              <div className="container-fluid">
+                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "14pt", marginTop: "1vh"}}>Dog Food - Chicken & Vegetable Flavor</div>
+                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "6.5vh"}}>
+                  Made from authentic chicken and vegetables
+                </div>
+                <div className="text-end" style={{ display: "block" }}>
+                  <span
+                    style={{
+                      color: "red",
+                      fontWeight: "bold",
+                      fontSize: "16pt",
+                    }}
+                  >
+                    Rp 20.000
+                  </span>
+                  <br />
+                  <div style={{ fontSize: "0.6rem" }}>⭐⭐⭐⭐⭐</div>
+                  <span style={{ fontSize: "0.8rem", color: "#6CD4FF"}}>
+                    100 Sold
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
