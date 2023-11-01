@@ -4,9 +4,15 @@ import logo from "../assets/logo.png";
 function MockupHome() {
   return (
     <>
-      <div className="container-fluid" style={{display: "flex", backgroundColor: "#6cd4ff"}}>
-        <img src={logo} style={{ width: "100px", height: "100px"}} />
-        <nav className="navbar p-3" style={{ backgroundColor: "#6cd4ff", width: "100%"}}>
+      <div
+        className="container-fluid"
+        style={{ display: "flex", backgroundColor: "#6cd4ff" }}
+      >
+        <img src={logo} style={{ width: "100px", height: "100px" }} />
+        <nav
+          className="navbar p-3"
+          style={{ backgroundColor: "#6cd4ff", width: "100%" }}
+        >
           <div style={{ display: "flex", flex: 4 }}>
             <input
               className="form-control me-3"

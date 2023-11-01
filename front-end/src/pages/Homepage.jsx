@@ -8,6 +8,8 @@ function Homepage(props) {
       <button onClick={() => props.setRoute("mockupbelom")}>
         home - belom login
       </button>
+      <br />
+      <button onClick={() => props.setRoute("mockupbrowse")}>Browse</button>
     </>
   );
 }
