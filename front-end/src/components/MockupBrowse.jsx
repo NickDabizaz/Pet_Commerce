@@ -1,4 +1,3 @@
-import React from "react";
 import logo from "../assets/logo.png";
 import filterIcon from "../assets/filter-icon.png";
 import searchIcon from "../assets/search-icon.png";
@@ -193,7 +192,7 @@ function MockupBrowse() {
                   style={{ objectFit: "contain" }}
                 />
                 <span style={{ fontSize: "1.2rem" }}>
-                  Shampoo Kucing Harus - 200mL
+                  Boneka Untuk Kucing Super Lembut
                 </span>
                 <br />
                 <span style={{ color: "red" }}>Rp 72.500</span>
@@ -225,7 +224,7 @@ function MockupBrowse() {
                   style={{ objectFit: "contain" }}
                 />
                 <span style={{ fontSize: "1.2rem" }}>
-                  Shampoo Kucing Harus - 200mL
+                  Boneka untuk Kucing Super Lembut
                 </span>
                 <br />
                 <span style={{ color: "red" }}>Rp 72.500</span>
@@ -257,7 +256,7 @@ function MockupBrowse() {
                   style={{ objectFit: "contain" }}
                 />
                 <span style={{ fontSize: "1.2rem" }}>
-                  Shampoo Kucing Harus - 200mL
+                  Boneka untuk Kucing Super Lembut
                 </span>
                 <br />
                 <span style={{ color: "red" }}>Rp 72.500</span>
@@ -289,7 +288,7 @@ function MockupBrowse() {
                   style={{ objectFit: "contain" }}
                 />
                 <span style={{ fontSize: "1.2rem" }}>
-                  Shampoo Kucing Harus - 200mL
+                  Boneka untuk Kucing Super Lembut
                 </span>
                 <br />
                 <span style={{ color: "red" }}>Rp 72.500</span>
@@ -322,7 +321,7 @@ function MockupBrowse() {
                   style={{ objectFit: "contain" }}
                 />
                 <span style={{ fontSize: "1.2rem" }}>
-                  Shampoo Kucing Harus - 200mL
+                  Boneka untuk Kucing Super Lembut
                 </span>
                 <br />
                 <span style={{ color: "red" }}>Rp 72.500</span>
@@ -354,7 +353,7 @@ function MockupBrowse() {
                   style={{ objectFit: "contain" }}
                 />
                 <span style={{ fontSize: "1.2rem" }}>
-                  Shampoo Kucing Harus - 200mL
+                  Boneka untuk Kucing Super Lembut
                 </span>
                 <br />
                 <span style={{ color: "red" }}>Rp 72.500</span>
@@ -386,7 +385,7 @@ function MockupBrowse() {
                   style={{ objectFit: "contain" }}
                 />
                 <span style={{ fontSize: "1.2rem" }}>
-                  Shampoo Kucing Harus - 200mL
+                  Boneka untuk Kucing Super Lembut
                 </span>
                 <br />
                 <span style={{ color: "red" }}>Rp 72.500</span>
@@ -418,7 +417,7 @@ function MockupBrowse() {
                   style={{ objectFit: "contain" }}
                 />
                 <span style={{ fontSize: "1.2rem" }}>
-                  Shampoo Kucing Harus - 200mL
+                  Boneka untuk Kucing Super Lembut
                 </span>
                 <br />
                 <span style={{ color: "red" }}>Rp 72.500</span>
@@ -451,7 +450,7 @@ function MockupBrowse() {
                   style={{ objectFit: "contain" }}
                 />
                 <span style={{ fontSize: "1.2rem" }}>
-                  Shampoo Kucing Harus - 200mL
+                  Boneka untuk Kucing Super Lembut
                 </span>
                 <br />
                 <span style={{ color: "red" }}>Rp 72.500</span>
@@ -483,7 +482,7 @@ function MockupBrowse() {
                   style={{ objectFit: "contain" }}
                 />
                 <span style={{ fontSize: "1.2rem" }}>
-                  Shampoo Kucing Harus - 200mL
+                  Boneka untuk Kucing Super Lembut
                 </span>
                 <br />
                 <span style={{ color: "red" }}>Rp 72.500</span>
@@ -515,7 +514,7 @@ function MockupBrowse() {
                   style={{ objectFit: "contain" }}
                 />
                 <span style={{ fontSize: "1.2rem" }}>
-                  Shampoo Kucing Harus - 200mL
+                  Boneka untuk Kucing Super Lembut
                 </span>
                 <br />
                 <span style={{ color: "red" }}>Rp 72.500</span>
@@ -547,7 +546,7 @@ function MockupBrowse() {
                   style={{ objectFit: "contain" }}
                 />
                 <span style={{ fontSize: "1.2rem" }}>
-                  Shampoo Kucing Harus - 200mL
+                  Boneka untuk Kucing Super Lembut
                 </span>
                 <br />
                 <span style={{ color: "red" }}>Rp 72.500</span>
