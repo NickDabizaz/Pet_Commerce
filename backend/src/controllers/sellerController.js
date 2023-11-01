@@ -30,21 +30,21 @@ const createStore = async (req, res) => {
 
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error creating store"); 
+    res.status(500).send("Error creating store");
   }
 
 };
 
 const addProduct = async (req, res) => {
 
-  const { 
-    user_id, 
-    store_id, 
-    product_name, 
-    price, 
-    quantity, 
+  const {
+    user_id,
+    store_id,
+    product_name,
+    price,
+    quantity,
     rating,
-    category_id 
+    category_id
   } = req.body;
 
   try {
@@ -57,16 +57,29 @@ const addProduct = async (req, res) => {
     }
 
     // Generate product id
-    const highestProduct = await models.Product.max("product_id");
-    const nextId = highestProduct ? highestProduct + 1 : 1;
+    const latestProduct = await models.Product.findOne({
+      where: {
+        deletedAt: null
+      },
+      order: [
+        ['product_id', 'DESC']
+      ],
+      attributes: ['product_id']
+    });
+
+    let nextProductId = 1;
+
+    if (latestProduct) {
+      nextProductId = latestProduct.product_id + 1;
+    }
 
     // Create new product
     const product = await models.Product.create({
-      product_id: nextId,
+      product_id: nextProductId,
       product_name,
       price,
       quantity,
-      store_id, 
+      store_id,
       rating,
       category_id
     });
@@ -82,14 +95,14 @@ const addProduct = async (req, res) => {
 };
 
 const editProduct = async (req, res) => {
-  
+
   const { user_id } = req.body;
   const { product_id } = req.params;
 
-  const { 
-    product_name, 
-    price, 
-    quantity, 
+  const {
+    product_name,
+    price,
+    quantity,
     rating,
     category_id
   } = req.body;
@@ -110,7 +123,7 @@ const editProduct = async (req, res) => {
       price,
       quantity,
       rating,
-      category_id 
+      category_id
     });
 
     // Return updated product
@@ -189,5 +202,5 @@ module.exports = {
   addProduct,
   editProduct,
   deleteProduct,
-  viewProducts  
+  viewProducts
 };

@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true
       },
       title: DataTypes.STRING(255),
-      image: DataTypes.STRING(255),
       user_id : DataTypes.INTEGER
     },
     {
