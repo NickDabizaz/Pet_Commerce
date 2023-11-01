@@ -8,6 +8,8 @@ function Homepage(props) {
       </button>
       <br />
       <button onClick={() => props.setRoute("mockupbrowse")}>Browse</button>
+      <br />
+      <button onClick={() => props.setRoute("mockupdetail")}>Detail</button>
     </>
   );
 }

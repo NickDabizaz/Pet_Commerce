@@ -565,6 +565,7 @@ function MockupBrowse() {
       </div>
       <hr />
 
+      {/* footer */}
       <div className="p-2 px-5">
         <div
           className="px-5"

@@ -4,6 +4,7 @@ import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import MockupHome from "./components/MockupHome";
 import MockupBrowse from "./components/MockupBrowse";
+import MockupDetail from "./components/MockupDetail";
 
 function App() {
   const [route, setRoute] = useState("homepage");
@@ -14,6 +15,7 @@ function App() {
       {route === "login" && <Login setRoute={setRoute} />}
       {route === "mockupbelom" && <MockupHome setRoute={setRoute} />}
       {route === "mockupbrowse" && <MockupBrowse setRoute={setRoute} />}
+      {route === "mockupdetail" && <MockupDetail setRoute={setRoute} />}
     </>
   );
 }
