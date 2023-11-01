@@ -411,7 +411,7 @@ function MockupHome() {
                 <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "10vh"}}>
                   For pet lovers out there, please provide the best solution for this problem
                 </div>
-                <div className="text-end" style={{ display: "block" }}>
+                <div className="text-end" style={{ display: "block", marginTop: "14%" }}>
                   <span
                     style={{
                       color: "#1286CE",
@@ -436,27 +436,21 @@ function MockupHome() {
                 display: "flex",
               }}
             >
-              <img src={dogfood} style={{width: "18vh", height: "18vh", marginTop: "4vh"}} />
               <div className="container-fluid">
-                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "14pt", marginTop: "1vh"}}>Dog Food - Chicken & Vegetable Flavor</div>
-                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "6.5vh"}}>
-                  Made from authentic chicken and vegetables
+                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "16pt", marginTop: "1vh"}}>How to Take Care of Our Pets</div>
+                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "10vh"}}>
+                  For pet lovers out there, please provide the best solution for this problem
                 </div>
-                <div className="text-end" style={{ display: "block" }}>
+                <div className="text-end" style={{ display: "block", marginTop: "14%" }}>
                   <span
                     style={{
-                      color: "red",
+                      color: "#1286CE",
                       fontWeight: "bold",
-                      fontSize: "16pt",
+                      fontSize: "14pt",
                     }}
                   >
-                    Rp 20.000
-                  </span>
-                  <br />
-                  <div style={{ fontSize: "0.6rem" }}>⭐⭐⭐⭐⭐</div>
-                  <span style={{ fontSize: "0.8rem", color: "#6CD4FF"}}>
-                    100 Sold
-                  </span>
+                    10,782 Replies
+                  </span>                  
                 </div>
               </div>
             </div>
@@ -472,27 +466,21 @@ function MockupHome() {
                 display: "flex",
               }}
             >
-              <img src={dogfood} style={{width: "18vh", height: "18vh", marginTop: "4vh"}} />
               <div className="container-fluid">
-                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "14pt", marginTop: "1vh"}}>Dog Food - Chicken & Vegetable Flavor</div>
-                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "6.5vh"}}>
-                  Made from authentic chicken and vegetables
+                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "16pt", marginTop: "1vh"}}>How to Take Care of Our Pets</div>
+                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "10vh"}}>
+                  For pet lovers out there, please provide the best solution for this problem
                 </div>
-                <div className="text-end" style={{ display: "block" }}>
+                <div className="text-end" style={{ display: "block", marginTop: "14%" }}>
                   <span
                     style={{
-                      color: "red",
+                      color: "#1286CE",
                       fontWeight: "bold",
-                      fontSize: "16pt",
+                      fontSize: "14pt",
                     }}
                   >
-                    Rp 20.000
-                  </span>
-                  <br />
-                  <div style={{ fontSize: "0.6rem" }}>⭐⭐⭐⭐⭐</div>
-                  <span style={{ fontSize: "0.8rem", color: "#6CD4FF"}}>
-                    100 Sold
-                  </span>
+                    10,782 Replies
+                  </span>                  
                 </div>
               </div>
             </div>
@@ -508,27 +496,21 @@ function MockupHome() {
                 display: "flex",
               }}
             >
-              <img src={dogfood} style={{width: "18vh", height: "18vh", marginTop: "4vh"}} />
               <div className="container-fluid">
-                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "14pt", marginTop: "1vh"}}>Dog Food - Chicken & Vegetable Flavor</div>
-                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "6.5vh"}}>
-                  Made from authentic chicken and vegetables
+                <div style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "16pt", marginTop: "1vh"}}>How to Take Care of Our Pets</div>
+                <div style={{ marginTop: "0.4rem", fontFamily: "Literata", fontSize: "10pt", minHeight: "10vh"}}>
+                  For pet lovers out there, please provide the best solution for this problem
                 </div>
-                <div className="text-end" style={{ display: "block" }}>
+                <div className="text-end" style={{ display: "block", marginTop: "14%" }}>
                   <span
                     style={{
-                      color: "red",
+                      color: "#1286CE",
                       fontWeight: "bold",
-                      fontSize: "16pt",
+                      fontSize: "14pt",
                     }}
                   >
-                    Rp 20.000
-                  </span>
-                  <br />
-                  <div style={{ fontSize: "0.6rem" }}>⭐⭐⭐⭐⭐</div>
-                  <span style={{ fontSize: "0.8rem", color: "#6CD4FF"}}>
-                    100 Sold
-                  </span>
+                    10,782 Replies
+                  </span>                  
                 </div>
               </div>
             </div>
@@ -536,37 +518,23 @@ function MockupHome() {
         </div>
       </div>
 
-      <hr />
+      <hr className="border border-primary border-3"/>
 
-      <div className="p-2 px-5">
+      <div className="p-2 px-5" style={{ backgroundColor: "#6CD4FF"}}>
         <div
           className="px-5"
           style={{
             width: "100%",
-            height: "100px",
+            height: "5vh",
             backgroundColor: "",
           }}
-        >
-          <div style={{ display: "flex" }}>
-            <div className="p-2" style={{ flex: 9, backgroundColor: "" }}>
-              GAMBAR APA ITU GATAU
-            </div>
-            <div className="p-2" style={{ flex: 6, backgroundColor: "" }}>
-              APA JUGA GATAU
-            </div>
-            <div className="p-2" style={{ flex: 4, backgroundColor: "" }}>
-              Social Media
-            </div>
-            <div className="p-2" style={{ flex: 6, backgroundColor: "" }}>
-              Politik?
-            </div>
-            <div className="p-2" style={{ flex: 6, backgroundColor: "" }}>
-              Instusional?
-            </div>
-          </div>
-          <div style={{ fontSize: "0.7rem" }}>
-            Mimos pet - CNP <br /> Av. x000
-          </div>
+        >          
+          <div className="d-flex justify-content-center mt-3">
+            <p style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "12pt", color: "white"}}>Melvin Audrey Adianto - 221116971</p>
+            <p style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "12pt", color: "white", marginLeft: "2%"}}>Nicklaus Dabizaz Fairlie - 221116978</p>
+            <p style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "12pt", color: "white", marginLeft: "2%"}}>Ramaditya Satriawan - 221116983</p>
+            <p style={{ fontFamily: "Literata", fontWeight: 700, fontSize: "12pt", color: "white", marginLeft: "2%"}}>Steven Tenata - 221116992</p>
+          </div>       
         </div>
       </div>
     </>
