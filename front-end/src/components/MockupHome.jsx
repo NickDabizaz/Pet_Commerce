@@ -1,55 +1,55 @@
 import React from "react";
+import logo from "../assets/logo.png";
 
 function MockupHome() {
   return (
     <>
-      <nav className="navbar p-3" style={{ backgroundColor: "#6cd4ff" }}>
-        <div className="navbar-logo" style={{ flex: 1 }}>
-          LOGO
-        </div>
+      <div className="container-fluid" style={{display: "flex", backgroundColor: "#6cd4ff"}}>
+        <img src={logo} style={{ width: "100px", height: "100px"}} />
+        <nav className="navbar p-3" style={{ backgroundColor: "#6cd4ff", width: "100%"}}>
+          <div style={{ display: "flex", flex: 4 }}>
+            <input
+              className="form-control me-3"
+              type="search"
+              placeholder="Authentic dog food"
+              aria-label="Search"
+            ></input>
+            <button className="btn btn-outline-success" type="submit">
+              Search
+            </button>
+          </div>
 
-        <div style={{ display: "flex", flex: 4 }}>
-          <input
-            className="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          ></input>
-          <button className="btn btn-outline-success" type="submit">
-            Search
-          </button>
-        </div>
+          <div style={{ flex: 4 }}></div>
 
-        <div style={{ flex: 4 }}></div>
+          <div style={{ flex: 1 }}>
+            <button
+              className="p-1 px-4"
+              style={{
+                border: "1px solid white",
+                borderRadius: "5px",
+                color: "white",
+                backgroundColor: "transparent",
+              }}
+            >
+              Register
+            </button>
+          </div>
 
-        <div style={{ flex: 1 }}>
-          <button
-            className="p-1 px-4"
-            style={{
-              border: "1px solid white",
-              borderRadius: "5px",
-              color: "white",
-              backgroundColor: "transparent",
-            }}
-          >
-            Register
-          </button>
-        </div>
-
-        <div style={{ flex: 1 }}>
-          <button
-            className="p-1 px-4"
-            style={{
-              border: "1px solid white",
-              borderRadius: "5px",
-              color: "black",
-              backgroundColor: "white",
-            }}
-          >
-            Login
-          </button>
-        </div>
-      </nav>
+          <div style={{ flex: 1 }}>
+            <button
+              className="p-1 px-4"
+              style={{
+                border: "1px solid white",
+                borderRadius: "5px",
+                color: "black",
+                backgroundColor: "white",
+              }}
+            >
+              Login
+            </button>
+          </div>
+        </nav>
+      </div>
       {/* -------------------------------------------------------------------------------- */}
       {/* sub-navbar */}
       <nav className="navbar p-2" style={{ backgroundColor: "#1286ce" }}>
