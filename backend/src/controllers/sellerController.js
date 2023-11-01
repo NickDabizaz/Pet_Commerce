@@ -1,188 +1,193 @@
 const models = require("../models");
 
 const createStore = async (req, res) => {
-  const { user_id, nama_toko, deskripsi_toko } = req.body;
+
+  const { user_id, store_name, store_description } = req.body;
 
   try {
-    // Cek apakah user_id memiliki role seller
-    const user = await models.User.findOne({
-      where: { user_id, role: "seller" },
-    });
 
-    if (!user) {
-      return res
-        .status(403)
-        .send("Anda tidak memiliki izin untuk membuat toko.");
+    // Validate seller role
+    const user = await models.User.findByPk(user_id);
+
+    if (!user || user.role !== "seller") {
+      return res.status(403).send("You don't have permission to create a store");
     }
 
-    const storeId = await generateStoreId(); // Tambahkan await di sini
-    const store = await models.Toko.create({
-      toko_id: storeId,
-      nama_toko,
-      deskripsi_toko,
-      user_id,
+    // Generate store id
+    const highestStore = await models.Store.max("store_id");
+    const nextId = highestStore ? highestStore + 1 : 1;
+
+    // Create new store
+    const store = await models.Store.create({
+      store_id: nextId,
+      store_name,
+      store_description,
+      user_id
     });
+
+    // Return created store
     res.json(store);
+
   } catch (error) {
     console.error(error);
-    res.status(500).send("Terjadi kesalahan saat mencoba membuat toko.");
+    res.status(500).send("Error creating store"); 
   }
+
 };
 
 const addProduct = async (req, res) => {
-  const { user_id, toko_id, nama_produk, harga, qty, rating, kategori_id } =
-    req.body;
+
+  const { 
+    user_id, 
+    store_id, 
+    product_name, 
+    price, 
+    quantity, 
+    rating,
+    category_id 
+  } = req.body;
 
   try {
-    // Cek apakah user_id memiliki role seller
-    const user = await models.User.findOne({
-      where: { user_id, role: "seller" },
-    });
 
-    if (!user) {
-      return res
-        .status(403)
-        .send("Anda tidak memiliki izin untuk menambahkan produk.");
+    // Validate seller role
+    const user = await models.User.findByPk(user_id);
+
+    if (!user || user.role !== "seller") {
+      return res.status(403).send("You don't have permission to add products");
     }
 
-    const product = await models.Produk.create({
-      product_id: await generateProductId(),
-      nama_produk,
-      harga,
-      qty,
-      toko_id,
-      rating, // Tambahkan rating
-      kategori_id, // Tambahkan kategori_id
+    // Generate product id
+    const highestProduct = await models.Product.max("product_id");
+    const nextId = highestProduct ? highestProduct + 1 : 1;
+
+    // Create new product
+    const product = await models.Product.create({
+      product_id: nextId,
+      product_name,
+      price,
+      quantity,
+      store_id, 
+      rating,
+      category_id
     });
 
+    // Return created product
     res.json(product);
+
   } catch (error) {
     console.error(error);
-    res.status(500).send("Terjadi kesalahan saat mencoba menambahkan produk.");
+    res.status(500).send("Error adding product");
   }
+
 };
 
 const editProduct = async (req, res) => {
+  
   const { user_id } = req.body;
   const { product_id } = req.params;
-  const { nama_produk, harga, qty, rating, kategori_id } = req.body;
+
+  const { 
+    product_name, 
+    price, 
+    quantity, 
+    rating,
+    category_id
+  } = req.body;
 
   try {
-    // Cek apakah user_id memiliki role seller dan memiliki toko dengan produk_id
-    const user = await models.User.findOne({
-      where: { user_id, role: "seller" },
-    });
-    const product = await models.Produk.findOne({ where: { product_id } });
 
-    if (!user || !product || product.toko_id !== user_id) {
-      return res
-        .status(403)
-        .send("Anda tidak memiliki izin untuk mengedit produk ini.");
+    // Validate seller permission
+    const user = await models.User.findByPk(user_id);
+    const product = await models.Product.findByPk(product_id);
+
+    if (!user || user.role !== "seller" || product.store_id !== user.user_id) {
+      return res.status(403).send("You don't have permission to edit this product");
     }
 
-    await product.update({ nama_produk, harga, qty, rating, kategori_id });
+    // Update product
+    await product.update({
+      product_name,
+      price,
+      quantity,
+      rating,
+      category_id 
+    });
+
+    // Return updated product
     res.json(product);
+
   } catch (error) {
     console.error(error);
-    res.status(500).send("Terjadi kesalahan saat mencoba mengedit produk.");
+    res.status(500).send("Error editing product");
   }
+
 };
 
 const deleteProduct = async (req, res) => {
-    const { user_id } = req.body;
-    const { product_id } = req.params;
-  
-    try {
-      // Cek apakah user_id memiliki role seller dan memiliki toko dengan produk_id
-      const user = await models.User.findOne({
-        where: { user_id, role: "seller" },
-      });
-      const product = await models.Produk.findOne({ where: { product_id } });
-  
-      if (!user || !product || product.toko_id !== user_id) {
-        return res
-          .status(403)
-          .send("Anda tidak memiliki izin untuk menghapus produk ini.");
-      }
-  
-      await models.Produk.destroy({ where: { product_id } }); // Hapus produk berdasarkan ID
-      res.send("Produk berhasil dihapus.");
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Terjadi kesalahan saat mencoba menghapus produk.");
-    }
-  };
-  
 
-  const viewProducts = async (req, res) => {
-    const { user_id } = req.params;
-  
-    try {
-      // Cek apakah user_id memiliki role seller
-      const user = await models.User.findOne({
-        where: { user_id, role: "seller" },
-      });
-  
-      if (!user) {
-        return res
-          .status(403)
-          .send("Anda tidak memiliki izin untuk melihat produk.");
-      }
-  
-      const products = await models.Produk.findAll({
-        where: { toko_id: user_id },
-      });
-      res.json(products);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Terjadi kesalahan saat mencoba melihat produk.");
+  const { user_id } = req.body;
+  const { product_id } = req.params;
+
+  try {
+
+    // Validate seller permission
+    const user = await models.User.findByPk(user_id);
+    const product = await models.Product.findByPk(product_id);
+
+    if (!user || user.role !== "seller") {
+      return res.status(403).send("You don't have permission to delete this product");
     }
-  };
-  
-  
+
+    if (!product || product.store_id !== user.user_id) {
+      return res.status(403).send("You don't have permission to delete this product");
+    }
+
+    // Delete product
+    await models.Product.destroy({ where: { product_id } });
+
+    // Return response
+    res.send("Product deleted successfully");
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error deleting product");
+  }
+
+};
+
+
+const viewProducts = async (req, res) => {
+
+  const { user_id } = req.params;
+
+  try {
+
+    // Validate seller role  
+    const user = await models.User.findByPk(user_id);
+
+    if (!user || user.role !== "seller") {
+      return res.status(403).send("You don't have permission to view products");
+    }
+
+    // Get products
+    const products = await models.Product.findAll({
+      where: { store_id: user_id }
+    });
+
+    // Return products
+    res.json(products);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error getting products");
+  }
+
+};
 
 module.exports = {
   createStore,
   addProduct,
   editProduct,
   deleteProduct,
-  viewProducts,
-};
-
-const generateStoreId = async () => {
-  try {
-    const highestStore = await models.Toko.findOne({
-      attributes: [
-        [models.sequelize.fn("max", models.sequelize.col("toko_id")), "max_id"],
-      ],
-    });
-
-    let nextId = 1;
-
-    if (highestStore && highestStore.dataValues.max_id) {
-      nextId = parseInt(highestStore.dataValues.max_id) + 1;
-    }
-
-    return nextId.toString();
-  } catch (error) {
-    console.error(error);
-    throw new Error("Gagal menghasilkan ID toko.");
-  }
-};
-
-const generateProductId = async () => {
-  try {
-    const highestProduct = await models.Produk.max("product_id");
-
-    let nextId = 1;
-
-    if (highestProduct) {
-      nextId = parseInt(highestProduct) + 1;
-    }
-
-    return nextId.toString();
-  } catch (error) {
-    console.error(error);
-    throw new Error("Gagal menghasilkan ID produk.");
-  }
+  viewProducts  
 };

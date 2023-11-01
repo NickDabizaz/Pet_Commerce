@@ -3,18 +3,20 @@ const models = require("../models");
 const Joi = require("joi");
 
 const generateToken = (user) => {
-  return jwt.sign({ id: user.id, email: user.email }, "PETCOMMERCE", {
+  return jwt.sign({ id: user.id, email: user.email }, "PETCOMMERCE", { 
     expiresIn: "1d",
   });
 };
 
 const register = async (req, res) => {
+
+  // Validate input
   const schema = Joi.object({
-    nama: Joi.string().required(),
+    name: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().required(),
-    alamat: Joi.string().required(),
-    nomor_telepon: Joi.string().required(),
+    address: Joi.string().required(),
+    phone_number: Joi.string().required(),
     role: Joi.string().valid("customer", "seller").required(),
   });
 
@@ -24,43 +26,55 @@ const register = async (req, res) => {
     return res.status(400).send(error.details[0].message);
   }
 
-  const { nama, email, password, alamat, nomor_telepon, role } = req.body;
+  // Get data from request
+  const { name, email, password, address, phone_number, role } = req.body;
 
   try {
-    // Dapatkan ID tertinggi dari tabel User
-    const highestUser = await models.User.findOne({
-      attributes: [
-        [models.sequelize.fn("max", models.sequelize.col("user_id")), "max_id"],
+    
+    const latestUser = await models.User.findOne({
+      where: {
+        deletedAt: null
+      },
+      order: [
+        ['user_id', 'DESC']  
       ],
+      attributes: ['user_id']
     });
-
+    
     let nextId = 1;
-
-    if (highestUser && highestUser.dataValues.max_id) {
-      nextId = parseInt(highestUser.dataValues.max_id) + 1;
+    
+    if (latestUser) {
+      nextId = latestUser.user_id + 1;  
     }
 
+    // Create new user
     const user = await models.User.create({
-      user_id: nextId.toString(),
-      nama,
+      user_id: nextId, 
+      name,
       email,
       password,
-      alamat,
-      nomor_telepon,
+      address,
+      phone_number,
       token: null,
-      role,
+      role 
     });
+
+    // Return created user
     res.json(user);
+    
   } catch (error) {
     console.error(error);
-    res.status(500).send("Terjadi kesalahan saat mencoba mendaftar.");
+    res.status(500).send("Error registering user");
   }
+
 };
 
 const login = async (req, res) => {
+  
+  // Validate input
   const schema = Joi.object({
     email: Joi.string().email().required(),
-    password: Joi.string().required(),
+    password: Joi.string().required()
   });
 
   const { error } = schema.validate(req.body);
@@ -72,25 +86,43 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await models.User.findOne({ where: { email, password } });
 
+    // Find user by email and password
+    const user = await models.User.findOne({ 
+      where: { email, password } 
+    });
+
+    // If user exists
     if (user) {
+
+      // Generate and save token
       const token = generateToken(user);
       user.token = token;
       await user.save();
-      res.json({ token, message: "Login berhasil", role: user.role }); // Sertakan role dalam respons
+      
+      // Return token, message and role
+      res.json({ 
+        token, 
+        message: "Login successful",
+        role: user.role
+      });
+
     } else {
-      res.status(401).send("Email atau kata sandi salah");
+      res.status(401).send("Invalid email or password");
     }
+
   } catch (error) {
     console.error(error);
-    res.status(500).send("Terjadi kesalahan saat mencoba melakukan login.");
+    res.status(500).send("Error logging in");
   }
+
 };
 
 const logout = async (req, res) => {
+
+  // Validate input
   const schema = Joi.object({
-    user_id: Joi.string().required(),
+    user_id: Joi.number().required()
   });
 
   const { error } = schema.validate(req.body);
@@ -102,27 +134,35 @@ const logout = async (req, res) => {
   const { user_id } = req.body;
 
   try {
-    const user = await models.User.findOne({ where: { user_id } });
 
+    // Find user by id
+    const user = await models.User.findByPk(user_id);
+
+    // If user exists
     if (user) {
+
+      // Clear user token
       if (user.token) {
         user.token = null;
         await user.save();
-        res.send("Berhasil logout");
-      } else {
-        res.status(401).send("Pengguna belum login");
-      }
+      } 
+      
+      // Return response
+      res.send("Logged out successfully");
+
     } else {
-      res.status(404).send("Pengguna tidak ditemukan");
+      res.status(404).send("User not found");
     }
+
   } catch (error) {
     console.error(error);
-    res.status(500).send("Terjadi kesalahan saat mencoba logout.");
+    res.status(500).send("Error logging out");
   }
+
 };
 
 module.exports = {
   register,
   login,
-  logout,
+  logout
 };

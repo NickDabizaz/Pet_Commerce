@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 
-// Proses registrasi
-router.post('/register', userController.register);
+// Registration process
+router.post('/register', userController.register); 
 
-// Proses login
+// Login process
 router.post('/login', userController.login);
 
-// Proses logout
+// Logout process
 router.post('/logout', userController.logout);
 
 module.exports = router;

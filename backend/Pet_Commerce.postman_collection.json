@@ -1,13 +1,12 @@
 {
 	"info": {
-		"_postman_id": "1b39b6f2-4d03-419f-936f-e9f8e1543064",
-		"name": "Pet_Commerce",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "24968335"
+		"_postman_id": "6d123978-7e2e-4c29-9e49-a1f9a892b37c",
+		"name": "Pet Commerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Login Register Logout",
+			"name": "Auth",
 			"item": [
 				{
 					"name": "Register User",
@@ -16,12 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\t\"nama\": \"John Doe\",\r\n\t\"email\": \"john.doe@example.com\",\r\n\t\"password\": \"password123\",\r\n\t\"alamat\": \"123 Main Street\",\r\n\t\"nomor_telepon\": \"1234567890\",\r\n\t\"role\": \"seller\"\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"password\",\n    \"address\": \"123 Main St\",\n    \"phone_number\": \"1234567890\",\n    \"role\": \"seller\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/users/register",
@@ -45,12 +39,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\t\"email\": \"john.doe@example.com\",\r\n\t\"password\": \"password123\"\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n    \"email\": \"john@example.com\",\n    \"password\": \"password\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/users/login",
@@ -68,18 +57,13 @@
 					"response": []
 				},
 				{
-					"name": "Logout",
+					"name": "Logout User",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"user_id\": \"1\"\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n    \"user_id\": 1\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/users/logout",
@@ -99,7 +83,7 @@
 			]
 		},
 		{
-			"name": "Seller Bikin Toko + CRUD Produk",
+			"name": "Sellers",
 			"item": [
 				{
 					"name": "Create Store",
@@ -108,12 +92,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"user_id\": \"1\",\r\n  \"nama_toko\": \"Toko Baru\",\r\n  \"deskripsi_toko\": \"Deskripsi Toko Baru\"\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n    \"user_id\": 1,\n    \"store_name\": \"My Store\",\n    \"store_description\": \"This is my store\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/sellers/create-store",
@@ -137,12 +116,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"user_id\": \"1\",\r\n  \"toko_id\": \"1\",\r\n  \"nama_produk\": \"Produk Baru\",\r\n  \"harga\": 10000,\r\n  \"qty\": 10,\r\n  \"rating\": 4,\r\n  \"kategori_id\": \"1\"\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n    \"user_id\": 1,\n    \"store_id\": 1,\n    \"product_name\": \"Product 1\",\n    \"price\": 100,\n    \"quantity\": 10,\n    \"category_id\": 1\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/sellers/add-product",
@@ -166,12 +140,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"user_id\": \"1\",\r\n  \"nama_produk\": \"Produk Terbaru\",\r\n  \"harga\": 15000,\r\n  \"qty\": 15\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n    \"user_id\": 1,\n    \"product_name\": \"Updated Name\",\n    \"price\": 150,\n    \"quantity\": 15\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/sellers/edit-product/1",
@@ -196,12 +165,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"user_id\": \"1\"\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n    \"user_id\": 1\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/sellers/delete-product/1",
@@ -229,12 +193,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"user_id\": \"1\"\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n    \"user_id\": 1\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/sellers/view-products/1",
@@ -255,7 +214,7 @@
 			]
 		},
 		{
-			"name": "Admin Control",
+			"name": "Admin",
 			"item": [
 				{
 					"name": "View All Users",
@@ -282,15 +241,6 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "http://localhost:3000/admin/users/1",
 							"protocol": "http",

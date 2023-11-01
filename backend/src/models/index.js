@@ -4,46 +4,49 @@ const config = require('../config/config.json');
 const sequelize = new Sequelize(config.development);
 
 const User = require('./User.js')(sequelize, Sequelize);
-const Kategori = require('./Kategori.js')(sequelize, Sequelize);
-const Produk = require('./Produk.js')(sequelize, Sequelize);
-const Transaksi = require('./Transaksi.js')(sequelize, Sequelize);
-const DetailTransaksi = require('./DetailTransaksi.js')(sequelize, Sequelize);
-const Review = require('./Review.js')(sequelize, Sequelize);
-const Postingan = require('./Postingan.js')(sequelize, Sequelize);
-const Komentar = require('./Komentar.js')(sequelize, Sequelize);
-const LikePostingan = require('./LikePostingan.js')(sequelize, Sequelize);
-const SharePostingan = require('./SharePostingan.js')(sequelize, Sequelize);
-const NotifikasiTransaksi = require('./NotifikasiTransaksi.js')(sequelize, Sequelize);
-const Toko = require('./Toko.js')(sequelize, Sequelize);
+const Category = require('./Category.js')(sequelize, Sequelize);
+const Product = require('./Product.js')(sequelize, Sequelize);
+const Order = require('./Order.js')(sequelize, Sequelize);
+const OrderDetail = require('./OrderDetail')(sequelize, Sequelize); // Added this line
+const Review = require('./Review.js')(sequelize, Sequelize);  
+const Post = require('./Post.js')(sequelize, Sequelize);
+const Comment = require('./Comment.js')(sequelize, Sequelize);
+const PostLike = require('./PostLike.js')(sequelize, Sequelize);
+const PostShare = require('./PostShare.js')(sequelize, Sequelize);
+const OrderNotification = require('./OrderNotification.js')(sequelize, Sequelize);
+const Store = require('./Store.js')(sequelize, Sequelize);
 const ShoppingCart = require('./ShoppingCart.js')(sequelize, Sequelize);
 
+// Associations
 User.associate(sequelize.models);
-Kategori.associate(sequelize.models);
-Produk.associate(sequelize.models);
-Transaksi.associate(sequelize.models);
-DetailTransaksi.associate(sequelize.models);
+Category.associate(sequelize.models);
+Product.associate(sequelize.models); 
+Order.associate(sequelize.models);
+OrderDetail.associate(sequelize.models); // Added association
 Review.associate(sequelize.models);
-Postingan.associate(sequelize.models);
-Komentar.associate(sequelize.models);
-LikePostingan.associate(sequelize.models);
-SharePostingan.associate(sequelize.models);
-NotifikasiTransaksi.associate(sequelize.models);
-Toko.associate(sequelize.models);
+Post.associate(sequelize.models);
+Comment.associate(sequelize.models);
+PostLike.associate(sequelize.models);
+PostShare.associate(sequelize.models);
+OrderNotification.associate(sequelize.models);
+Store.associate(sequelize.models);
 ShoppingCart.associate(sequelize.models);
+
+// Rest of file
 
 const models = {
   User,
-  Kategori,
-  Produk,
-  Transaksi,
-  DetailTransaksi,
+  Category,
+  Product,
+  Order,
+  OrderDetail,
   Review,
-  Postingan,
-  Komentar,
-  LikePostingan,
-  SharePostingan,
-  NotifikasiTransaksi,
-  Toko,
+  Post,
+  Comment,
+  PostLike,
+  PostShare,
+  OrderNotification,
+  Store,
   ShoppingCart
 };
 
