@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "6d123978-7e2e-4c29-9e49-a1f9a892b37c",
+		"_postman_id": "dc25c2dd-2807-4703-9711-d9d97589eaf0",
 		"name": "Pet Commerce",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24968335"
 	},
 	"item": [
 		{
