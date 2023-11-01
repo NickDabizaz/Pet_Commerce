@@ -1,4 +1,5 @@
 const models = require('../models');
+const { Post } = require("../models");
 
 const viewAllUsers = async (req, res) => {
 
@@ -15,6 +16,23 @@ const viewAllUsers = async (req, res) => {
     res.status(500).send("Error getting users");
   }
 
+};
+
+const deleteUserPost = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const post = await Post.findByPk(id);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    await post.destroy();
+
+    res.status(200).json({ message: "Post deleted" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 const deleteUser = async (req, res) => {
@@ -45,5 +63,6 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   viewAllUsers,
+  deleteUserPost,
   deleteUser
 };
