@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true
       },
       title: DataTypes.STRING(255),
-      image: DataTypes.STRING(255)
+      image: DataTypes.STRING(255),
+      user_id : DataTypes.INTEGER
     },
     {
       paranoid: true  
@@ -14,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
   
     Post.associate = (models) => {
       Post.belongsTo(models.User, { foreignKey: 'user_id' });
-      Post.belongsTo(models.Store, { foreignKey: 'store_id' });
       Post.hasMany(models.Comment, { foreignKey: 'post_id' });
       Post.hasMany(models.PostLike, { foreignKey: 'post_id' });
       Post.hasMany(models.PostShare, { foreignKey: 'post_id' });

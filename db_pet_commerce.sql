@@ -109,7 +109,6 @@ CREATE TABLE `posts` (
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL,      
   `user_id` int(11) DEFAULT NULL,
-  `store_id` int(11) DEFAULT NULL   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -280,7 +279,6 @@ ALTER TABLE `order_notifications`
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`post_id`),
   ADD KEY `user_id` (`user_id`),
-  ADD KEY `store_id` (`store_id`);
   
 --  
 -- Indexes for table `products`
@@ -370,7 +368,6 @@ ALTER TABLE `order_notifications`
 --
 ALTER TABLE `posts`
   ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `posts_ibfk_2` FOREIGN KEY (`store_id`) REFERENCES `stores` (`store_id`) ON DELETE SET NULL ON UPDATE CASCADE;
   
 --
 -- Constraints for table `products` 

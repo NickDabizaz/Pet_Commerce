@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
   
     Store.associate = (models) => {
       Store.belongsTo(models.User, { foreignKey: 'user_id' });
-      Store.hasMany(models.Post, { foreignKey: 'store_id' });
       Store.hasMany(models.Product, { foreignKey: 'store_id' });
     };
   
