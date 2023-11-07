@@ -26,6 +26,9 @@ SET time_zone = "+00:00";
 --
 -- Struktur dari tabel `categories`
 --
+DROP DATABASE IF EXISTS db_pet_commerce;
+CREATE DATABASE db_pet_commerce;
+USE db_pet_commerce;
 
 CREATE TABLE `categories` (
   `category_id` int(11) NOT NULL,
