@@ -54,7 +54,16 @@ const getAllPosts = async (req, res) => {
       }
 
       console.log({temp2});
-      tempArrayLengkap.push(temp2)
+      if(tempArrayLengkap.length > 0){
+        const check = tempArrayLengkap.filter((item) => item.post_id === temp2.post_id)
+        console.log({check});
+        if(check.length == 0 ){
+          tempArrayLengkap.push(temp2)
+        }
+      }
+      if(tempArrayLengkap.length == 0){
+        tempArrayLengkap.push(temp2)
+      }
 
       console.log({ tempArrayLengkap });
 
