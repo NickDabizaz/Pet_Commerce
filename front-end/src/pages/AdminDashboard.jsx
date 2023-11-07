@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { MainLayout } from "../Components";
+import welcome from "../assets/welcome.png"
 
 function AdminDashboard() {
   const [curPage, setCurPage] = useState("home");
@@ -41,39 +42,38 @@ function AdminDashboard() {
   return (
     <>
       <MainLayout />
-      <div>
-        <h2>Admin Dashboard</h2>
+      <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>
         {loading && <p>Loading...</p>}
         {message && <p>{message}</p>}
         <button
           onClick={() => setCurPage("home")}
-          className="border border-dark"
+          style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}
         >
           Home
         </button>{" "}
         <button
           onClick={() => setCurPage("manageUser")}
-          className="border border-dark"
+          style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}
         >
-          manage users
+          Users Management
         </button>{" "}
         <button
           onClick={() => setCurPage("manageCommunity")}
-          className="border border-dark"
+          style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}
         >
-          manage community
+          Community Management
         </button>{" "}
         <button
           onClick={() => setCurPage("manageFAQ")}
-          className="border border-dark"
+          style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}
         >
-          manage faq
+          FAQ Management
         </button>
-        {curPage == "home" && home()}
-        {curPage == "manageUser" && manageUser(users)}
-        {curPage == "manageCommunity" && manageCommunity()}
-        {curPage == "manageFAQ" && manageFAQ()}
       </div>
+      {curPage == "home" && home()}
+      {curPage == "manageUser" && manageUser(users)}
+      {curPage == "manageCommunity" && manageCommunity()}
+      {curPage == "manageFAQ" && manageFAQ()}
     </>
   );
 }
@@ -81,7 +81,26 @@ function AdminDashboard() {
 function home() {
   return (
     <>
-      <div>Sawadikap min!</div>
+      <div className="container-fluid" style={{ backgroundColor: "#F3F0F0", height: "100vh" }}>
+        <img src={welcome} style={{ display: "block", margin: "0 auto", width: "30%", paddingTop: "2%" }} />
+        <div className="container-fluid d-flex mt-3">
+          <div className="rounded" style={{ width: "100%", height: "40vh", backgroundColor: "#6CD4FF" }}>
+            <div className="rounded" style={{ backgroundColor: "white", display: "block", margin: "0 auto", width: "90%", height: "86%", marginTop: "4.5%" }}>
+              a
+            </div>
+          </div>
+          <div className="rounded ms-4 me-4" style={{ width: "100%", height: "40vh", backgroundColor: "#6CD4FF" }}>
+            <div className="rounded" style={{ backgroundColor: "white", display: "block", margin: "0 auto", width: "90%", height: "86%", marginTop: "4.5%" }}>
+              a
+            </div>
+          </div>
+          <div className="rounded pe-4" style={{ width: "100%", height: "40vh", backgroundColor: "#6CD4FF" }}>
+            <div className="rounded" style={{ backgroundColor: "white", display: "block", margin: "0 auto", width: "90%", height: "86%", marginTop: "4.5%" }}>
+              a
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
