@@ -34,6 +34,7 @@ export function MainLayout() {
           width: "100%",
           position: "fixed",
           fontSize: "0.875 rem",
+          zIndex: 9999,
         }}
       >
         <ul style={{ display: "flex" }}>
