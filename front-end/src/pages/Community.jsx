@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import dogo from "../assets/dogo.jpg";
+import { MainLayout } from "../Components";
 
 function Community() {
   const [curPage, setCurPage] = useState("browse");
@@ -30,6 +31,7 @@ function Community() {
 function browse(setCurPage, response, setIdPost) {
   return (
     <>
+      <MainLayout />
       <div>
         <div
           className="row text-center bg-warning m-auto"

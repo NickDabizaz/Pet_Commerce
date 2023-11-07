@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { MainLayout } from "../Components";
 function AdminPostDashboard() {
 //   const [response, setResponse] = useState([
 //     {
@@ -84,6 +84,7 @@ function AdminPostDashboard() {
 
   return (
     <>
+      <MainLayout />
       <div className="flex flex-col items-center">
         {response.map((post) => (
           <div

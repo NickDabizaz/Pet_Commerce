@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import { MainLayout } from '../Components';
 
 function CreateStore() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -26,6 +27,8 @@ function CreateStore() {
   };
 
   return (
+    <>
+    <MainLayout />
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow-lg">
       <h1 className="text-2xl font-bold mb-4">Create Store</h1>
       {successMessage && <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-2 mb-4 rounded">{successMessage}</div>}
@@ -61,6 +64,7 @@ function CreateStore() {
         <button type="submit" className="bg-blue-500 text-white p-2 rounded">Create Store</button>
       </form>
     </div>
+    </>
   );
 }
 

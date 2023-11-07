@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { MainLayout } from "../Components";
 
 function AdminDashboard() {
   const [curPage, setCurPage] = useState("home");
@@ -39,6 +40,7 @@ function AdminDashboard() {
 
   return (
     <>
+      <MainLayout />
       <div>
         <h2>Admin Dashboard</h2>
         {loading && <p>Loading...</p>}

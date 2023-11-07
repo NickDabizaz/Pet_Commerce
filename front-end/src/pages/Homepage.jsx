@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { MainLayout } from '../Components';
+MainLayout
 
 function HomePage() {
   const [products, setProducts] = useState([]);
@@ -15,6 +17,8 @@ function HomePage() {
   }, []);
 
   return (
+    <>
+    <MainLayout />
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">List of Products</h1>
       <div className="grid grid-cols-3 gap-4">
@@ -30,6 +34,7 @@ function HomePage() {
         ))}
       </div>
     </div>
+    </>
   );
 }
 

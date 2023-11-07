@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { MainLayout } from '../Components';
 
 function ListProduct() {
   const [products, setProducts] = useState([]);
@@ -15,6 +16,8 @@ function ListProduct() {
   }, []);
 
   return (
+    <>
+    <MainLayout />
     <div>
       <h1>List of Products</h1>
       <div className="product-list">
@@ -32,6 +35,7 @@ function ListProduct() {
         ))}
       </div>
     </div>
+    </>
   );
 }
 
