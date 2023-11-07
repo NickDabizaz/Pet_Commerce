@@ -45,7 +45,7 @@ const Login = () => {
                   type="email"
                   {...register("email", { required: "Email is required" })}
                 />
-                {errors.email && <p>{errors.email.message}</p>}
+                {errors.email && <p className="text-center" style={{marginTop: "5%", color: "red"}}>{errors.email.message}</p>}
               </div>
               <div>
                 <label style={{marginTop: "7%", marginLeft: "3%", fontWeight: 700, marginBottom: "1%"}}>Password</label>
@@ -53,7 +53,7 @@ const Login = () => {
                   type="password"
                   {...register("password", { required: "Password is required" })}
                 />
-                {errors.password && <p>{errors.password.message}</p>}
+                {errors.password && <p className="text-center" style={{marginTop: "5%", color: "red"}}>{errors.password.message}</p>}
               </div>
               <button type="submit" 
               className="btn btn-info" 
@@ -61,9 +61,9 @@ const Login = () => {
               >Login</button>
             </form>
             <p className="text-center" style={{marginTop: "8%"}}>
-              Don't Have Any Account? <Link to="/register"><b style={{color: "#D39C39"}}>Register Here</b></Link>
+              Don&#39;t Have Any Account? <Link to="/register"><b style={{color: "#D39C39"}}>Register Here</b></Link>
             </p>
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+            {errorMessage && <p className="text-center" style={{marginTop: "5%", color: "red"}}>{errorMessage}</p>}
           </div>
         </div>
       </div>

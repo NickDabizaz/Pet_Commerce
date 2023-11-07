@@ -26,73 +26,77 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            {...register('name', { required: 'Name is required' })}
-          />
-          {errors.name && <p>{errors.name.message}</p>}
-        </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            {...register('email', { required: 'Email is required' })}
-          />
-          {errors.email && <p>{errors.email.message}</p>}
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            {...register('password', { required: 'Password is required' })}
-          />
-          {errors.password && <p>{errors.password.message}</p>}
-        </div>
-        <div>
-          <label>Address:</label>
-          <input
-            type="text"
-            {...register('address', { required: 'Address is required' })}
-          />
-          {errors.address && <p>{errors.address.message}</p>}
-        </div>
-        <div>
-          <label>Phone Number:</label>
-          <input
-            type="text"
-            {...register('phone_number', { required: 'Phone Number is required' })}
-          />
-          {errors.phone_number && <p>{errors.phone_number.message}</p>}
-        </div>
-        <div>
-          <label>Role:</label>
+    <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>
+      <div className="pt-20 pb-20">
+        <div className="container-fluid rounded d-flex shadow" style={{ width: "90%", height: "80vh", backgroundColor: "#6CD4FF", overflow: "hidden"}}>
+        <h2>Register</h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div>
+            <label>Name:</label>
             <input
-              type="radio"
-              {...register('role', { required: 'Role is required' })}
-              value="seller"
+              type="text"
+              {...register('name', { required: 'Name is required' })}
             />
-            <label>Seller</label>
+            {errors.name && <p>{errors.name.message}</p>}
           </div>
           <div>
+            <label>Email:</label>
             <input
-              type="radio"
-              {...register('role', { required: 'Role is required' })}
-              value="customer"
+              type="email"
+              {...register('email', { required: 'Email is required' })}
             />
-            <label>Customer</label>
+            {errors.email && <p>{errors.email.message}</p>}
           </div>
-          {errors.role && <p>{errors.role.message}</p>}
-        </div>
-        <button type="submit">Register</button>
-      </form>
-      <p>Sudah punya akun? <Link to="/login">Login sekarang</Link></p>
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+          <div>
+            <label>Password:</label>
+            <input
+              type="password"
+              {...register('password', { required: 'Password is required' })}
+            />
+            {errors.password && <p>{errors.password.message}</p>}
+          </div>
+          <div>
+            <label>Address:</label>
+            <input
+              type="text"
+              {...register('address', { required: 'Address is required' })}
+            />
+            {errors.address && <p>{errors.address.message}</p>}
+          </div>
+          <div>
+            <label>Phone Number:</label>
+            <input
+              type="text"
+              {...register('phone_number', { required: 'Phone Number is required' })}
+            />
+            {errors.phone_number && <p>{errors.phone_number.message}</p>}
+          </div>
+          <div>
+            <label>Role:</label>
+            <div>
+              <input
+                type="radio"
+                {...register('role', { required: 'Role is required' })}
+                value="seller"
+              />
+              <label>Seller</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                {...register('role', { required: 'Role is required' })}
+                value="customer"
+              />
+              <label>Customer</label>
+            </div>
+            {errors.role && <p>{errors.role.message}</p>}
+          </div>
+          <button type="submit">Register</button>
+        </form>
+        <p>Sudah punya akun? <Link to="/login">Login sekarang</Link></p>
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      </div>
+      </div>
     </div>
   );
 };
