@@ -26,31 +26,40 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            {...register("email", { required: "Email is required" })}
-          />
-          {errors.email && <p>{errors.email.message}</p>}
+    <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>
+      <div className="pt-12 pb-12">
+        <div className="container-fluid rounded d-flex" style={{ width: "95%", height: "80vh", backgroundColor: "#FFFFFF" }}>
+          <div className="container-fluid" style={{ width: "100%", height: "80vh", backgroundColor: ""}}>
+            
+          </div>
+          <div className="container-fluid" style={{ width: "100%", height: "80vh", backgroundColor: "FFFFFF"}}>
+            <h2>Login</h2>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div>
+                <label>Email:</label>
+                <input
+                  type="email"
+                  {...register("email", { required: "Email is required" })}
+                />
+                {errors.email && <p>{errors.email.message}</p>}
+              </div>
+              <div>
+                <label>Password:</label>
+                <input
+                  type="password"
+                  {...register("password", { required: "Password is required" })}
+                />
+                {errors.password && <p>{errors.password.message}</p>}
+              </div>
+              <button type="submit">Login</button>
+            </form>
+            <p>
+              Belum punya akun? <Link to="/register">Daftar di sini</Link>
+            </p>
+            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+          </div>
         </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            {...register("password", { required: "Password is required" })}
-          />
-          {errors.password && <p>{errors.password.message}</p>}
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      <p>
-        Belum punya akun? <Link to="/register">Daftar di sini</Link>
-      </p>
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      </div>
     </div>
   );
 };
