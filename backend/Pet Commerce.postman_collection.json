@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"password\",\n    \"address\": \"123 Main St\",\n    \"phone_number\": \"1234567890\",\n    \"role\": \"seller\"\n}",
+							"raw": "{\n    \"name\": \"John Doe 2\",\n    \"email\": \"john@example.com\",\n    \"password\": \"password\",\n    \"address\": \"123 Main St\",\n    \"phone_number\": \"1234567890\",\n    \"role\": \"seller\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -136,7 +136,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user_id\": 1,\n    \"store_id\": 1,\n    \"product_name\": \"Product 1\",\n    \"price\": 100,\n    \"rating\" : 0,\n    \"quantity\": 10,\n    \"category_id\": 1\n}",
+							"raw": "{\n    \"user_id\": 1,\n    \"store_id\": 1,\n    \"product_name\": \"Product 3\",\n    \"price\": 100,\n    \"rating\" : 0,\n    \"quantity\": 10,\n    \"category_id\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -250,6 +250,14 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GetAllProducts",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			]
 		},
@@ -282,7 +290,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/admin/post/2",
+							"raw": "http://localhost:3000/admin/post/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -291,7 +299,7 @@
 							"path": [
 								"admin",
 								"post",
-								"2"
+								"5"
 							]
 						}
 					},
@@ -366,6 +374,26 @@
 							"path": [
 								"post",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllPost",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/post/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"post",
+								""
 							]
 						}
 					},
