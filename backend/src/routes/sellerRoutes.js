@@ -17,4 +17,6 @@ router.delete('/delete-product/:product_id', sellerController.deleteProduct);
 // Route for seller to view all products in store
 router.get('/view-products/:user_id', sellerController.viewProducts);
 
+router.get('/get-all-products/', sellerController.getAllProducts);
+
 module.exports = router;
