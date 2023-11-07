@@ -23,34 +23,33 @@ export function ErrorElement() {
 
 export function MainLayout() {
   return (
-    <div style={{ display: "flex" }}>
-      <div style={{ flex: 1 }}>
-        S
-        <ul>
-          <li>
+    <>
+      <div>
+        <ul style={{ display: "flex" }}>
+          <li style={{ flex: 1 }}>
             <NavLink to="/">Home</NavLink>
           </li>
-          <li>
+          <li style={{ flex: 1 }}>
             <NavLink to="/about">About</NavLink>
           </li>
-          <li>
+          <li style={{ flex: 1 }}>
             <NavLink to="/contact">Contact</NavLink>
           </li>
-          <li>
+          <li style={{ flex: 1 }}>
             <NavLink to="/nested">Nested</NavLink>
           </li>
-          <li>
+          <li style={{ flex: 1 }}>
             <NavLink to="/nested/page1">Nested 1</NavLink>
           </li>
-          <li>
+          <li style={{ flex: 1 }}>
             <NavLink to="/nested/page2">Nested 2</NavLink>
           </li>
         </ul>
       </div>
-      <div style={{ flex: 5 }}>
+      <div>
         <Outlet />
       </div>
-    </div>
+    </>
   );
 }
 
