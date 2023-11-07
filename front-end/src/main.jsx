@@ -6,6 +6,7 @@ import Homepage from "./pages/Homepage.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
+import Community from "./pages/Community.jsx";
 
 const routes = [
   {
@@ -23,6 +24,10 @@ const routes = [
   {
     path: "/admin",
     element: <AdminDashboard />
+  },
+  {
+    path: "/community",
+    element: <Community />
   }
 ];
 

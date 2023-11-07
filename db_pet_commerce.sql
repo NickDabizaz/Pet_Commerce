@@ -21,6 +21,9 @@ SET time_zone = "+00:00";
 -- Database: `db_pet_commerce`
 --
 
+CREATE DATABASE db_pet_commerce;
+use db_pet_commerce
+
 -- --------------------------------------------------------
 
 --
