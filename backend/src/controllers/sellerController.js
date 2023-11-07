@@ -199,12 +199,44 @@ const viewProducts = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
   try {
-    const products = await models.Product.findAll();
-    res.status(200).json(products);
+    const products = await models.Product.findAll({
+      include: [
+        {
+          model: models.Category,
+          attributes: ['category_name'],
+        },
+        {
+          model: models.Store,
+          attributes: ['store_name'],
+        },
+      ],
+      attributes: {
+        exclude: ['category_id', 'store_id'], // Exclude category_id and store_id
+      },
+    });
+
+    // Manipulasi hasil untuk memformat sesuai keinginan Anda
+    const formattedProducts = products.map(product => {
+      return {
+        product_id: product.product_id,
+        product_name: product.product_name,
+        price: product.price,
+        rating: product.rating,
+        category_name: product.Category.category_name,
+        store_name: product.Store.store_name,
+        quantity: product.quantity,
+        createdAt: product.createdAt,
+        updatedAt: product.updatedAt,
+        deletedAt: product.deletedAt,
+      };
+    });
+
+    res.status(200).json(formattedProducts);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 }
+
 
 module.exports = {
   createStore,
