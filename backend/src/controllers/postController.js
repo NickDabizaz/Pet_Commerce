@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const { Post, User, Comment, PostLike, PostShare } = require("../models");
 
 const addPost = async (req, res) => {
@@ -15,32 +16,52 @@ const addPost = async (req, res) => {
   }
 };
 
+let tempArrayLengkap = []
 const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.findAll();
-    const tempArray = []
-    const tempArrayLengkap = []
     posts.map(async (item) => {
       const user = await User.findOne({ where: { user_id: item.user_id } })
       const like = await PostLike.count({
         where: {
-          post_id : item.post_id
+          post_id: item.post_id
         }
       });
       const share = await PostShare.count({
         where: {
-          post_id : item.post_id
+          post_id: item.post_id
         }
       });
-      const temp = {
+
+      let tempArray = []
+      const comment = await Comment.findAll({ where: { post_id: item.post_id } })
+      const tempComment = comment.map(async (item) => {
+        const tempUser = await User.findOne({ where: { user_id: item.user_id } })
+        let temp = {
+          nama_pengomen: tempUser.name,
+          komentar: item.comment_text,
+          waktu_komentar: item.comment_time,
+        }
+        tempArray.push(temp)
+      })
+
+      let temp2 = {
         post_id: item.post_id,
         nama_pengepost: user.name,
         jumlah_like: like,
         jumlah_share: share,
-        
+        comment: tempArray
       }
+
+      console.log({temp2});
+      tempArrayLengkap.push(temp2)
+
+      console.log({ tempArrayLengkap });
+
     })
-    res.status(200).json(posts);
+
+    res.status(200).json(tempArrayLengkap);
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
