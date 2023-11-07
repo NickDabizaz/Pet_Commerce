@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function AdminDashboard() {
+  const [curPage, setCurPage] = useState("home");
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState(null);
@@ -37,11 +38,56 @@ function AdminDashboard() {
   };
 
   return (
-    <div>
-      <h2>Admin Dashboard</h2>
-      {loading && <p>Loading...</p>}
-      {message && <p>{message}</p>}
-      <table>
+    <>
+      <div>
+        <h2>Admin Dashboard</h2>
+        {loading && <p>Loading...</p>}
+        {message && <p>{message}</p>}
+        <button
+          onClick={() => setCurPage("home")}
+          className="border border-dark"
+        >
+          Home
+        </button>{" "}
+        <button
+          onClick={() => setCurPage("manageUser")}
+          className="border border-dark"
+        >
+          manage users
+        </button>{" "}
+        <button
+          onClick={() => setCurPage("manageCommunity")}
+          className="border border-dark"
+        >
+          manage community
+        </button>{" "}
+        <button
+          onClick={() => setCurPage("manageFAQ")}
+          className="border border-dark"
+        >
+          manage faq
+        </button>
+        {curPage == "home" && home()}
+        {curPage == "manageUser" && manageUser(users)}
+        {curPage == "manageCommunity" && manageCommunity()}
+        {curPage == "manageFAQ" && manageFAQ()}
+      </div>
+    </>
+  );
+}
+
+function home() {
+  return (
+    <>
+      <div>Sawadikap min!</div>
+    </>
+  );
+}
+
+function manageUser(users) {
+  return (
+    <>
+      <table className="table">
         <thead>
           <tr>
             <th>ID</th>
@@ -65,7 +111,23 @@ function AdminDashboard() {
           ))}
         </tbody>
       </table>
-    </div>
+    </>
+  );
+}
+
+function manageCommunity() {
+  return (
+    <>
+      <div>hai</div>
+    </>
+  );
+}
+
+function manageFAQ() {
+  return (
+    <>
+      <div>hai</div>
+    </>
   );
 }
 

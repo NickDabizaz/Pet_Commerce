@@ -1,4 +1,7 @@
 import { Outlet, NavLink } from "react-router-dom";
+import logo from "./assets/logo.png";
+import searchLogo from "./assets/search.png";
+import cartLogo from "./assets/cart.png";
 
 export function HomePage() {
   return <h1>Home</h1>;
@@ -24,47 +27,59 @@ export function ErrorElement() {
 export function MainLayout() {
   return (
     <>
-      <div>
+      <div
+        className="align-middle"
+        style={{
+          backgroundColor: "#6CD4FF",
+          width: "100%",
+          position: "fixed",
+          fontSize: "0.875 rem",
+        }}
+      >
         <ul style={{ display: "flex" }}>
           <li style={{ flex: 1 }}>
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/">
+              <img src={logo} style={{ width: "5rem" }} />
+            </NavLink>
           </li>
+          <li
+            className="align-bottom"
+            style={{ flex: 5, position: "relative" }}
+          >
+            <div style={{ display: "flex" }}>
+              <input
+                className="form-control me-3"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                style={{
+                  fontFamily: "Literata",
+                  fontSize: "12pt",
+                  height: "2.5rem",
+                }}
+              ></input>
+              <button
+                className="btn btn-outline-success"
+                type="submit"
+                style={{ backgroundColor: "#1286CE", height: "2.5rem" }}
+              >
+                <img
+                  src={searchLogo}
+                  style={{ width: "30px", height: "30px", color: "white" }}
+                />
+              </button>
+            </div>
+          </li>
+          <li style={{ flex: 5 }}></li>
           <li style={{ flex: 1 }}>
-            <NavLink to="/about">About</NavLink>
+            {<img src={cartLogo} width={"40px"}></img>}
           </li>
-          <li style={{ flex: 1 }}>
-            <NavLink to="/contact">Contact</NavLink>
-          </li>
-          <li style={{ flex: 1 }}>
-            <NavLink to="/nested">Nested</NavLink>
-          </li>
-          <li style={{ flex: 1 }}>
-            <NavLink to="/nested/page1">Nested 1</NavLink>
-          </li>
-          <li style={{ flex: 1 }}>
-            <NavLink to="/nested/page2">Nested 2</NavLink>
-          </li>
+          <li style={{ flex: 1 }}>GAMBAR</li>
         </ul>
       </div>
-      <div>
+      <div style={{ top: "100px", position: "relative" }}>
         <Outlet />
       </div>
     </>
   );
-}
-
-export function NestedPage() {
-  return <h1>Nested</h1>;
-}
-
-export function NestedPage0() {
-  return <h1>Nested default page</h1>;
-}
-
-export function NestedPage1() {
-  return <h1>Nested 1</h1>;
-}
-
-export function NestedPage2() {
-  return <h1>Nested 2</h1>;
 }
