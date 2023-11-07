@@ -5,7 +5,13 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true
       },
-      link: DataTypes.STRING(255)
+      link: DataTypes.STRING(255),
+      user_id: {
+        type: DataTypes.INTEGER,
+      },
+      post_id:{
+        type: DataTypes.INTEGER,
+      },
     },
     {
       paranoid: true

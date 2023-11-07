@@ -4,7 +4,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
-      }
+      },
+      user_id: {
+        type: DataTypes.INTEGER,
+      },
+      post_id:{
+        type: DataTypes.INTEGER,
+      },
     },
     {
       paranoid: true

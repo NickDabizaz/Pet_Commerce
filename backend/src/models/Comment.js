@@ -6,7 +6,13 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true
       },
       comment_text: DataTypes.TEXT,
-      comment_time: DataTypes.DATE
+      comment_time: DataTypes.DATE,
+      user_id: {
+        type: DataTypes.INTEGER,
+      },
+      post_id:{
+        type: DataTypes.INTEGER,
+      },
     },
     {
       paranoid: true
