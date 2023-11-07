@@ -17,7 +17,7 @@ import CreateStore from "./pages/CreateStore.jsx";
 
 const router = createBrowserRouter([
   {
-    // element: <MainLayout />,
+    element: <MainLayout />,
     errorElement: <errorElement />,
     children: [
       { path: "/", element: <Homepage /> },

@@ -17,7 +17,7 @@ export function ContactUsPage() {
 
 export function AlwaysErrorPage() {
   throw new Error();
-  return <h1>This will never show</h1>;
+  // return <h1>This will never show</h1>;
 }
 
 export function ErrorElement() {
@@ -28,55 +28,80 @@ export function MainLayout() {
   return (
     <>
       <div
-        className="align-middle"
-        style={{
-          backgroundColor: "#6CD4FF",
-          width: "100%",
-          position: "fixed",
-          fontSize: "0.875 rem",
-          zIndex: 9999,
-        }}
+        className="container-fluid"
+        style={{ display: "flex", backgroundColor: "#6CD4FF" }}
       >
-        <ul style={{ display: "flex" }}>
-          <li style={{ flex: 1 }}>
-            <NavLink to="/">
-              <img src={logo} style={{ width: "5rem" }} />
+        <NavLink to="/">
+          <img src={logo} style={{ width: "100px", height: "100px" }} />
+        </NavLink>
+        <nav
+          className="navbar p-3"
+          style={{ backgroundColor: "#6CD4FF", width: "100%" }}
+        >
+          <div style={{ display: "flex", flex: 4 }}>
+            <input
+              className="form-control me-3"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+              style={{
+                fontFamily: "Literata",
+                fontSize: "12pt",
+                height: "2.5rem",
+              }}
+            ></input>
+            <button
+              className="btn btn-outline-success"
+              type="submit"
+              style={{ backgroundColor: "#1286CE", height: "2.5rem" }}
+            >
+              <img
+                src={searchLogo}
+                style={{ width: "30px", height: "30px", color: "white" }}
+              />
+            </button>
+          </div>
+
+          <div style={{ flex: 2 }}></div>
+
+          <div>
+            <NavLink to="/register">
+            <button
+              className="p-1 px-4 rounded me-3"
+              style={{
+                border: "1px solid white",
+                color: "white",
+                backgroundColor: "transparent",
+                height: "2.5rem",
+                fontFamily: "Literata",
+                fontWeight: 600,
+                fontSize: "14pt",
+              }}
+            >
+              Register
+            </button>
             </NavLink>
-          </li>
-          <li
-            className="align-bottom"
-            style={{ flex: 5, position: "relative" }}
-          >
-            <div style={{ display: "flex" }}>
-              <input
-                className="form-control me-3"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-                style={{
-                  fontFamily: "Literata",
-                  fontSize: "12pt",
-                  height: "2.5rem",
-                }}
-              ></input>
-              <button
-                className="btn btn-outline-success"
-                type="submit"
-                style={{ backgroundColor: "#1286CE", height: "2.5rem" }}
-              >
-                <img
-                  src={searchLogo}
-                  style={{ width: "30px", height: "30px", color: "white" }}
-                />
-              </button>
-            </div>
-          </li>
-          <li style={{ flex: 5 }}></li>
-          <li style={{ flex: 1 }}>
-            {<img src={cartLogo} width={"40px"}></img>}
-          </li>
-          <li style={{ flex: 1 }}>GAMBAR</li>
-        </ul>
+          </div>
+
+          <div>
+            <NavLink to="/login">
+            <button
+              className="p-1 px-4 rounded"
+              style={{
+                border: "1px solid white",
+                color: "black",
+                backgroundColor: "white",
+                height: "2.5rem",
+                fontFamily: "Literata",
+                fontWeight: 600,
+                fontSize: "14pt",
+              }}
+            >
+              Login
+            </button>
+            </NavLink>
+          </div>
+        </nav>
       </div>
       <div style={{ top: "100px", position: "relative" }}>
         <Outlet />
