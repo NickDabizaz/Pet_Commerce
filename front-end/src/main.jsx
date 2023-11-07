@@ -13,6 +13,7 @@ import {
   ErrorElement,
   MainLayout,
 } from "./Components.jsx";
+import CreateStore from "./pages/CreateStore.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: "/register", element: <Register /> },
       { path: "/admin", element: <AdminDashboard /> },
       { path: "/community", element: <Community /> },
+      { path: "/create-store", element: <CreateStore /> },
       // {
       //   path: "/nested",
       //   // element: <NestedPage />,

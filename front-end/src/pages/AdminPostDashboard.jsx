@@ -1,65 +1,65 @@
 import { useState } from "react";
 
 function AdminPostDashboard() {
-  const [response, setResponse] = useState([
-    {
-      id_post: 1,
-      nama_ngepost: "John Doe",
-      title_post: "Sample Post 1",
-      jumlah_like: 10,
-      jumlah_share: 5,
-      comments: [
-        {
-          nama_yang_komen: "Jane Doe",
-          comment_nya_apa: "Nice post!",
-          tanggalnya_berapa: "2023-11-07",
-        },
-        {
-          nama_yang_komen: "Bob Smith",
-          comment_nya_apa: "Great content!",
-          tanggalnya_berapa: "2023-11-08",
-        },
-      ],
-    },
-    {
-      id_post: 2,
-      nama_ngepost: "Jane Doe",
-      title_post: "Sample Post 2",
-      jumlah_like: 15,
-      jumlah_share: 8,
-      comments: [
-        {
-          nama_yang_komen: "John Doe",
-          comment_nya_apa: "Thanks!",
-          tanggalnya_berapa: "2023-11-09",
-        },
-      ],
-    },
-    {
-      id_post: 3,
-      nama_ngepost: "Bob Smith",
-      title_post: "Sample Post 3",
-      jumlah_like: 8,
-      jumlah_share: 3,
-      comments: [
-        {
-          nama_yang_komen: "Jane Doe",
-          comment_nya_apa: "Well done!",
-          tanggalnya_berapa: "2023-11-10",
-        },
-        {
-          nama_yang_komen: "John Doe",
-          comment_nya_apa: "Keep it up!",
-          tanggalnya_berapa: "2023-11-11",
-        },
-        {
-          nama_yang_komen: "Jane Doe",
-          comment_nya_apa: "I love this!",
-          tanggalnya_berapa: "2023-11-11",
-        },
-      ],
-    },
-  ]);
+//   const [response, setResponse] = useState([
+//     {
+//       id_post: 1,
+//       nama_ngepost: "John Doe",
+//       title_post: "Sample Post 1",
+//       jumlah_like: 10,
+//       jumlah_share: 5,
+//       comments: [
+//         {
+//           nama_yang_komen: "Jane Doe",
+//           comment_nya_apa: "Nice post!",
+//           tanggalnya_berapa: "2023-11-07",
+//         },
+//         {
+//           nama_yang_komen: "Bob Smith",
+//           comment_nya_apa: "Great content!",
+//           tanggalnya_berapa: "2023-11-08",
+//         },
+//       ],
+//     },
+//     {
+//       id_post: 2,
+//       nama_ngepost: "Jane Doe",
+//       title_post: "Sample Post 2",
+//       jumlah_like: 15,
+//       jumlah_share: 8,
+//       comments: [
+//         {
+//           nama_yang_komen: "John Doe",
+//           comment_nya_apa: "Thanks!",
+//           tanggalnya_berapa: "2023-11-09",
+//         },
+//       ],
+//     },
+//     {
+//       id_post: 3,
+//       nama_ngepost: "Bob Smith",
+//       title_post: "Sample Post 3",
+//       jumlah_like: 8,
+//       jumlah_share: 3,
+//       comments: [
+//         {
+//           nama_yang_komen: "Jane Doe",
+//           comment_nya_apa: "Well done!",
+//           tanggalnya_berapa: "2023-11-10",
+//         },
+//         {
+//           nama_yang_komen: "John Doe",
+//           comment_nya_apa: "Keep it up!",
+//           tanggalnya_berapa: "2023-11-11",
+//         },
+//         {
+//           nama_yang_komen: "Jane Doe",
+//           comment_nya_apa: "I love this!",
+//           tanggalnya_berapa: "2023-11-11",
+//         },
+//       ],
+//     },
+//   ]);
 
   const handleDeletePost = (postId) => {
     const updatedResponse = response.filter((post) => post.id_post !== postId);
