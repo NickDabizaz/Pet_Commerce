@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import Homepage from "./pages/Homepage.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import AdminDashboard from "./pages/AdminDashboard.jsx";
 
 const routes = [
   {
@@ -18,6 +19,10 @@ const routes = [
   {
     path: "/register",
     element: <Register />
+  },
+  {
+    path: "/admin",
+    element: <AdminDashboard />
   }
 ];
 
