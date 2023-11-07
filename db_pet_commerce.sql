@@ -1,165 +1,191 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Waktu pembuatan: 01 Nov 2023 pada 13.12
--- Versi server: 10.4.24-MariaDB
--- Versi PHP: 8.1.6
+/*
+SQLyog Community v13.2.0 (64 bit)
+MySQL - 10.4.22-MariaDB : Database - db_pet_commerce
+*********************************************************************
+*/
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+/*!40101 SET NAMES utf8 */;
 
+/*!40101 SET SQL_MODE=''*/;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`db_pet_commerce` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
---
--- Database: `db_pet_commerce`
---
+USE `db_pet_commerce`;
 
-CREATE DATABASE db_pet_commerce;
-use db_pet_commerce
+/*Table structure for table `categories` */
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `categories`
---
+DROP TABLE IF EXISTS `categories`;
 
 CREATE TABLE `categories` (
-  `category_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `deletedAt` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `deletedAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+/*Data for the table `categories` */
 
---
--- Struktur dari tabel `comments`
---
+insert  into `categories`(`category_id`,`category_name`,`createdAt`,`updatedAt`,`deletedAt`) values 
+(1,'Food','2023-10-31 21:46:14','2023-10-31 21:46:14',NULL),
+(2,'Toys','2023-10-31 21:46:14','2023-10-31 21:46:14',NULL),
+(3,'Snacks','2023-10-31 21:46:14','2023-10-31 21:46:14',NULL),
+(4,'Accessories','2023-10-31 21:46:14','2023-10-31 21:46:14',NULL),
+(5,'Pet Clothing','2023-10-31 21:46:14','2023-10-31 21:46:14',NULL),
+(6,'Medicine and Vitamins','2023-10-31 21:46:14','2023-10-31 21:46:14',NULL);
+
+/*Table structure for table `comments` */
+
+DROP TABLE IF EXISTS `comments`;
 
 CREATE TABLE `comments` (
-  `comment_id` int(11) NOT NULL,
+  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
   `comment_text` text DEFAULT NULL,
   `comment_time` datetime DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `post_id` int(11) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `post_id` int(11) DEFAULT NULL
+  PRIMARY KEY (`comment_id`),
+  KEY `user_id` (`user_id`),
+  KEY `post_id` (`post_id`),
+  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+/*Data for the table `comments` */
 
---
--- Struktur dari tabel `orderdetails`
---
+/*Table structure for table `orderdetails` */
+
+DROP TABLE IF EXISTS `orderdetails`;
 
 CREATE TABLE `orderdetails` (
-  `detail_id` int(11) NOT NULL,
+  `detail_id` int(11) NOT NULL AUTO_INCREMENT,
   `qty` int(11) DEFAULT NULL,
   `subtotal` int(11) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
-  `order_id` int(11) DEFAULT NULL
+  `order_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`detail_id`),
+  KEY `product_id` (`product_id`),
+  KEY `order_id` (`order_id`),
+  CONSTRAINT `orderdetails_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `orderdetails_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+/*Data for the table `orderdetails` */
 
---
--- Struktur dari tabel `ordernotifications`
---
+/*Table structure for table `ordernotifications` */
+
+DROP TABLE IF EXISTS `ordernotifications`;
 
 CREATE TABLE `ordernotifications` (
-  `notification_id` int(11) NOT NULL,
+  `notification_id` int(11) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
   `message` text DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`notification_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `ordernotifications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+/*Data for the table `ordernotifications` */
 
---
--- Struktur dari tabel `orders`
---
+/*Table structure for table `orders` */
+
+DROP TABLE IF EXISTS `orders`;
 
 CREATE TABLE `orders` (
-  `order_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_date` datetime DEFAULT NULL,
   `total_price` int(11) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`order_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+/*Data for the table `orders` */
 
---
--- Struktur dari tabel `postlikes`
---
+/*Table structure for table `postlikes` */
+
+DROP TABLE IF EXISTS `postlikes`;
 
 CREATE TABLE `postlikes` (
-  `like_id` int(11) NOT NULL,
+  `like_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `post_id` int(11) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `post_id` int(11) DEFAULT NULL
+  PRIMARY KEY (`like_id`),
+  KEY `user_id` (`user_id`),
+  KEY `post_id` (`post_id`),
+  CONSTRAINT `postlikes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `postlikes_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+/*Data for the table `postlikes` */
 
---
--- Struktur dari tabel `posts`
---
+/*Table structure for table `posts` */
+
+DROP TABLE IF EXISTS `posts`;
 
 CREATE TABLE `posts` (
-  `post_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `store_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`post_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+/*Data for the table `posts` */
 
---
--- Struktur dari tabel `postshares`
---
+/*Table structure for table `postshares` */
+
+DROP TABLE IF EXISTS `postshares`;
 
 CREATE TABLE `postshares` (
-  `share_id` int(11) NOT NULL,
+  `share_id` int(11) NOT NULL AUTO_INCREMENT,
   `link` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `post_id` int(11) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `post_id` int(11) DEFAULT NULL
+  PRIMARY KEY (`share_id`),
+  KEY `user_id` (`user_id`),
+  KEY `post_id` (`post_id`),
+  CONSTRAINT `postshares_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `postshares_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+/*Data for the table `postshares` */
 
---
--- Struktur dari tabel `products`
---
+/*Table structure for table `products` */
+
+DROP TABLE IF EXISTS `products`;
 
 CREATE TABLE `products` (
-  `product_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_name` varchar(255) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
   `rating` float DEFAULT NULL,
@@ -168,66 +194,99 @@ CREATE TABLE `products` (
   `quantity` int(11) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `deletedAt` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `deletedAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`product_id`),
+  KEY `category_id` (`category_id`),
+  KEY `store_id` (`store_id`),
+  CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `products_ibfk_2` FOREIGN KEY (`store_id`) REFERENCES `stores` (`store_id`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+/*Data for the table `products` */
 
---
--- Struktur dari tabel `reviews`
---
+insert  into `products`(`product_id`,`product_name`,`price`,`rating`,`category_id`,`store_id`,`quantity`,`createdAt`,`updatedAt`,`deletedAt`) values 
+(41,'Product 1',50,4,2,1,5,'2023-11-07 21:50:44','2023-11-07 21:50:44',NULL),
+(42,'Product 2',75,3,1,1,8,'2023-11-07 21:50:44','2023-11-07 21:50:44',NULL),
+(43,'Product 3',100,5,3,1,3,'2023-11-07 21:50:44','2023-11-07 21:50:44',NULL),
+(44,'Product 4',120,4,2,1,6,'2023-11-07 21:50:44','2023-11-07 21:50:44',NULL),
+(45,'Product 5',90,2,1,1,7,'2023-11-07 21:50:44','2023-11-07 21:50:44',NULL),
+(46,'Product 6',60,5,3,1,10,'2023-11-07 21:50:44','2023-11-07 21:50:44',NULL),
+(47,'Product 7',80,3,1,1,4,'2023-11-07 21:50:44','2023-11-07 21:50:44',NULL),
+(48,'Product 8',95,4,2,1,9,'2023-11-07 21:50:44','2023-11-07 21:50:44',NULL),
+(49,'Product 9',110,2,3,1,5,'2023-11-07 21:50:44','2023-11-07 21:50:44',NULL),
+(50,'Product 10',70,5,2,1,8,'2023-11-07 21:50:44','2023-11-07 21:50:44',NULL);
+
+/*Table structure for table `reviews` */
+
+DROP TABLE IF EXISTS `reviews`;
 
 CREATE TABLE `reviews` (
-  `review_id` int(11) NOT NULL,
+  `review_id` int(11) NOT NULL AUTO_INCREMENT,
   `rating` float DEFAULT NULL,
   `comment` text DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `product_id` int(11) DEFAULT NULL
+  `product_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`review_id`),
+  KEY `user_id` (`user_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+/*Data for the table `reviews` */
 
---
--- Struktur dari tabel `shoppingcarts`
---
+/*Table structure for table `shoppingcarts` */
+
+DROP TABLE IF EXISTS `shoppingcarts`;
 
 CREATE TABLE `shoppingcarts` (
-  `cart_id` int(11) NOT NULL,
+  `cart_id` int(11) NOT NULL AUTO_INCREMENT,
   `qty` int(11) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `product_id` int(11) DEFAULT NULL
+  `product_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`cart_id`),
+  KEY `user_id` (`user_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `shoppingcarts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `shoppingcarts_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+/*Data for the table `shoppingcarts` */
 
---
--- Struktur dari tabel `stores`
---
+/*Table structure for table `stores` */
+
+DROP TABLE IF EXISTS `stores`;
 
 CREATE TABLE `stores` (
-  `store_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_name` varchar(255) DEFAULT NULL,
   `store_description` text DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`store_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `stores_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+/*Data for the table `stores` */
 
---
--- Struktur dari tabel `users`
---
+insert  into `stores`(`store_id`,`store_name`,`store_description`,`createdAt`,`updatedAt`,`deletedAt`,`user_id`) values 
+(1,'My Store','This is my store','2023-11-07 14:50:41','2023-11-07 14:50:41',NULL,1);
+
+/*Table structure for table `users` */
+
+DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
@@ -237,271 +296,16 @@ CREATE TABLE `users` (
   `role` varchar(20) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `deletedAt` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `deletedAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
---
--- Indexes for dumped tables
---
+/*Data for the table `users` */
 
---
--- Indeks untuk tabel `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`category_id`);
+insert  into `users`(`user_id`,`name`,`email`,`password`,`address`,`phone_number`,`token`,`role`,`createdAt`,`updatedAt`,`deletedAt`) values 
+(1,'John Doe 2','john@example.com','password','123 Main St','1234567890','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJpYXQiOjE2OTkzNjg2MjcsImV4cCI6MTY5OTQ1NTAyN30.YXwUA1pF4W5kfQet2l1zaFYrar-pOGMC46XoIxVuEsA','seller','2023-11-07 14:50:24','2023-11-07 14:50:27',NULL);
 
---
--- Indeks untuk tabel `comments`
---
-ALTER TABLE `comments`
-  ADD PRIMARY KEY (`comment_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `post_id` (`post_id`);
-
---
--- Indeks untuk tabel `orderdetails`
---
-ALTER TABLE `orderdetails`
-  ADD PRIMARY KEY (`detail_id`),
-  ADD KEY `product_id` (`product_id`),
-  ADD KEY `order_id` (`order_id`);
-
---
--- Indeks untuk tabel `ordernotifications`
---
-ALTER TABLE `ordernotifications`
-  ADD PRIMARY KEY (`notification_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indeks untuk tabel `orders`
---
-ALTER TABLE `orders`
-  ADD PRIMARY KEY (`order_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indeks untuk tabel `postlikes`
---
-ALTER TABLE `postlikes`
-  ADD PRIMARY KEY (`like_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `post_id` (`post_id`);
-
---
--- Indeks untuk tabel `posts`
---
-ALTER TABLE `posts`
-  ADD PRIMARY KEY (`post_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `store_id` (`store_id`);
-
---
--- Indeks untuk tabel `postshares`
---
-ALTER TABLE `postshares`
-  ADD PRIMARY KEY (`share_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `post_id` (`post_id`);
-
---
--- Indeks untuk tabel `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`product_id`),
-  ADD KEY `category_id` (`category_id`),
-  ADD KEY `store_id` (`store_id`);
-
---
--- Indeks untuk tabel `reviews`
---
-ALTER TABLE `reviews`
-  ADD PRIMARY KEY (`review_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Indeks untuk tabel `shoppingcarts`
---
-ALTER TABLE `shoppingcarts`
-  ADD PRIMARY KEY (`cart_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Indeks untuk tabel `stores`
---
-ALTER TABLE `stores`
-  ADD PRIMARY KEY (`store_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indeks untuk tabel `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`);
-
---
--- AUTO_INCREMENT untuk tabel yang dibuang
---
-
---
--- AUTO_INCREMENT untuk tabel `categories`
---
-ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `comments`
---
-ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `orderdetails`
---
-ALTER TABLE `orderdetails`
-  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `ordernotifications`
---
-ALTER TABLE `ordernotifications`
-  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `orders`
---
-ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `postlikes`
---
-ALTER TABLE `postlikes`
-  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `posts`
---
-ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `postshares`
---
-ALTER TABLE `postshares`
-  MODIFY `share_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `products`
---
-ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `reviews`
---
-ALTER TABLE `reviews`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `shoppingcarts`
---
-ALTER TABLE `shoppingcarts`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `stores`
---
-ALTER TABLE `stores`
-  MODIFY `store_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `users`
---
-ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
---
-
---
--- Ketidakleluasaan untuk tabel `comments`
---
-ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `orderdetails`
---
-ALTER TABLE `orderdetails`
-  ADD CONSTRAINT `orderdetails_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `orderdetails_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `ordernotifications`
---
-ALTER TABLE `ordernotifications`
-  ADD CONSTRAINT `ordernotifications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `orders`
---
-ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `postlikes`
---
-ALTER TABLE `postlikes`
-  ADD CONSTRAINT `postlikes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `postlikes_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `posts`
---
-ALTER TABLE `posts`
-  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `posts_ibfk_2` FOREIGN KEY (`store_id`) REFERENCES `stores` (`store_id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `postshares`
---
-ALTER TABLE `postshares`
-  ADD CONSTRAINT `postshares_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `postshares_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `products`
---
-ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`store_id`) REFERENCES `stores` (`store_id`) ON DELETE NO ACTION ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `reviews`
---
-ALTER TABLE `reviews`
-  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `shoppingcarts`
---
-ALTER TABLE `shoppingcarts`
-  ADD CONSTRAINT `shoppingcarts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `shoppingcarts_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `stores`
---
-ALTER TABLE `stores`
-  ADD CONSTRAINT `stores_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

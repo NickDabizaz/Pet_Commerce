@@ -1,4 +1,4 @@
-const { Post } = require("../models");
+const { Post, User, Comment, PostLike, PostShare } = require("../models");
 
 const addPost = async (req, res) => {
   const { title, user_id } = req.body;
@@ -18,13 +18,35 @@ const addPost = async (req, res) => {
 const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.findAll();
+    const tempArray = []
+    const tempArrayLengkap = []
+    posts.map(async (item) => {
+      const user = await User.findOne({ where: { user_id: item.user_id } })
+      const like = await PostLike.count({
+        where: {
+          post_id : item.post_id
+        }
+      });
+      const share = await PostShare.count({
+        where: {
+          post_id : item.post_id
+        }
+      });
+      const temp = {
+        post_id: item.post_id,
+        nama_pengepost: user.name,
+        jumlah_like: like,
+        jumlah_share: share,
+        
+      }
+    })
     res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-const getPostById = async (req, res) => {  
+const getPostById = async (req, res) => {
   const { id } = req.params;
 
   try {
