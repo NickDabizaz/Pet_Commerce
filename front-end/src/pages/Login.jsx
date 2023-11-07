@@ -34,7 +34,7 @@ const Login = () => {
         <div className="container-fluid rounded d-flex shadow" style={{ width: "90%", height: "80vh", backgroundColor: "#6CD4FF", overflow: "hidden"}}>
           <div className="container-fluid rounded" style={{ width: "100%", height: "75vh", position: "relative"}}>
             <img src={logo} style={{width: "30vh", height: "30vh", left: -10, position: "absolute", zIndex: 2}}/>       
-            <img src={loginpict} className="rounded" style={{width: "120vh", height: "35.75rem", left: -15, position: "absolute", zIndex: 1}}/>       
+            <img src={loginpict} className="rounded" style={{width: "120vh", height: "38rem", left: -15, top: -5, position: "absolute", zIndex: 1}}/>       
           </div>
           <div className="container-fluid rounded" style={{ width: "60%", height: "75vh", marginTop: "2.5vh", backgroundColor: "#FFFFFF"}}>
           <img src={word} style={{ display: "block", margin: "0 auto", width: "12rem", height: "6rem", marginTop: "4%" }} />           
