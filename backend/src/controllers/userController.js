@@ -93,6 +93,7 @@ const login = async (req, res) => {
 
       // Return token, message and role
       res.json({
+        user_id: user.user_id,
         token,
         message: "Login successful",
         role: user.role,
@@ -143,8 +144,28 @@ const logout = async (req, res) => {
   }
 };
 
+const getUser = async (req, res) => {
+  const {user_id} = req.params
+  try {
+    // Mencari pengguna berdasarkan ID dalam token
+    const user = await models.User.findOne({
+      where: { user_id},
+    });
+
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error getting user");
+  }
+};
+
 module.exports = {
   register,
   login,
   logout,
+  getUser,
 };
