@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Form, RouterProvider } from "react-router-dom";
 import App from "./App.jsx";
 import Homepage from "./pages/Homepage.jsx";
 import Login from "./pages/Login.jsx";
@@ -16,6 +16,7 @@ import {
 import CreateStore from "./pages/CreateStore.jsx";
 import StoreDetail from "./pages/StoreDetail.jsx";
 import Profile from "./pages/Profile.jsx";
+import FormAddProduct from "./pages/FormAddProduct.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,9 +36,19 @@ const router = createBrowserRouter([
       },
       { path: "/create-store", element: <CreateStore /> },
       {
-        path: "/store/:store_id", // Tambahkan parameter store_id di sini
-        element: <StoreDetail />, // Gantikan StoreDetail dengan komponen yang sesuai
+        path: "/store",
+        children:[
+          {
+            path:":store_id",
+            element: <StoreDetail />
+          },
+          {
+            path: ":store_id/form-add-product",
+            element : <FormAddProduct />
+          }
+        ]
       },
+      // 
       // {
       //   path: "/nested",
       //   // element: <NestedPage />,
