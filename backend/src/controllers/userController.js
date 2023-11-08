@@ -174,10 +174,23 @@ const getUserStore = async (req, res) => {
   }
 }
 
+const updateUser = async (req, res) => {
+  try {
+    const { user_id } = req.params
+    const { name, email, address, phone_number } = req.body
+    const user = await models.User.findOne({ where: { user_id: user_id } })
+    const result = await user.update({ name: name, email: email, address: address, phone_number: phone_number })
+    res.json(result)
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 module.exports = {
   register,
   login,
   logout,
   getUser,
-  getUserStore
+  getUserStore,
+  updateUser
 };
