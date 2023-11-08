@@ -5,7 +5,7 @@ import App from "./App.jsx";
 import Homepage from "./pages/Homepage.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
-import AdminDashboard from "./pages/AdminDashboard.jsx";
+import { AdminDashboard, ManageUser, ManageCommunity, ManageFAQ } from "./pages/AdminDashboard.jsx";
 import { Community, Detail } from "./pages/Community.jsx";
 import {
   AlwaysErrorPage,
@@ -26,7 +26,15 @@ const router = createBrowserRouter([
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "/profile", element: <Profile /> },
-      { path: "/admin", element: <AdminDashboard /> },
+      { 
+        path: "/admin", 
+        children: [
+          { index: true, element: <AdminDashboard /> },
+          { path: "/admin/manage-users", element: <ManageUser /> },
+          { path: "/admin/manage-community", element: <ManageCommunity /> },
+          { path: "/admin/manage-faq", element: <ManageFAQ /> },
+        ]
+      },
       {
         path: "/community",
         children: [
