@@ -1,4 +1,6 @@
 const models = require("../models");
+const {Op} = require("sequelize")
+
 const createStore = async (req, res) => {
 
   const { user_id, store_name, store_description } = req.body;
