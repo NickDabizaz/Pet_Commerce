@@ -15,4 +15,6 @@ router.get("/:user_id", userController.getUser);
 
 router.get("/store/:user_id", userController.getUserStore);
 
+router.put("/:user_id", userController.updateUser)
+
 module.exports = router;
