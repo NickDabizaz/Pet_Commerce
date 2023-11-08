@@ -236,26 +236,47 @@ const getAllProducts = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 }
-
 const getDetailStore = async (req, res) => {
-  const { id_store } = req.params;
+  const { store_id } = req.params;
 
   try {
-    const storeData = await Store.findOne({
-      where: { store_id: id_store },
-      include: [{ model: User, attributes: ['name'] }]
+    const storeData = await models.Store.findOne({
+      where: { store_id: store_id },
+      include: [
+        { model: models.User, attributes: ['name'] },
+        { model: models.Product } // Menambahkan relasi untuk mendapatkan produk
+      ]
     });
 
     if (!storeData) {
       return res.status(404).json({ message: 'Toko tidak ditemukan' });
     }
 
-    res.json(storeData);
+    const products = storeData.Products.map(product => ({
+      product_id: product.product_id,
+      product_name: product.product_name,
+      price: product.price,
+      rating: product.rating,
+      category_id: product.category_id,
+      quantity: product.quantity
+    }));
+
+    const result = {
+      store_id: storeData.store_id,
+      store_name: storeData.store_name,
+      store_description: storeData.store_description,
+      owner: storeData.User.name,
+      products: products // Menambahkan data produk
+    };
+
+    res.json(result);
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ message: 'Terjadi kesalahan saat mengambil data toko' });
   }
 };
+
+
 
 module.exports = {
   createStore,
