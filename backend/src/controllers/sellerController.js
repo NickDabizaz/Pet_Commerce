@@ -1,5 +1,5 @@
 const models = require("../models");
-const {Op} = require(sequelize)
+const { Op } = require(sequelize)
 
 const createStore = async (req, res) => {
 
@@ -278,9 +278,14 @@ const getDetailStore = async (req, res) => {
 };
 
 const searchProduct = async (req, res) => {
-  const {q} = req.query
-  const processKeyword = `%${q}%`;
-  // const results = await models.Product.findAll({where:{[Op.like]}})
+  try {
+    const { q } = req.query
+    const processKeyword = `%${q}%`;
+    const results = await models.Product.findAll({ where: { product_name: { [Op.like]: processKeyword } } })
+    res.status(200).json(results);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 }
 
 module.exports = {
