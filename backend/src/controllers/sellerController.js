@@ -1,9 +1,4 @@
 const models = require("../models");
-<<<<<<< Updated upstream
-const { Op } = require("sequelize")
-=======
->>>>>>> Stashed changes
-
 const createStore = async (req, res) => {
 
   const { user_id, store_name, store_description } = req.body;
