@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { MainLayout } from "../Components";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 function CreateStore() {
   const {
@@ -15,16 +16,17 @@ function CreateStore() {
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies(["user_id"]);
   const user_id = cookies.user_id;
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    data.user_id = user_id
+    data.user_id = user_id;
     try {
       const response = await axios.post(
         "http://localhost:3000/sellers/create-store",
         data
       );
-      console.log({store_id : response.data.store_id});
-      reset()
+      reset();
+      navigate(`/store/${response.data.store_id}`);
 
       if (response.status === 200) {
         setSuccessMessage("Store created successfully");
@@ -56,7 +58,6 @@ function CreateStore() {
           </div>
         )}
         <form onSubmit={handleSubmit(onSubmit)}>
-          
           <div className="mb-4">
             <label className="block text-gray-700">Store Name:</label>
             <input

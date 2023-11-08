@@ -5,6 +5,8 @@ const sellerController = require('../controllers/sellerController');
 // Route for seller to create a new store
 router.post('/create-store', sellerController.createStore);
 
+router.get('/store/:store_id', sellerController.getDetailStore)
+
 // Route for seller to add product to store  
 router.post('/add-product', sellerController.addProduct);
 

@@ -237,6 +237,25 @@ const getAllProducts = async (req, res) => {
   }
 }
 
+const getDetailStore = async (req, res) => {
+  const { id_store } = req.params;
+
+  try {
+    const storeData = await Store.findOne({
+      where: { store_id: id_store },
+      include: [{ model: User, attributes: ['name'] }]
+    });
+
+    if (!storeData) {
+      return res.status(404).json({ message: 'Toko tidak ditemukan' });
+    }
+
+    res.json(storeData);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Terjadi kesalahan saat mengambil data toko' });
+  }
+};
 
 module.exports = {
   createStore,
@@ -244,5 +263,6 @@ module.exports = {
   editProduct,
   deleteProduct,
   viewProducts,
-  getAllProducts
+  getAllProducts,
+  getDetailStore
 };
