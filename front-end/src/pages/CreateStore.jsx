@@ -4,6 +4,8 @@ import axios from "axios";
 import { MainLayout } from "../Components";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import create from "../assets/create.png"
+import createpict from "../assets/createpict.jpg"
 
 function CreateStore() {
   const {
@@ -45,47 +47,56 @@ function CreateStore() {
   return (
     <>
       <MainLayout />
-      <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow-lg">
-        <h1 className="text-2xl font-bold mb-4">Create Store</h1>
-        {successMessage && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-2 mb-4 rounded">
-            {successMessage}
+      <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>{/* #61A0AF or #1286CE*/}
+        <div className="pt-20 pb-20">
+          <div className="container-fluid rounded d-flex shadow" style={{ width: "90%", height: "80vh", backgroundColor: "#6CD4FF", overflow: "hidden" }}>
+            <div className="container-fluid rounded" style={{ width: "100%", height: "75vh", position: "relative" }}>
+              <img src={createpict} className="rounded" style={{ width: "120vh", height: "38rem", left: -15, top: -5, position: "absolute", zIndex: 1 }} />
+            </div>
+            <div className="container-fluid rounded" style={{ width: "60%", height: "75vh", marginTop: "2.5vh", backgroundColor: "#FFFFFF" }}>
+              <img src={create} style={{ display: "block", margin: "0 auto", width: "22rem", height: "6rem", marginTop: "4%" }} />
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div>
+                  <label style={{ marginLeft: "3%", fontWeight: 700, marginBottom: "1%", marginTop: "7%" }}>Store Name:</label>
+                  <input className="form-control" style={{ marginLeft: "3%", width: "94%" }}
+                    type="text"
+                    {...register("store_name", { required: true })}
+                  />
+                </div>
+                <div>
+                  <label style={{ marginTop: "7%", marginLeft: "3%", fontWeight: 700, marginBottom: "1%" }}>Store Description:</label>
+                  <input className="form-control" style={{ marginLeft: "3%", width: "94%" }}
+                    type="text"
+                    {...register("store_description", { required: true })}
+                  />
+                </div>
+                <button type="submit"
+                  className="btn btn-info"
+                  style={{ backgroundColor: "#C46E85", borderColor: "#C46E85", marginTop: "8%", marginLeft: "3%", fontWeight: 700, width: "94%", height: "2.5rem", color: "white" }}>
+                  Create Store
+                </button>
+                {errors.store_name && (
+                  <p className="text-center" style={{ marginTop: "5%", color: "red" }}>Store Name is required</p>
+                )}
+                {errors.store_description && (
+                  <p className="text-center" style={{ marginTop: "1%", color: "red" }}>
+                    Store Description is required
+                  </p>
+                )}
+                {successMessage && (
+                  <p className="text-center" style={{ marginTop: "1%", color: "red" }}>
+                    {successMessage}
+                  </p>
+                )}
+                {errorMessage && (
+                  <p className="text-center" style={{ marginTop: "1%", color: "red" }}>
+                    {errorMessage}
+                  </p>
+                )}
+              </form>
+            </div>
           </div>
-        )}
-        {errorMessage && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 mb-4 rounded">
-            {errorMessage}
-          </div>
-        )}
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-4">
-            <label className="block text-gray-700">Store Name:</label>
-            <input
-              type="text"
-              {...register("store_name", { required: true })}
-              className="w-full border border-gray-300 p-2 rounded"
-            />
-            {errors.store_name && (
-              <span className="text-red-500">Store Name is required</span>
-            )}
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Store Description:</label>
-            <input
-              type="text"
-              {...register("store_description", { required: true })}
-              className="w-full border border-gray-300 p-2 rounded"
-            />
-            {errors.store_description && (
-              <span className="text-red-500">
-                Store Description is required
-              </span>
-            )}
-          </div>
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-            Create Store
-          </button>
-        </form>
+        </div>
       </div>
     </>
   );
