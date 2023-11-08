@@ -45,6 +45,7 @@ function StoreDetail() {
           </li>
         ))}
       </ul>
+      <div className="btn btn-primary" onClick={() => navigate(`/store/${store_id}/form-add-product`)} >Add new Product</div>
     </div>
   );
 }
