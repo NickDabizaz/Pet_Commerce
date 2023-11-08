@@ -15,45 +15,45 @@ function AdminDashboard() {
         <NavLink to="/admin/manage-faq" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>FAQ Management</NavLink>
       </div>
 
-      <div className="container-fluid" style={{ backgroundColor: "#F3F0F0", height: "100vh" }}>
+      <div className="container-fluid" style={{ backgroundColor: "#F3F0F0", height: "88vh" }}>
         <img src={welcome} style={{ display: "block", margin: "0 auto", width: "30%", paddingTop: "2%" }} />
         <div className="container-fluid d-flex mt-3">
           <div className="rounded" style={{ width: "100%", height: "40vh", backgroundColor: "#6CD4FF" }}>
-            <div className="rounded" style={{ backgroundColor: "white", display: "block", margin: "0 auto", width: "90%", height: "86%", marginTop: "4.5%" }}>
-              <p className="text-center pt-4" style={{ fontFamily: "Literata", fontSize: "18pt", fontWeight: 700, color: "#1286CE" }}>Users Management</p>
-              <p className="text-start mt-2 ps-4 pe-4" style={{ fontFamily: "Literata", fontSize: "14pt", color: "black" }}>
-                This section is used to see all users that are already registered in Pet-Commerce. As an admin, you can delete user that are breaking the rules.
+            <div className="rounded" style={{ backgroundColor: "white", display: "block", margin: "0 auto", width: "94%", height: "90%", marginTop: "3%" }}>
+              <p className="text-center pt-3" style={{ fontFamily: "Literata", fontSize: "18pt", fontWeight: 700, color: "#1286CE" }}>Users Management</p>
+              <p className="text-center mt-2 ps-4 pe-4" style={{ fontFamily: "Literata", fontSize: "14pt", color: "black" }}>
+                This section is used to view all users that are already registered in Pet-Commerce. As an admin, you can delete any user that are breaking the rules inside Pet-Commerce.
               </p>
               <NavLink to="/admin/manage-users">
-                <button className="btn btn-info" 
-                style={{ backgroundColor: "#C46E85", borderColor: "#C46E85", color: "white", display: "block", margin: "0 auto", marginTop: "4%", fontFamily: "Literata", fontWeight: 700 }}
-                >Let&#39;s Manage</button>
+                <button className="btn btn-info"
+                  style={{ backgroundColor: "#C46E85", borderColor: "#C46E85", color: "white", display: "block", margin: "0 auto", marginTop: "4%", fontFamily: "Literata", fontWeight: 700 }}
+                >Users List</button>
               </NavLink>
             </div>
           </div>
           <div className="rounded ms-4 me-4" style={{ width: "100%", height: "40vh", backgroundColor: "#6CD4FF" }}>
-            <div className="rounded" style={{ backgroundColor: "white", display: "block", margin: "0 auto", width: "90%", height: "86%", marginTop: "4.5%" }}>
-            <p className="text-center pt-4" style={{ fontFamily: "Literata", fontSize: "18pt", fontWeight: 700, color: "#1286CE" }}>Users Management</p>
-              <p className="text-start mt-2 ps-4 pe-4" style={{ fontFamily: "Literata", fontSize: "14pt", color: "black" }}>
-                This section is used to see all users that are already registered in Pet-Commerce. As an admin, you can delete user that are breaking the rules.
+            <div className="rounded" style={{ backgroundColor: "white", display: "block", margin: "0 auto", width: "94%", height: "90%", marginTop: "3%" }}>
+              <p className="text-center pt-3" style={{ fontFamily: "Literata", fontSize: "18pt", fontWeight: 700, color: "#1286CE" }}>Community Management</p>
+              <p className="text-center mt-2 ps-4 pe-4" style={{ fontFamily: "Literata", fontSize: "14pt", color: "black" }}>
+                This section is used to view all posts that are already posted by users including every post&#39;s comments. As an admin, you can delete post or comment that are breaking the rules.
               </p>
               <NavLink to="/admin/manage-community">
-                <button className="btn btn-info" 
-                style={{ backgroundColor: "#C46E85", borderColor: "#C46E85", color: "white", display: "block", margin: "0 auto", marginTop: "4%", fontFamily: "Literata", fontWeight: 700 }}
-                >Let&#39;s Manage</button>
+                <button className="btn btn-info"
+                  style={{ backgroundColor: "#C46E85", borderColor: "#C46E85", color: "white", display: "block", margin: "0 auto", marginTop: "4%", fontFamily: "Literata", fontWeight: 700 }}
+                >Check Posts</button>
               </NavLink>
             </div>
           </div>
           <div className="rounded" style={{ width: "100%", height: "40vh", backgroundColor: "#6CD4FF" }}>
-            <div className="rounded" style={{ backgroundColor: "white", display: "block", margin: "0 auto", width: "90%", height: "86%", marginTop: "4.5%" }}>
-            <p className="text-center pt-4" style={{ fontFamily: "Literata", fontSize: "18pt", fontWeight: 700, color: "#1286CE" }}>Users Management</p>
-              <p className="text-start mt-2 ps-4 pe-4" style={{ fontFamily: "Literata", fontSize: "14pt", color: "black" }}>
-                This section is used to see all users that are already registered in Pet-Commerce. As an admin, you can delete user that are breaking the rules.
+            <div className="rounded" style={{ backgroundColor: "white", display: "block", margin: "0 auto", width: "94%", height: "90%", marginTop: "3%" }}>
+              <p className="text-center pt-3" style={{ fontFamily: "Literata", fontSize: "18pt", fontWeight: 700, color: "#1286CE" }}>FAQ Management</p>
+              <p className="text-center mt-2 ps-4 pe-4" style={{ fontFamily: "Literata", fontSize: "14pt", color: "black" }}>
+                This section is used to view and edit all FAQ that are already created by admin. As an admin, you can give all basic informations that are frequently asked by users.
               </p>
               <NavLink to="/admin/manage-faq">
-                <button className="btn btn-info" 
-                style={{ backgroundColor: "#C46E85", borderColor: "#C46E85", color: "white", display: "block", margin: "0 auto", marginTop: "4%", fontFamily: "Literata", fontWeight: 700 }}
-                >Let&#39;s Manage</button>
+                <button className="btn btn-info"
+                  style={{ backgroundColor: "#C46E85", borderColor: "#C46E85", color: "white", display: "block", margin: "0 auto", marginTop: "4%", fontFamily: "Literata", fontWeight: 700 }}
+                >View FAQ List</button>
               </NavLink>
             </div>
           </div>
@@ -108,30 +108,36 @@ function ManageUser() {
         <NavLink to="/admin/manage-community" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Community Management</NavLink>
         <NavLink to="/admin/manage-faq" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>FAQ Management</NavLink>
       </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.user_id}>
-              <td>{user.user_id}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>
-                <button onClick={() => handleDeleteUser(user.user_id)}>
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="container-fluid" style={{ backgroundColor: "#61A0AF", height: "88vh" }}>
+        <div className="container-fluid pt-2" style={{ backgroundColor: "#FFFFFF", width: "90%", height: "88vh", overflow: "hidden", overflowY: "scroll"}}>
+          <table className="table" style={{ margin: "0 auto" }}>
+            <thead className="text-center" style={{verticalAlign: "middle"}}>
+              <tr style={{fontSize: "14pt"}}>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody className="text-center" style={{verticalAlign: "middle"}}>
+              {users.map((user) => (
+                <tr key={user.user_id}>
+                  <td>{user.user_id}</td>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>
+                    <button className="btn btn-info"
+                    style={{ backgroundColor: "#C46E85", borderColor: "#C46E85", color: "white", fontFamily: "Literata", fontWeight: 700 }}
+                    onClick={() => handleDeleteUser(user.user_id)}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </>
   );
 }
