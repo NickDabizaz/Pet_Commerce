@@ -13,4 +13,6 @@ router.post("/logout", userController.logout);
 
 router.get("/:user_id", userController.getUser);
 
+router.get("/store/:user_id", userController.getUserStore);
+
 module.exports = router;

@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const models = require("../models");
 const Joi = require("joi");
+const {Store} = require("../models")
 
 const generateToken = (user) => {
   return jwt.sign({ id: user.id, email: user.email }, "PETCOMMERCE", {
@@ -163,9 +164,14 @@ const getUser = async (req, res) => {
   }
 };
 
+const getUserStore = async (req, res) => {
+
+}
+
 module.exports = {
   register,
   login,
   logout,
   getUser,
+  getUserStore
 };
