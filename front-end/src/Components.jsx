@@ -5,6 +5,7 @@ import cartLogo from "./assets/cart.png";
 import { useCookies } from "react-cookie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import dogo from "./assets/dogo.jpg";
 
 export function HomePage() {
   return <h1>Home</h1>;
@@ -29,10 +30,13 @@ export function ErrorElement() {
 
 export function MainLayout() {
   const navigate = useNavigate();
-  const [cookie, setCookie] = useCookies(["user_id"]);
-  // if (!cookie.user_id) {
-  //   navigate("/login");
-  // }
+  const [cookie, setCookie, removeCookie] = useCookies(["user_id"]);
+
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleInputChange = (event) => {
+    setSearchValue(event.target.value);
+  };
 
   return (
     <>
@@ -51,24 +55,22 @@ export function MainLayout() {
             <input
               className="form-control me-3"
               type="search"
-              placeholder="Search"
               aria-label="Search"
               style={{
                 fontFamily: "Literata",
                 fontSize: "12pt",
                 height: "2.5rem",
               }}
+              onChange={handleInputChange}
             ></input>
-            <button
-              className="btn btn-outline-success"
-              type="submit"
-              style={{ backgroundColor: "#1286CE", height: "2.5rem" }}
-            >
-              <img
-                src={searchLogo}
-                style={{ width: "30px", height: "30px", color: "white" }}
-              />
-            </button>
+            <NavLink to={`/products?q=${searchValue}`}>
+              <div className="btn border border-dark">
+                <img
+                  src={searchLogo}
+                  style={{ width: "30px", height: "30px", color: "white" }}
+                />
+              </div>
+            </NavLink>
           </div>
 
           <div style={{ flex: 2 }}></div>
@@ -92,6 +94,17 @@ export function MainLayout() {
                 </button>
               </NavLink>
             )}
+            {cookie.user_id && (
+              <button
+                className="btn btn-danger mx-4"
+                onClick={() => {
+                  removeCookie("user_id");
+                  navigate("/");
+                }}
+              >
+                Logout
+              </button>
+            )}
           </div>
 
           <div>
@@ -113,8 +126,17 @@ export function MainLayout() {
                 </button>
               </NavLink>
             ) : (
-              <NavLink to={"/profile"} className="btn btn-warning">
-                Profile
+              <NavLink to={"/profile"} style={{}}>
+                <img
+                  className="mx-auto"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
+                  style={{
+                    height: "3rem",
+                    width: "3rem",
+                    objectFit: "cover",
+                    borderRadius: "50%  ",
+                  }}
+                />
               </NavLink>
             )}
           </div>
