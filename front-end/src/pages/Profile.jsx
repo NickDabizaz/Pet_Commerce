@@ -3,10 +3,12 @@ import { MainLayout } from "../Components";
 import dogo from "../assets/dogo.jpg";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const [cookie, setCookie] = useCookies("user_id");
   const [response, setResponse] = useState([]);
+  const [stores, setStores] = useState([]);
 
   useEffect(() => {
     axios
@@ -17,8 +19,21 @@ function Profile() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+
+      const fetchStores = async () => {
+        const user_id = cookie.user_id;
+        
+        const response = await fetch(`http://localhost:3000/users/store/${user_id}`);
+        const data = await response.json();
+        
+        setStores(data);
+      }
+
+      fetchStores()
+  }, [cookie]);
   console.log(response);
+
+const navigate = useNavigate()
 
   return (
     <>
@@ -131,6 +146,15 @@ function Profile() {
         </div>
       </div>
       <div>List Toko:</div>
+      <div className="btn btn-success" onClick={()=>navigate("/create-store")}>Add New Store</div>
+      <div>
+        {stores.map(store => (
+          <div key={store.store_id} className="mb-4 p-4 border border-gray-300 rounded">
+            <h3 className="text-xl mb-2">{store.store_name}</h3>
+            <div className="btn btn-primary" onClick={() => navigate(`/store/${store.store_id}`)}>See Detail Store</div>
+          </div>
+        ))}
+      </div>
     </>
   );
 }

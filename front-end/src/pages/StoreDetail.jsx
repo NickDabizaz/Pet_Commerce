@@ -24,7 +24,7 @@ function StoreDetail() {
 
   return (
     <div className="max-w-2xl mx-auto mt-4 p-4 bg-white shadow">
-      <div className="btn btn-danger" onClick={() => navigate("/")}>
+      <div className="btn btn-danger" onClick={() => navigate("/profile")}>
         back
       </div>
       <h2 className="text-2xl font-bold mb-2">{storeData.store_name}</h2>
