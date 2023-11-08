@@ -1,0 +1,5 @@
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0 !important;
+  background: transparent !important;
+  display: none !important;
+}
