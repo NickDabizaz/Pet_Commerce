@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -5,17 +6,19 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png"
 import login from "../assets/login.png"
 import loginpict from "../assets/loginpict.png"
+import {useCookies} from "react-cookie"
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(['user_id']); 
 
   const onSubmit = async (data) => {
     try {
       const response = await axios.post("http://localhost:3000/users/login", data);
       const responseData = response.data;
-      console.log(responseData);
+      setCookie('user_id', responseData.user_id, { path: '/' }); // Set cookie dengan user_id dari responseData
       navigate("/"); // Navigasi ke halaman utama setelah login berhasil
     } catch (error) {
       if (error.response) {

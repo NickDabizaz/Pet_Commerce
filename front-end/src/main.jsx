@@ -14,6 +14,7 @@ import {
   MainLayout,
 } from "./Components.jsx";
 import CreateStore from "./pages/CreateStore.jsx";
+import StoreDetail from "./pages/StoreDetail.jsx";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       { path: "/admin", element: <AdminDashboard /> },
       { path: "/community", element: <Community /> },
       { path: "/create-store", element: <CreateStore /> },
+      {
+        path: "/store/:store_id", // Tambahkan parameter store_id di sini
+        element: <StoreDetail />, // Gantikan StoreDetail dengan komponen yang sesuai
+      },
       // {
       //   path: "/nested",
       //   // element: <NestedPage />,

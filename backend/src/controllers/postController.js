@@ -80,15 +80,30 @@ const getPostById = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const post = await Post.findByPk(id);
+    const post = await Post.findByPk(id, {
+      include: [
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ['name']
+            }
+          ]
+        }
+      ]
+    });
+    
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
     res.status(200).json(post);
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 const updatePost = async (req, res) => {
   const { id } = req.params;
