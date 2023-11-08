@@ -2,6 +2,9 @@ import { Outlet, NavLink } from "react-router-dom";
 import logo from "./assets/logo.png";
 import searchLogo from "./assets/search.png";
 import cartLogo from "./assets/cart.png";
+import { useCookies } from "react-cookie";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function HomePage() {
   return <h1>Home</h1>;
@@ -25,6 +28,12 @@ export function ErrorElement() {
 }
 
 export function MainLayout() {
+  const navigate = useNavigate();
+  const [cookie, setCookie] = useCookies(["user_id"]);
+  // if (!cookie.user_id) {
+  //   navigate("/login");
+  // }
+
   return (
     <>
       <div
@@ -65,41 +74,49 @@ export function MainLayout() {
           <div style={{ flex: 2 }}></div>
 
           <div>
-            <NavLink to="/register">
-            <button
-              className="p-1 px-4 rounded me-3"
-              style={{
-                border: "1px solid white",
-                color: "white",
-                backgroundColor: "transparent",
-                height: "2.5rem",
-                fontFamily: "Literata",
-                fontWeight: 600,
-                fontSize: "14pt",
-              }}
-            >
-              Register
-            </button>
-            </NavLink>
+            {!cookie.user_id && (
+              <NavLink to="/register">
+                <button
+                  className="p-1 px-4 rounded me-3"
+                  style={{
+                    border: "1px solid white",
+                    color: "white",
+                    backgroundColor: "transparent",
+                    height: "2.5rem",
+                    fontFamily: "Literata",
+                    fontWeight: 600,
+                    fontSize: "14pt",
+                  }}
+                >
+                  Register
+                </button>
+              </NavLink>
+            )}
           </div>
 
           <div>
-            <NavLink to="/login">
-            <button
-              className="p-1 px-4 rounded"
-              style={{
-                border: "1px solid white",
-                color: "black",
-                backgroundColor: "white",
-                height: "2.5rem",
-                fontFamily: "Literata",
-                fontWeight: 600,
-                fontSize: "14pt",
-              }}
-            >
-              Login
-            </button>
-            </NavLink>
+            {!cookie.user_id ? (
+              <NavLink to="/login">
+                <button
+                  className="p-1 px-4 rounded"
+                  style={{
+                    border: "1px solid white",
+                    color: "black",
+                    backgroundColor: "white",
+                    height: "2.5rem",
+                    fontFamily: "Literata",
+                    fontWeight: 600,
+                    fontSize: "14pt",
+                  }}
+                >
+                  Login
+                </button>
+              </NavLink>
+            ) : (
+              <NavLink to={"/profile"} className="btn btn-warning">
+                Profile
+              </NavLink>
+            )}
           </div>
         </nav>
       </div>

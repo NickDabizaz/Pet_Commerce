@@ -6,7 +6,7 @@ import Homepage from "./pages/Homepage.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
-import Community from "./pages/Community.jsx";
+import { Community, Detail } from "./pages/Community.jsx";
 import {
   AlwaysErrorPage,
   ContactUsPage,
@@ -15,6 +15,7 @@ import {
 } from "./Components.jsx";
 import CreateStore from "./pages/CreateStore.jsx";
 import StoreDetail from "./pages/StoreDetail.jsx";
+import Profile from "./pages/Profile.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,8 +24,15 @@ const router = createBrowserRouter([
       { path: "/", element: <Homepage /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
+      { path: "/profile", element: <Profile /> },
       { path: "/admin", element: <AdminDashboard /> },
-      { path: "/community", element: <Community /> },
+      {
+        path: "/community",
+        children: [
+          { index: true, element: <Community /> },
+          { path: ":post_id", element: <Detail /> },
+        ],
+      },
       { path: "/create-store", element: <CreateStore /> },
       {
         path: "/store/:store_id", // Tambahkan parameter store_id di sini
