@@ -21,6 +21,6 @@ router.get('/view-products/:user_id', sellerController.viewProducts);
 
 router.get('/get-all-products', sellerController.getAllProducts);
 
-router.get('/products?q', sellerController.searchProduct);
+router.get('/products', sellerController.searchProduct);
 
 module.exports = router;
