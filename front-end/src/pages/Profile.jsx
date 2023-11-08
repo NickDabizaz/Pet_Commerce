@@ -23,11 +23,11 @@ function Profile() {
   return (
     <>
       <MainLayout />
-      <div className=" m-5 bg-warning">
+      <div className="m-5">
         <h1 style={{ fontSize: "2rem" }}>My Profile</h1>
         <h1 style={{ fontSize: "1.5rem" }}>Manage your account</h1>
         <div className="mt-5" style={{ display: "flex" }}>
-          <div className="m-auto" style={{ width: "50rem" }}>
+          <div className="mx-auto" style={{ width: "50rem" }}>
             <form>
               <table className="table text-start">
                 <tr>
@@ -38,60 +38,95 @@ function Profile() {
                     <input
                       className="form-control"
                       type="text"
-                      placeholder={response.name}
+                      value={response.name}
                     ></input>
                   </td>
                 </tr>
+                <tr style={{ height: "1rem" }}></tr>
                 <tr>
                   <td className="text-end">Email:</td>
                   <td>
                     <input
                       className="form-control"
                       type="text"
-                      placeholder={response.email}
+                      value={response.email}
                     ></input>
                   </td>
                 </tr>
+                <tr style={{ height: "1rem" }}></tr>
                 <tr>
                   <td className="text-end">Address:</td>
                   <td>
                     <input
                       className="form-control"
                       type="text"
-                      placeholder={response.address}
+                      value={response.address}
                     ></input>
                   </td>
                 </tr>
+                <tr style={{ height: "1rem" }}></tr>
                 <tr>
                   <td className="text-end">Phone Number:</td>
                   <td>
                     <input
                       className="form-control"
                       type="text"
-                      placeholder={response.phone_number}
+                      value={response.phone_number}
                     ></input>
                   </td>
                 </tr>
               </table>
+              <div className="text-center">
+                <button type="submit" className="btn btn-warning">
+                  Save
+                </button>
+              </div>
             </form>
           </div>
-          <div></div>
+
+          {/* ---------Garis Abu---------------- */}
+
           <div
-            className="m-auto"
+            className="mx-auto"
             style={{
-              width: "10rem",
-              height: "10rem",
+              width: "20rem",
+              height: "20rem",
               objectFit: "cover",
+              display: "flex",
             }}
           >
-            <img
-              src={dogo}
+            <div
+              className="bg-black bg-opacity-25 me-4"
               style={{
-                height: "10rem",
-                objectFit: "cover",
-                borderRadius: "50%  ",
+                height: "20rem",
+                width: "0.1rem",
               }}
-            />
+            ></div>
+            <div
+              className=" text-center"
+              style={{ display: "block", width: "15rem" }}
+            >
+              <img
+                className="mx-auto"
+                src={dogo}
+                style={{
+                  height: "10rem",
+                  width: "10rem",
+                  objectFit: "cover",
+                  borderRadius: "50%  ",
+                }}
+              />
+              <div className="mx-auto mt-3">
+                <button className="mx-auto btn btn-secondary">
+                  Select Image
+                </button>
+              </div>
+              <br />
+              <div className="mx-auto">
+                File size: maximum 1 MB <br />
+                File extension: .JPEG, .PNG
+              </div>
+            </div>
           </div>
         </div>
       </div>
