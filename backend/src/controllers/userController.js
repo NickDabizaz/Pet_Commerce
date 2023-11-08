@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const models = require("../models");
 const Joi = require("joi");
-const {Store} = require("../models")
+const { Store } = require("../models")
 
 const generateToken = (user) => {
   return jwt.sign({ id: user.id, email: user.email }, "PETCOMMERCE", {
@@ -146,11 +146,11 @@ const logout = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  const {user_id} = req.params
+  const { user_id } = req.params
   try {
     // Mencari pengguna berdasarkan ID dalam token
     const user = await models.User.findOne({
-      where: { user_id},
+      where: { user_id },
     });
 
     if (user) {
@@ -165,7 +165,13 @@ const getUser = async (req, res) => {
 };
 
 const getUserStore = async (req, res) => {
-
+  try {
+    const { user_id } = req.params
+    const store = await Store.findAll({ where: { user_id: user_id } })
+    res.status(200).json(store);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 }
 
 module.exports = {

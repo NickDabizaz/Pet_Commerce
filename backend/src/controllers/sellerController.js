@@ -276,7 +276,9 @@ const getDetailStore = async (req, res) => {
   }
 };
 
-
+const searchProduct = async (req, res) => {
+  
+}
 
 module.exports = {
   createStore,
@@ -285,5 +287,6 @@ module.exports = {
   deleteProduct,
   viewProducts,
   getAllProducts,
-  getDetailStore
+  getDetailStore,
+  searchProduct
 };
