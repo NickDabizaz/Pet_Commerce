@@ -33,8 +33,6 @@ function Profile() {
   //   console.log(response);
   console.log(toko);
 
-  const navigate = useNavigate();
-
   return (
     <>
       <MainLayout />
@@ -147,12 +145,12 @@ function Profile() {
         </div>
       </div>
       <div className="m-5">
-        {/* <div
+        <div
           className="btn btn-success"
           onClick={() => navigate("/create-store")}
         >
           Add New Store
-        </div> */}
+        </div>
         <h1 style={{ fontSize: "2rem" }} className="mb-2">
           List Toko:
         </h1>
