@@ -1,19 +1,48 @@
 const { where } = require("sequelize");
 const { Post, User, Comment, PostLike, PostShare } = require("../models");
+const multer = require("multer");
+const fs = require("fs"); //filesystem
+const path = require("path");
 
-const addPost = async (req, res) => {
-  const { title, user_id } = req.body;
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    const folderName = `uploads/${req.body.user_id}`;
 
-  try {
-    const post = await Post.create({
-      title,
-      user_id
-    });
+    if (!fs.existsSync(folderName)) {
+      fs.mkdirSync(folderName, { recursive: true });
+    }
 
-    res.status(201).json(post);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+    callback(null, folderName);
+  },
+  filename: (req, file, callback) => {
+    const fileExtension = path.extname(file.originalname).toLowerCase();
+
+    callback(null, `tes${fileExtension}`);
+  },
+});
+
+const upload = multer({ storage: storage })
+
+const addPost = (req, res) => {
+
+  const uploadingFile = upload.single("file");
+  uploadingFile(req, res, (err) => {
+    // const { title, user_id } = req.body;
+    if (err) {
+      console.log(err);
+      return res
+        .status(400)
+        .send((err.message || err.code) + " pada field " + err.field);
+    }
+    else{
+      // const post = await Post.create({
+      //   title,
+      //   user_id
+      // });
+      res.status(201).json({msg:"masok"});
+    }
+  });
+
 };
 
 let tempArrayLengkap = []
@@ -53,15 +82,15 @@ const getAllPosts = async (req, res) => {
         comment: tempArray
       }
 
-      console.log({temp2});
-      if(tempArrayLengkap.length > 0){
+      console.log({ temp2 });
+      if (tempArrayLengkap.length > 0) {
         const check = tempArrayLengkap.filter((item) => item.post_id === temp2.post_id)
-        console.log({check});
-        if(check.length == 0 ){
+        console.log({ check });
+        if (check.length == 0) {
           tempArrayLengkap.push(temp2)
         }
       }
-      if(tempArrayLengkap.length == 0){
+      if (tempArrayLengkap.length == 0) {
         tempArrayLengkap.push(temp2)
       }
 
@@ -93,7 +122,7 @@ const getPostById = async (req, res) => {
         }
       ]
     });
-    
+
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
