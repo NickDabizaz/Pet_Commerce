@@ -4,10 +4,10 @@ import dogo from "../assets/dogo.jpg";
 import { MainLayout } from "../Components";
 import "../index.css";
 import { NavLink, useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 function Community() {
-  const [curPage, setCurPage] = useState("browse");
-  const [idPost, setIdPost] = useState(-999);
+  const [cookie, setCookie] = useCookies("user_id");
   const [response, setResponse] = useState([]);
 
   useEffect(() => {
@@ -32,14 +32,8 @@ function Community() {
         >
           {response.map((post) => (
             <div key={post.post_id} className="col-6">
-              <NavLink to={`/community/${post.post_id}`}>
-                <div
-                  className="m-4 bg-info border border-dark rounded-4"
-                  onClick={() => {
-                    setCurPage("detail");
-                    setIdPost(post.post_id);
-                  }}
-                >
+              <NavLink to={`/post/${post.post_id}`}>
+                <div className="m-4 bg-info border border-dark rounded-4">
                   <div style={{ display: "flex" }}>
                     <div className="text-start m-2 ms-4">
                       {post.nama_pengepost}
@@ -52,7 +46,7 @@ function Community() {
                     </div>
                   </div>
                   <div className=" ">
-                    <img src={dogo} />
+                    <img src={dogo} width={"100%"} />
                   </div>
                   <div
                     className="row text-start mx-4"
@@ -130,21 +124,37 @@ function Community() {
 
 function Detail() {
   let post_id = useParams();
-  console.log(post_id.post_id);
+  // console.log(post_id.post_id);
 
   const [response, setResponse] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (post_id.post_id) {
+      fetchPost();
+    }
+  }, [post_id.post_id]);
+
+  const fetchPost = () => {
     axios
       .get(`http://localhost:3000/post/${post_id.post_id}`)
       .then((res) => {
         setResponse(res.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        setLoading(false);
       });
-  }, []);
-  console.log(response);
+  };
+
+  if (loading) {
+    return <div>Loading...</div>; // Tampilkan pesan loading jika masih dalam proses fetch data
+  }
+
+  console.log("response:", response);
+
+  const post = response;
 
   return (
     <>
@@ -173,18 +183,40 @@ function Detail() {
               }}
             >
               <div style={{ display: "flex" }}>
-                <div className="text-start ms-4 mt-2">
-                  PP {post.nama_pengepost}
-                </div>
+                <div className="text-start ms-4 mt-3">
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
+                    alt="pp-icon"
+                    style={{
+                      width: "2rem",
+                      border: "1px solid black",
+                      borderRadius: "50%",
+                    }}
+                  />{" "}
+                  {/* {post.nama_pengepost} */}
+                </div>{" "}
+                <span style={{ fontSize: "1rem" }} className="mt-3 ms-2 ">
+                  Jane Doe
+                </span>{" "}
                 <div
-                  className=" text-black-50 mt-3"
+                  className=" text-black-50 mt-4 ms-2"
                   style={{ fontSize: "0.6rem" }}
                 >
                   1h ago
                 </div>
               </div>
               <div className="mt-2">
-                <img src={dogo} />
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
+                  style={{
+                    height: "100%",
+                    maxHeight: "20rem",
+                    display: "block", // Center horizontally
+                    margin: "0 auto", // Center horizontally
+                    textAlign: "center", // Center horizontally (alternative)
+                    lineHeight: "2rem", // Center vertically
+                  }}
+                />
               </div>
               <div
                 className="row text-start mx-4 mb-4"
@@ -221,7 +253,7 @@ function Detail() {
                     display: "-webkit-box",
                   }}
                 >
-                  {post.comment.map((comment, index) => (
+                  {post.Comments.map((comment, index) => (
                     <span
                       key={index}
                       // className="mb-2 text-white"
@@ -248,10 +280,15 @@ function Detail() {
                       <div style={{ width: "85%", maxWidth: "85%" }}>
                         <div className="border border-dark rounded">
                           <div className="m-2">
-                            <b>{comment.nama_pengomen}</b>
+                            <b>{comment.User.name}</b>
                             <br />
                             {/* <span className="text-black-50"> */}
-                            <span>{comment.komentar}</span>
+                            <span
+                              className="text-justify"
+                              style={{ wordBreak: "break-all" }}
+                            >
+                              {comment.comment_text}
+                            </span>
                             {/* {comment.waktu_komentar} */}
                             <br />
                           </div>

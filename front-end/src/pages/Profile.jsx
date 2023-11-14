@@ -3,12 +3,13 @@ import { MainLayout } from "../Components";
 import dogo from "../assets/dogo.jpg";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 function Profile() {
   const [cookie, setCookie] = useCookies("user_id");
   const [response, setResponse] = useState([]);
-  const [stores, setStores] = useState([]);
+  const [toko, setToko] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -20,20 +21,17 @@ function Profile() {
         console.error("Error fetching data:", error);
       });
 
-      const fetchStores = async () => {
-        const user_id = cookie.user_id;
-        
-        const response = await fetch(`http://localhost:3000/users/store/${user_id}`);
-        const data = await response.json();
-        
-        setStores(data);
-      }
-
-      fetchStores()
-  }, [cookie]);
-  console.log(response);
-
-const navigate = useNavigate()
+    axios
+      .get(`http://localhost:3000/users/store/${cookie.user_id}`)
+      .then((res) => {
+        setToko(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+  //   console.log(response);
+  console.log(toko);
 
   return (
     <>
@@ -123,12 +121,13 @@ const navigate = useNavigate()
             >
               <img
                 className="mx-auto"
-                src={dogo}
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
                 style={{
                   height: "10rem",
                   width: "10rem",
                   objectFit: "cover",
                   borderRadius: "50%  ",
+                  border: "1px solid black",
                 }}
               />
               <div className="mx-auto mt-3">
@@ -145,14 +144,42 @@ const navigate = useNavigate()
           </div>
         </div>
       </div>
-      <div>List Toko:</div>
-      <div className="btn btn-success" onClick={()=>navigate("/create-store")}>Add New Store</div>
-      <div>
-        {stores.map(store => (
-          <div key={store.store_id} className="mb-4 p-4 border border-gray-300 rounded">
-            <h3 className="text-xl mb-2">{store.store_name}</h3>
-            <div className="btn btn-primary" onClick={() => navigate(`/store/${store.store_id}`)}>See Detail Store</div>
-          </div>
+      <div className="m-5">
+        <div
+          className="btn btn-success"
+          onClick={() => navigate("/create-store")}
+        >
+          Add New Store
+        </div>
+        <h1 style={{ fontSize: "2rem" }} className="mb-2">
+          List Toko:
+        </h1>
+        {toko.map((toko) => (
+          <>
+            <div
+              className="border border-dark rounded-1 mb-4"
+              onClick={() => navigate(`/store/${toko.store_id}`)}
+            >
+              <div className="m-4 row">
+                <div className="col-1">
+                  <img
+                    src="https://icon-library.com/images/guest-icon-png/guest-icon-png-29.jpg"
+                    alt="icon-toko"
+                    style={{
+                      objectFit: "cover",
+                      border: "1px solid black",
+                      borderRadius: "50%",
+                      height: "5rem",
+                    }}
+                  />
+                </div>
+                <div className="col-1">
+                  <div style={{ fontSize: "1.2rem" }}>{toko.store_name}</div>
+                  <div>{toko.store_description}</div>
+                </div>
+              </div>
+            </div>
+          </>
         ))}
       </div>
     </>
