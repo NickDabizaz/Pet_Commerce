@@ -37,17 +37,17 @@ const createComment = async (req, res) => {
 
 const getCommentsByPostId = async (req, res) => {
         try {
-            const { postId } = req.params;
+            const { post_id } = req.params;
     
             // Check if post exists
-            const post = await db.Post.findOne({ where: { post_id: postId } });
+            const post = await db.Post.findOne({ where: { post_id: post_id } });
             if (!post) {
                 return res.status(404).json({ message: 'Post not found' });
             }
     
             // Get the comments for the post
             const comments = await db.Comment.findAll({
-                where: { post_id: postId },
+                where: { post_id: post_id },
                 include: [{ model: db.User, attributes: ['name'] }],
                 order: [['comment_time', 'ASC']]
             });
@@ -75,18 +75,18 @@ const getCommentsByPostId = async (req, res) => {
 
   const deleteComment = async (req, res) => {
     try {
-      const { commentId } = req.params;
+      const { comment_id } = req.params;
   
       // Check if comment exists
-      const comment = await db.Comment.findOne({ where: { comment_id: commentId } });
+      const comment = await db.Comment.findOne({ where: { comment_id: comment_id } });
       if (!comment) {
-        return res.status(404).json({ message: `Comment with id ${commentId} not found` });
+        return res.status(404).json({ message: `Comment with id ${comment_id} not found` });
       }
   
       // Delete the comment
       await comment.destroy();
   
-      return res.status(200).json({ message: `Comment with id ${commentId} has been deleted successfully` });
+      return res.status(200).json({ message: `Comment with id ${comment_id} has been deleted successfully` });
     } catch (err) {
       console.error(err);
       return res.status(500).json({ message: 'An error occurred while trying to delete the comment' });

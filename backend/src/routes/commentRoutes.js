@@ -8,9 +8,9 @@ const router = express.Router();
 router.post('/', commentController.createComment);
 
 // Route untuk menampilkan comment berdasarkan postingan yang di comment
-router.get('/:postId', commentController.getCommentsByPostId);
+router.get('/:post_id', commentController.getCommentsByPostId);
 
 // Route untuk menghapus comment
-router.delete('/:commentId', commentController.deleteComment);
+router.delete('/:comment_id', commentController.deleteComment);
 
 module.exports = router;

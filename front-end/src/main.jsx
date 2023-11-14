@@ -24,6 +24,7 @@ import Profile from "./pages/Profile.jsx";
 import FormAddProduct from "./pages/FormAddProduct.jsx";
 import Search from "./pages/Search.jsx";
 import ShoppingCart from "./pages/ShoppingCart.jsx";
+import DetailPost from "./pages/DetailPost.jsx";
 
 const router = createBrowserRouter([
   {
@@ -52,8 +53,15 @@ const router = createBrowserRouter([
         path: "/community",
         children: [
           { index: true, element: <Community /> },
-          { path: ":post_id", element: <Detail /> },
         ],
+      },
+      {
+        path: "/post",
+        children: [
+          { index: true, element: <Community /> },
+          { path: ":post_id", element: <DetailPost /> },
+        ],
+
       },
       { path: "/create-store", element: <CreateStore /> },
       {
@@ -76,7 +84,7 @@ const router = createBrowserRouter([
       {
         path: "/error",
         element: <AlwaysErrorPage />,
-        errorElement: <ErrorElement />,
+        errorElement: <div>Ini Error Element</div>,
       },
     ],
   },
