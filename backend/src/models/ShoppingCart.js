@@ -5,10 +5,34 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true
       },
-      qty: DataTypes.INTEGER
+      qty: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
+      deletedAt: {
+        type: DataTypes.DATE,
+        allowNull: true
+      },
+      user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      product_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      }
     },
     {
-      paranoid: true
+      paranoid: true,
+      tableName: 'shoppingcarts'
     });
   
     ShoppingCart.associate = (models) => {
@@ -18,3 +42,5 @@ module.exports = (sequelize, DataTypes) => {
   
     return ShoppingCart;
   };
+
+  
