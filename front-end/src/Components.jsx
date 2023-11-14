@@ -20,7 +20,7 @@ export function ContactUsPage() {
 }
 
 export function AlwaysErrorPage() {
-  throw new Error();
+  throw new Error("Error");
   // return <h1>This will never show</h1>;
 }
 

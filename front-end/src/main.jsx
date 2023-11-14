@@ -23,6 +23,7 @@ import StoreDetail from "./pages/StoreDetail.jsx";
 import Profile from "./pages/Profile.jsx";
 import FormAddProduct from "./pages/FormAddProduct.jsx";
 import Search from "./pages/Search.jsx";
+import ShoppingCart from "./pages/ShoppingCart.jsx";
 
 const router = createBrowserRouter([
   {
@@ -68,16 +69,10 @@ const router = createBrowserRouter([
           },
         ],
       },
-      //
-      // {
-      //   path: "/nested",
-      //   // element: <NestedPage />,
-      //   children: [
-      //     { path: "page1", element: <NestedPage1 /> },
-      //     { path: "page2", element: <NestedPage2 /> },
-      //     { index: true, element: <NestedPage0 /> },
-      //   ],
-      // },
+      {
+        path: "/cart",
+        element: <ShoppingCart />,
+      },
       {
         path: "/error",
         element: <AlwaysErrorPage />,

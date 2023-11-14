@@ -20,7 +20,7 @@ function Community() {
         console.error("Error fetching data:", error);
       });
   }, []);
-  console.log(response);
+  // console.log(response);
 
   return (
     <>
@@ -132,6 +132,7 @@ function Detail() {
   useEffect(() => {
     if (post_id.post_id) {
       fetchPost();
+      console.log({response});
     }
   }, [post_id.post_id]);
 
