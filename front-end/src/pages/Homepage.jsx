@@ -4,10 +4,15 @@ import { MainLayout } from "../Components";
 import cart from "../assets/cart.png";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
+import { Modal, Button } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 function HomePage() {
   const [cookie, setCookie, removeCookie] = useCookies(["user_id"]);
   const [products, setProducts] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [productId, setProductId] = useState(-1);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +25,44 @@ function HomePage() {
         console.error("Error fetching data:", error);
       });
   }, []);
+
+  const handleCloseModal = () => {
+    setQuantity(1);
+    setShowModal(false);
+  };
+  const handleShowModal = (product_id) => {
+    setProductId(product_id);
+    setShowModal(true);
+  };
+
+  const handleAddToCart = () => {
+    const data = {
+      user_id: cookie.user_id,
+      product_id: productId,
+      qty: quantity,
+    };
+    console.log({ data });
+    axios
+      .post("http://localhost:3000/cart", data)
+      .then((response) => {
+        console.log(response.data);
+        Swal.fire({
+          icon: 'success',
+          title: 'Berhasil ditambahkan ke keranjang',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal menambahkan ke keranjang',
+          text: 'Terjadi kesalahan saat menambahkan ke keranjang',
+        });
+      });
+    setQuantity(1);
+  };
 
   return (
     <>
@@ -52,6 +95,7 @@ function HomePage() {
                       className="btn btn-warning"
                       onClick={() => {
                         !cookie.user_id && navigate("/login");
+                        cookie.user_id && handleShowModal(product.product_id);
                       }}
                     >
                       <img src={cart} width={"20rem"} />
@@ -63,6 +107,46 @@ function HomePage() {
           ))}
         </div>
       </div>
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        style={{ backgroundColor: "transparent" }}
+      >
+        <Modal.Header closeButton style={{ color: "#000" }}>
+          <Modal.Title>Add to Cart</Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ color: "#000" }}>
+          <div className="mb-3">
+            <label htmlFor="quantity" className="form-label">
+              Quantity
+            </label>
+            <input
+              type="number"
+              className="form-control"
+              id="quantity"
+              min="1"
+              value={quantity}
+              onChange={(e) => setQuantity(parseInt(e.target.value))}
+            />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="outline-danger"
+            className="no-hover"
+            onClick={handleCloseModal}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="outline-warning"
+            className="no-hover"
+            onClick={handleAddToCart}
+          >
+            Add to Cart
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
