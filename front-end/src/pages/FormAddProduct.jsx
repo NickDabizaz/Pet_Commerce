@@ -66,7 +66,7 @@ export default function FormAddProduct() {
           className="container-fluid rounded d-flex shadow"
           style={{
             width: "70%",
-            height: "100vh",
+            height: "105vh",
             backgroundColor: "#6CD4FF",
             overflow: "hidden",
           }}
@@ -75,7 +75,7 @@ export default function FormAddProduct() {
             className="container-fluid rounded"
             style={{
               width: "100%",
-              height: "95vh",
+              height: "100vh",
               marginTop: "2.5vh",
               backgroundColor: "#FFFFFF",
             }}
@@ -88,6 +88,7 @@ export default function FormAddProduct() {
                   margin: "0 auto",
                   width: "26rem",
                   height: "5rem",
+                  marginTop: "1%"
                 }}
               />
               <div>
@@ -186,6 +187,10 @@ export default function FormAddProduct() {
                 {loading ? "Submitting..." : "Add Product"}
               </button>
             </form>
+            <p className="text-center" style={{ marginTop: "2%" }}>
+              Change Of Mind?{" "}
+              <b className="cursor-pointer" style={{ color: "#D39C39" }} onClick={() => { navigate(`/store/${store_id}`) }}>Back To Store</b>
+            </p>
             {errors.product_name && (
               <p
                 className="text-center"
