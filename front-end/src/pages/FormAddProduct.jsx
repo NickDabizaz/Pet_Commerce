@@ -3,15 +3,16 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import addpict from "../assets/add.png";
 
 export default function FormAddProduct() {
   const [cookies] = useCookies(["user_id"]);
-  const { 
+  const {
     register,
-    handleSubmit, 
+    handleSubmit,
     formState: { errors }
   } = useForm();
-  const {store_id} = useParams()
+  const { store_id } = useParams()
 
   const navigate = useNavigate();
 
@@ -28,14 +29,15 @@ export default function FormAddProduct() {
     fetchCategories();
   }, []);
 
-  const onSubmit = async ({product_name, price, quantity, rating, category_id}) => {
+  const onSubmit = async ({ product_name, price, quantity, rating, category_id }) => {
     try {
       setLoading(true);
-      
+
       const { user_id } = cookies;
-      
+      rating = 0;
+
       const response = await axios.post("http://localhost:3000/sellers/add-product", {
-        user_id, 
+        user_id,
         product_name,
         price,
         quantity,
@@ -43,10 +45,10 @@ export default function FormAddProduct() {
         category_id,
         store_id
       });
-      console.log({response});
-      
+      console.log({ response });
+
       setLoading(false);
-      navigate("/");
+      navigate(`/store/${store_id}`);
     } catch (error) {
       setLoading(false);
       console.error(error);
@@ -58,60 +60,159 @@ export default function FormAddProduct() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="p-10 bg-white rounded shadow">
-      <h1 className="text-2xl font-bold mb-4">Add New Product</h1>
-
-      <div className="space-y-2">
-        <input 
-          {...register("product_name", { required: "Product name is required" })}
-          className="w-full border p-2" 
-          type="text" 
-          placeholder="Product name" 
-        />
-        {errors.product_name && <p className="text-red-500">{errors.product_name.message}</p>}
-        
-        <input
-          {...register("price", { required: "Price is required" })}
-          className="w-full border p-2"
-          type="number" 
-          placeholder="Price" 
-        />
-        {errors.price && <p className="text-red-500">{errors.price.message}</p>}
-
-        <input
-          {...register("quantity", { required: "Quantity is required" })}
-          className="w-full border p-2"
-          type="number"
-          placeholder="Quantity"
-        />
-        {errors.quantity && <p className="text-red-500">{errors.quantity.message}</p>}
-
-        <input
-          {...register("rating", { required: "Rating is required" })}
-          className="w-full border p-2" 
-          type="number"
-          placeholder="Rating" 
-        />
-        {errors.rating && <p className="text-red-500">{errors.rating.message}</p>}
-
-        <select {...register("category_id")}>
-          <option value={categories[0].category_id}>{categories[0].category_name}</option>
-            
-          {categories.map(category => (
-            <option key={category.category_id} value={category.category_id}>
-              {category.category_name}
-            </option>
-          ))}
-        </select>
-
-        <button 
-          type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded"
-          disabled={loading}
+    <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>
+      <div className="pt-20 pb-20">
+        <div
+          className="container-fluid rounded d-flex shadow"
+          style={{
+            width: "70%",
+            height: "100vh",
+            backgroundColor: "#6CD4FF",
+            overflow: "hidden",
+          }}
         >
-          {loading ? "Submitting..." : "Add Product"}
-        </button>
+          <div
+            className="container-fluid rounded"
+            style={{
+              width: "100%",
+              height: "95vh",
+              marginTop: "2.5vh",
+              backgroundColor: "#FFFFFF",
+            }}
+          >
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <img
+                src={addpict}
+                style={{
+                  display: "block",
+                  margin: "0 auto",
+                  width: "26rem",
+                  height: "5rem",
+                }}
+              />
+              <div>
+                <label
+                  style={{
+                    marginLeft: "2%",
+                    fontWeight: 700,
+                    marginBottom: "1%",
+                    marginTop: "1%",
+                  }}
+                >
+                  Product Name
+                </label>
+                <input
+                  className="form-control"
+                  style={{ marginLeft: "2%", width: "96%" }}
+                  type="text"
+                  placeholder="Product name"
+                  {...register("product_name", { required: "Product name is required" })}
+                />
+              </div>
+              <div>
+                <label
+                  style={{
+                    marginLeft: "2%",
+                    fontWeight: 700,
+                    marginBottom: "1%",
+                    marginTop: "3%",
+                  }}
+                >
+                  Price
+                </label>
+                <input
+                  className="form-control"
+                  style={{ marginLeft: "2%", width: "96%" }}
+                  type="number"
+                  placeholder="Price"
+                  {...register("price", { required: "Price is required" })}
+                />
+              </div>
+              <div>
+                <label
+                  style={{
+                    marginLeft: "2%",
+                    fontWeight: 700,
+                    marginBottom: "1%",
+                    marginTop: "3%",
+                  }}
+                >
+                  Quantity
+                </label>
+                <input
+                  className="form-control"
+                  style={{ marginLeft: "2%", width: "96%" }}
+                  type="number"
+                  placeholder="Quantity"
+                  {...register("quantity", { required: "Quantity is required" })}
+                />
+              </div>
+              <div>
+                <label
+                  style={{
+                    marginLeft: "2%",
+                    fontWeight: 700,
+                    marginBottom: "1%",
+                    marginTop: "3%",
+                  }}
+                >
+                  Category
+                </label>
+                <select className="form-select" style={{ marginLeft: "2%", width: "96%" }} {...register("category_id")}>
+                  <option value={categories[0].category_id}>{categories[0].category_name}</option>
+
+                  {categories.map(category => (
+                    <option key={category.category_id} value={category.category_id}>
+                      {category.category_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button
+                type="submit"
+                className="btn btn-info"
+                disabled={loading}
+                style={{
+                  backgroundColor: "#C46E85",
+                  borderColor: "#C46E85",
+                  marginTop: "4%",
+                  marginLeft: "2%",
+                  fontWeight: 700,
+                  width: "96%",
+                  height: "2.5rem",
+                  color: "white",
+                }}
+              >
+                {loading ? "Submitting..." : "Add Product"}
+              </button>
+            </form>
+            {errors.product_name && (
+              <p
+                className="text-center"
+                style={{ marginTop: "1%", color: "red" }}
+              >
+                {errors.product_name.message}
+              </p>
+            )}
+            {errors.price && (
+              <p
+                className="text-center"
+                style={{ marginTop: "1%", color: "red" }}
+              >
+                {errors.price.message}
+              </p>
+            )}
+            {errors.quantity && (
+              <p
+                className="text-center"
+                style={{ marginTop: "1%", color: "red" }}
+              >
+                {errors.quantity.message}
+              </p>
+            )}
+          </div>
+        </div>
       </div>
-    </form>
+    </div>
   );
 }
