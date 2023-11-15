@@ -1,49 +1,25 @@
 const { where } = require("sequelize");
 const { Post, User, Comment, PostLike, PostShare } = require("../models");
-const multer = require("multer");
-const fs = require("fs"); //filesystem
-const path = require("path");
 
-const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
-    const folderName = `uploads/${req.body.user_id}`;
+const addPost = async (req, res) => {
 
-    if (!fs.existsSync(folderName)) {
-      fs.mkdirSync(folderName, { recursive: true });
-    }
+  try {
 
-    callback(null, folderName);
-  },
-  filename: (req, file, callback) => {
-    const fileExtension = path.extname(file.originalname).toLowerCase();
+    const { user_id, title } = req.params
 
-    callback(null, `tes${fileExtension}`);
-  },
-});
+    const post = await Post.create({
+      title,
+      user_id,
+    });
 
-const upload = multer({ storage: storage })
+    res.status(201).json(post);
 
-const addPost = (req, res) => {
-
-  const uploadingFile = upload.single("file");
-  uploadingFile(req, res, (err) => {
-    // const { title, user_id } = req.body;
-    if (err) {
-      console.log(err);
-      return res
-        .status(400)
-        .send((err.message || err.code) + " pada field " + err.field);
-    }
-    else{
-      // const post = await Post.create({
-      //   title,
-      //   user_id
-      // });
-      res.status(201).json({msg:"masok"});
-    }
-  });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 
 };
+
 
 let tempArrayLengkap = []
 const getAllPosts = async (req, res) => {
