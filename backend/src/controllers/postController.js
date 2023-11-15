@@ -1,4 +1,4 @@
-const { where } = require("sequelize");
+const { where, Sequelize, Op } = require("sequelize");
 const { Post, User, Comment, PostLike, PostShare } = require("../models");
 
 const addPost = async (req, res) => {
@@ -19,7 +19,6 @@ const addPost = async (req, res) => {
   }
 
 };
-
 
 let tempArrayLengkap = []
 const getAllPosts = async (req, res) => {
@@ -58,10 +57,10 @@ const getAllPosts = async (req, res) => {
         comment: tempArray
       }
 
-      console.log({ temp2 });
+
       if (tempArrayLengkap.length > 0) {
         const check = tempArrayLengkap.filter((item) => item.post_id === temp2.post_id)
-        console.log({ check });
+        // console.log({ check });
         if (check.length == 0) {
           tempArrayLengkap.push(temp2)
         }
@@ -70,7 +69,7 @@ const getAllPosts = async (req, res) => {
         tempArrayLengkap.push(temp2)
       }
 
-      console.log({ tempArrayLengkap });
+      // console.log({ tempArrayLengkap });
 
     })
 
@@ -81,6 +80,7 @@ const getAllPosts = async (req, res) => {
   }
 };
 
+
 const getPostById = async (req, res) => {
   const { id } = req.params;
 
@@ -88,21 +88,50 @@ const getPostById = async (req, res) => {
     const post = await Post.findByPk(id, {
       include: [
         {
+          model: User,
+          attributes: ['name'],
+        },
+        {
+          model: PostLike,
+          attributes: [
+            [Sequelize.fn('COUNT', Sequelize.col('postLikes.post_id')), 'likeCount']
+          ],
+          group: ['postLikes.post_id'],
+        },
+        {
+          model: PostShare,
+          attributes: [
+            [Sequelize.fn('COUNT', Sequelize.col('postShares.post_id')), 'shareCount']
+          ],
+          group: ['postShares.post_id'],
+        },
+        {
           model: Comment,
           include: [
             {
               model: User,
-              attributes: ['name']
-            }
-          ]
-        }
-      ]
+              attributes: ['name'],
+            },
+          ],
+        },
+      ],
     });
+
+    const likeCount = post.PostLikes.length > 0 ? post.PostLikes[0].get('likeCount') : 0;
+    const shareCount = post.PostShares.length > 0 ? post.PostShares[0].get('shareCount') : 0;
+
+    const result = {
+      post_id: id,
+      nama_pengepost: post.User.name,
+      jumlah_like: likeCount,
+      jumlah_share: shareCount,
+      comment: post.Comments,
+    }
 
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
-    res.status(200).json(post);
+    res.status(200).json(result);
 
   } catch (error) {
     res.status(500).json({ message: error.message });

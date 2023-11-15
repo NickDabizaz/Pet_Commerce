@@ -4,8 +4,8 @@ const {getLikesByPostId,likePost,unlikePost} = require('../controllers/likeContr
 
 const router = express.Router();
 
-router.get('/:post_id', getLikesByPostId);
 router.post('/', likePost);
 router.delete('/', unlikePost);
+router.get('/:post_id', getLikesByPostId);
 
 module.exports = router;

@@ -42,6 +42,45 @@ const getOrderById = async (req, res) => {
   }
 };
 
+const addProductToOrder = async (req, res) => {
+  try {
+    // Find the order based on user_id
+    const order = await Order.findOne({
+      where: { user_id: req.params.user_id },
+    });
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found for the user" });
+    }
+
+    // Get the product_id from the request body
+    const product = await Product.findOne({
+      where: { product_id: req.body.product_id },
+    });
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    // Calculate the subtotal based on the product price and quantity
+    const subtotal = product.price * req.body.qty;
+
+    // Create a new order detail
+    const orderDetail = new OrderDetail({
+      order_id: order.order_id,
+      product_id: req.body.product_id,
+      qty: req.body.qty,
+      subtotal: subtotal,
+    });
+
+    const newOrderDetail = await orderDetail.save();
+
+    res.status(201).json(newOrderDetail);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 // Get order details by order_id
 const getOrderDetailsById = async (req, res) => {
   try {
@@ -93,45 +132,6 @@ const getOrderDetailsById = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
-  }
-};
-
-const addProductToOrder = async (req, res) => {
-  try {
-    // Find the order based on user_id
-    const order = await Order.findOne({
-      where: { user_id: req.params.user_id },
-    });
-
-    if (!order) {
-      return res.status(404).json({ message: "Order not found for the user" });
-    }
-
-    // Get the product_id from the request body
-    const product = await Product.findOne({
-      where: { product_id: req.body.product_id },
-    });
-
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-
-    // Calculate the subtotal based on the product price and quantity
-    const subtotal = product.price * req.body.qty;
-
-    // Create a new order detail
-    const orderDetail = new OrderDetail({
-      order_id: order.order_id,
-      product_id: req.body.product_id,
-      qty: req.body.qty,
-      subtotal: subtotal,
-    });
-
-    const newOrderDetail = await orderDetail.save();
-
-    res.status(201).json(newOrderDetail);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
   }
 };
 

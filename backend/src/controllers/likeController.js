@@ -58,32 +58,32 @@ exports.unlikePost = async (req, res) => {
 };
 
 exports.getLikesByPostId = async (req, res) => {
-    try {
-        const { post_id } = req.params;
+  try {
+    const { post_id } = req.params;
 
-        const likes = await PostLike.findAll({
-            where: {
-                post_id,
-                deletedAt: null,
-            },
-            include: [
-                {
-                    model: User,
-                    attributes: ["user_id", "name"],
-                },
-            ],
-        });
+    const likes = await PostLike.findAll({
+      where: {
+        post_id,
+        deletedAt: null,
+      },
+      include: [
+        {
+          model: User,
+          attributes: ["user_id", "name"],
+        },
+      ],
+    });
 
-        const simplifiedLikes = likes.map(like => ({
-            like_id: like.like_id,
-            post_id: like.post_id,
-            user_id: like.User.user_id,
-            user_name: like.User.name
-        }));
+    const simplifiedLikes = likes.map(like => ({
+      like_id: like.like_id,
+      post_id: like.post_id,
+      user_id: like.User.user_id,
+      user_name: like.User.name
+    }));
 
-        return res.status(200).json(simplifiedLikes);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Internal server error" });
-    }
+    return res.status(200).json(simplifiedLikes);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 };

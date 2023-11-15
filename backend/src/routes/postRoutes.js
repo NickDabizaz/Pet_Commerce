@@ -5,9 +5,9 @@ const router = express.Router();
 const postController = require('../controllers/postController');
 const upload = require("../utils/multerConfig")
 
-router.get('/', postController.getAllPosts);
-
 router.post('/:user_id/:title', upload.single("file"), postController.addPost);
+
+router.get('/', postController.getAllPosts);
 
 router.get('/:id', postController.getPostById);
 

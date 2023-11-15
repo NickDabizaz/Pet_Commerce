@@ -8,9 +8,9 @@ const {
 } = require("../controllers/orderController");
 
 // GET a specific order by ID
-router.get("/:user_id", getOrderById);
-router.get("/details/:order_id", getOrderDetailsById);
-router.post("/add/:user_id", addProductToOrder);
 router.post("/", createNewOrder);
+router.get("/:user_id", getOrderById);
+router.post("/add/:user_id", addProductToOrder);
+router.get("/details/:order_id", getOrderDetailsById);
 
 module.exports = router;
