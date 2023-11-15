@@ -102,32 +102,6 @@ exports.updateCart = async (req, res) => {
   }
 };
 
-exports.deleteCart = async (req, res) => {
-  try {
-    const { user_id } = req.params;
-
-    if (!user_id) {
-      return res.status(400).json({ message: "Invalid input" });
-    }
-
-    // Find the cart to delete
-    const cart = await ShoppingCart.findOne({
-      where: { user_id },
-    });
-
-    if (!cart) {
-      return res.status(404).json({ message: "Cart not found" });
-    }
-
-    // Delete the cart
-    await cart.destroy();
-
-    res.status(200).json({ message: "Cart deleted successfully" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
 exports.updateCart = async (req, res) => {
   try {
     const { user_id } = req.params;
@@ -153,6 +127,33 @@ exports.updateCart = async (req, res) => {
     await cart.save();
 
     res.status(200).json(cart);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+exports.deleteCart = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+
+    if (!user_id) {
+      return res.status(400).json({ message: "Invalid input" });
+    }
+
+    // Find the cart to delete
+    const cart = await ShoppingCart.findOne({
+      where: { user_id },
+    });
+
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+
+    // Delete the cart
+    await cart.destroy();
+
+    res.status(200).json({ message: "Cart deleted successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });
