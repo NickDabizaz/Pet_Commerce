@@ -6,6 +6,7 @@ import { useCookies } from "react-cookie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dogo from "./assets/dogo.jpg";
+import cart_profile from "./assets/cart_profile.png"
 
 export function HomePage() {
   return <h1>Home</h1>;
@@ -96,12 +97,11 @@ export function MainLayout() {
               </NavLink>
             )}
             {cookie.user_id && (
-              <button
-                className="btn btn-warning mx-4"
-                onClick={() => navigate("/cart")}
-              >
-                Cart
-              </button>
+              <NavLink to={"/cart"}>
+                <div className="me-10 cursor-pointer" style={{ height: "2rem", width: "2rem" }}>
+                  <img src={cart_profile} style={{ width: "2rem", height: "2rem" }} />
+                </div>
+              </NavLink>
             )}
             {/* {cookie.user_id && (
               <button
@@ -152,13 +152,13 @@ export function MainLayout() {
         </nav>
 
       </div>
-      <div 
+      <div
         className="container-fluid"
         style={{ display: "flex", backgroundColor: "#1286CE", height: "2.1rem" }}
       >
         <div style={{ marginLeft: "2.5rem" }}><Link to={"/"}><p style={{ fontFamily: "Literata", fontSize: "16pt", fontWeight: 600, color: "white" }}>Home</p></Link></div>
         <div style={{ marginLeft: "7rem" }}><Link to={"/community"}><p style={{ fontFamily: "Literata", fontSize: "16pt", fontWeight: 600, color: "white" }}>Community</p></Link></div>
-        <div style={{ marginLeft: "7rem" }}><Link to={"/"}><p style={{ fontFamily: "Literata", fontSize: "16pt", fontWeight: 600, color: "white" }}>FAQ</p></Link></div>      
+        <div style={{ marginLeft: "7rem" }}><Link to={"/"}><p style={{ fontFamily: "Literata", fontSize: "16pt", fontWeight: 600, color: "white" }}>FAQ</p></Link></div>
       </div>
       <div style={{ top: "100px", position: "relative" }}>
         <Outlet />
