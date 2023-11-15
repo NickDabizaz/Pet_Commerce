@@ -23,4 +23,8 @@ router.get('/get-all-products', sellerController.getAllProducts);
 
 router.get('/products', sellerController.searchProduct);
 
+router.get('/product/:product_id', sellerController.getProductDetail);
+
+
+
 module.exports = router;

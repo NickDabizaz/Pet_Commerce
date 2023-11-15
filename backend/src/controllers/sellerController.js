@@ -1,5 +1,6 @@
 const models = require("../models");
 const {Op} = require("sequelize")
+const { Sequelize } = require('sequelize');
 
 const createStore = async (req, res) => {
 
@@ -289,6 +290,44 @@ const searchProduct = async (req, res) => {
   }
 }
 
+
+const getProductDetail = async (req, res) => {
+  try {
+    const { product_id } = req.params;
+    const product = await models.Product.findOne({ 
+      where: { product_id: product_id },
+      include: [
+        { 
+          model: models.Store, 
+          attributes: ['store_name'] 
+        },
+        { 
+          model: models.Category, 
+          attributes: ['category_name'] 
+        }
+      ]
+    });
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    const productDetail = {
+      product_id: product.product_id,
+      product_name: product.product_name,
+      price: product.price,
+      rating: product.rating,
+      category_id: product.category_id,
+      store_id: product.store_id,
+      quantity: product.quantity,
+      store_name: product.Store.store_name,
+      category_name: product.Category.category_name,
+      subtotal: product.price * product.quantity,
+    };
+    res.status(200).json(productDetail);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createStore,
   addProduct,
@@ -297,5 +336,6 @@ module.exports = {
   viewProducts,
   getAllProducts,
   getDetailStore,
-  searchProduct
+  searchProduct,
+  getProductDetail
 };

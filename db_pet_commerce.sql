@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Nov 2023 pada 16.49
+-- Waktu pembuatan: 15 Nov 2023 pada 15.27
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.1.6
 
@@ -26,9 +26,6 @@ SET time_zone = "+00:00";
 --
 -- Struktur dari tabel `categories`
 --
-DROP DATABASE IF EXISTS db_pet_commerce;
-CREATE DATABASE db_pet_commerce;
-USE db_pet_commerce;
 
 CREATE TABLE `categories` (
   `category_id` int(11) NOT NULL,
@@ -37,18 +34,6 @@ CREATE TABLE `categories` (
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `categories`
---
-
-INSERT INTO `categories` (`category_id`, `category_name`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
-(1, 'Food', '2023-10-31 21:46:14', '2023-10-31 21:46:14', NULL),
-(2, 'Toys', '2023-10-31 21:46:14', '2023-10-31 21:46:14', NULL),
-(3, 'Snacks', '2023-10-31 21:46:14', '2023-10-31 21:46:14', NULL),
-(4, 'Accessories', '2023-10-31 21:46:14', '2023-10-31 21:46:14', NULL),
-(5, 'Pet Clothing', '2023-10-31 21:46:14', '2023-10-31 21:46:14', NULL),
-(6, 'Medicine and Vitamins', '2023-10-31 21:46:14', '2023-10-31 21:46:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -67,14 +52,6 @@ CREATE TABLE `comments` (
   `deletedAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `comments`
---
-
-INSERT INTO `comments` (`comment_id`, `comment_text`, `comment_time`, `user_id`, `post_id`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
-(1, 'Great post!', '2023-02-05 14:00:00', 2, 1, '2023-02-05 14:00:00', '2023-02-05 14:00:00', NULL),
-(2, 'I agree!', '2023-02-06 15:00:00', 1, 2, '2023-02-06 15:00:00', '2023-02-06 15:00:00', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -83,13 +60,13 @@ INSERT INTO `comments` (`comment_id`, `comment_text`, `comment_time`, `user_id`,
 
 CREATE TABLE `orderdetails` (
   `detail_id` int(11) NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
   `qty` int(11) DEFAULT NULL,
   `subtotal` int(11) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `deletedAt` datetime DEFAULT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  `order_id` int(11) DEFAULT NULL
+  `deletedAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -116,12 +93,12 @@ CREATE TABLE `ordernotifications` (
 
 CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `order_date` datetime DEFAULT NULL,
   `total_price` int(11) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `deletedAt` datetime DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `deletedAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -139,14 +116,6 @@ CREATE TABLE `postlikes` (
   `deletedAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `postlikes`
---
-
-INSERT INTO `postlikes` (`like_id`, `user_id`, `post_id`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
-(1, 1, 2, '2023-02-07 16:00:00', '2023-02-07 16:00:00', NULL),
-(2, 2, 1, '2023-02-08 17:00:00', '2023-02-08 17:00:00', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -161,14 +130,6 @@ CREATE TABLE `posts` (
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `posts`
---
-
-INSERT INTO `posts` (`post_id`, `title`, `user_id`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
-(1, 'My first post', 1, '2023-02-03 12:00:00', '2023-02-03 12:00:00', NULL),
-(2, 'Fun toys for pets', 2, '2023-02-04 13:00:00', '2023-02-04 13:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -185,14 +146,6 @@ CREATE TABLE `postshares` (
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `postshares`
---
-
-INSERT INTO `postshares` (`share_id`, `link`, `user_id`, `post_id`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
-(1, 'https://example.com/post/1', 1, 1, '2023-02-12 10:00:00', '2023-02-12 10:00:00', NULL),
-(2, 'https://example.com/post/2', 2, 2, '2023-02-13 11:00:00', '2023-02-13 11:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -212,15 +165,6 @@ CREATE TABLE `products` (
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `products`
---
-
-INSERT INTO `products` (`product_id`, `product_name`, `price`, `rating`, `category_id`, `store_id`, `quantity`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
-(1, 'Product 1', 100, 0, 1, 1, 10, '2023-11-07 15:23:07', '2023-11-07 15:23:07', NULL),
-(2, 'Product 2', 100, 0, 1, 1, 10, '2023-11-07 15:23:11', '2023-11-07 15:23:11', NULL),
-(3, 'Product 3', 100, 0, 1, 1, 10, '2023-11-07 15:23:14', '2023-11-07 15:23:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -276,7 +220,7 @@ CREATE TABLE `stores` (
 --
 
 INSERT INTO `stores` (`store_id`, `store_name`, `store_description`, `createdAt`, `updatedAt`, `deletedAt`, `user_id`) VALUES
-(1, 'My Store', 'This is my store', '2023-11-07 15:23:04', '2023-11-07 15:23:04', NULL, 3);
+(1, 'Testing Store Di Tampilan', 'Ini Contoh Description Tampilan dari Tampilan', '2023-11-15 14:23:29', '2023-11-15 14:23:29', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -303,9 +247,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `address`, `phone_number`, `token`, `role`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
-(1, 'John Doe', 'john@example.com', 'password123', NULL, NULL, NULL, NULL, '2023-02-01 10:00:00', '2023-02-01 10:00:00', NULL),
-(2, 'Jane Doe', 'jane@example.com', 'password456', NULL, NULL, NULL, NULL, '2023-02-02 11:00:00', '2023-02-02 11:00:00', NULL),
-(3, 'John Doe', 'john@example.com', 'password', '123 Main St', '1234567890', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJpYXQiOjE2OTkzNzA0MDIsImV4cCI6MTY5OTQ1NjgwMn0.AU7pTlJgSgc6_7xTFGqS5kCWentYoP_tJFV21elqoMo', 'seller', '2023-11-07 15:19:56', '2023-11-07 15:20:02', NULL);
+(1, 'Nicklaus', 'nicklaus@gmail.com', '123', 'Jl. Rumah no 1', '012345678987', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pY2tsYXVzQGdtYWlsLmNvbSIsImlhdCI6MTcwMDA1ODE3NywiZXhwIjoxNzAwMTQ0NTc3fQ.ct6qS4Q6bDErOudWKDZVB4TP1eYB_DjJHBybUlvCRFo', 'seller', '2023-11-15 14:22:54', '2023-11-15 14:22:57', NULL);
 
 --
 -- Indexes for dumped tables
@@ -330,8 +272,8 @@ ALTER TABLE `comments`
 --
 ALTER TABLE `orderdetails`
   ADD PRIMARY KEY (`detail_id`),
-  ADD KEY `product_id` (`product_id`),
-  ADD KEY `order_id` (`order_id`);
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indeks untuk tabel `ordernotifications`
@@ -415,13 +357,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `orderdetails`
@@ -445,25 +387,25 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT untuk tabel `postlikes`
 --
 ALTER TABLE `postlikes`
-  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `postshares`
 --
 ALTER TABLE `postshares`
-  MODIFY `share_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `share_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `reviews`
@@ -487,7 +429,7 @@ ALTER TABLE `stores`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -504,8 +446,8 @@ ALTER TABLE `comments`
 -- Ketidakleluasaan untuk tabel `orderdetails`
 --
 ALTER TABLE `orderdetails`
-  ADD CONSTRAINT `orderdetails_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `orderdetails_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `orderdetails_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `orderdetails_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `ordernotifications`
@@ -517,7 +459,7 @@ ALTER TABLE `ordernotifications`
 -- Ketidakleluasaan untuk tabel `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `postlikes`
@@ -570,3 +512,53 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+INSERT INTO `categories` (`category_id`, `category_name`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
+(1, 'Makanan Kucing', '2023-11-01 10:00:00', '2023-11-01 10:00:00', NULL), 
+(2, 'Makanan Anjing', '2023-11-02 11:00:00', '2023-11-02 11:00:00', NULL),
+(3, 'Mainan Kucing', '2023-11-03 12:00:00', '2023-11-03 12:00:00', NULL),
+(4, 'Mainan Anjing', '2023-11-04 13:00:00', '2023-11-04 13:00:00', NULL),
+(5, 'Aksesoris Hewan', '2023-11-05 14:00:00', '2023-11-05 14:00:00', NULL);
+
+INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `address`, `phone_number`, `token`, `role`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
+(1, 'John Doe', 'john@example.com', 'password123', 'Jl. Example No.1', '08123456789', NULL, 'customer', '2023-11-06 09:00:00', '2023-11-06 09:00:00', NULL),
+(2, 'Jane Doe', 'jane@example.com', 'password456', 'Jl. Example No.2', '08987654321', NULL, 'customer', '2023-11-07 10:00:00', '2023-11-07 10:00:00', NULL), 
+(3, 'James Smith', 'james@example.com', 'password789', 'Jl. Example No.3', '08192837465', NULL, 'seller', '2023-11-08 11:00:00', '2023-11-08 11:00:00', NULL),
+(4, 'Jennifer Smith', 'jennifer@example.com', 'password321', 'Jl. Example No.4', '08465743829', NULL, 'seller', '2023-11-09 12:00:00', '2023-11-09 12:00:00', NULL),
+(5, 'Robert Johnson', 'robert@example.com', 'password159', 'Jl. Example No.5', '08567483921', NULL, 'customer', '2023-11-10 13:00:00', '2023-11-10 13:00:00', NULL);
+
+INSERT INTO `stores` (`store_id`, `store_name`, `store_description`, `createdAt`, `updatedAt`, `deletedAt`, `user_id`) VALUES  
+(1, 'Toko Hewan A', 'Toko hewan terlengkap', '2023-11-01 08:00:00', '2023-11-01 08:00:00', NULL, 3),
+(2, 'Toko Hewan B', 'Toko hewan murah', '2023-11-02 09:00:00', '2023-11-02 09:00:00', NULL, 4),
+(3, 'Toko Hewan C', 'Toko hewan berkualitas', '2023-11-03 10:00:00', '2023-11-03 10:00:00', NULL, 3),
+(4, 'Toko Hewan D', 'Toko hewan menyeluruh', '2023-11-04 11:00:00', '2023-11-04 11:00:00', NULL, 4), 
+(5, 'Toko Hewan E', 'Toko hewan terbaik', '2023-11-05 12:00:00', '2023-11-05 12:00:00', NULL, 3);
+
+INSERT INTO `products` (`product_id`, `product_name`, `price`, `rating`, `category_id`, `store_id`, `quantity`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
+(1, 'Makanan Kucing Meong', 15000, 4.5, 1, 1, 20, '2023-11-06 08:00:00', '2023-11-06 08:00:00', NULL),  
+(2, 'Makanan Anjing Gukguk', 25000, 4.2, 2, 2, 30, '2023-11-07 09:00:00', '2023-11-07 09:00:00', NULL),
+(3, 'Mainan Kucing Bulu', 5000, 4.8, 3, 3, 10, '2023-11-08 10:00:00', '2023-11-08 10:00:00', NULL),
+(4, 'Mainan Anjing Kong', 10000, 4.0, 4, 4, 15, '2023-11-09 11:00:00', '2023-11-09 11:00:00', NULL),
+(5, 'Kalung Anjing', 50000, 4.9, 5, 5, 5, '2023-11-10 12:00:00', '2023-11-10 12:00:00', NULL);
+
+INSERT INTO `orders` (`order_id`, `user_id`, `order_date`, `total_price`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
+(1, 1, '2023-11-11 10:00:00', 15000, '2023-11-11 10:00:00', '2023-11-11 10:00:00', NULL),
+(2, 2, '2023-11-12 11:00:00', 25000, '2023-11-12 11:00:00', '2023-11-12 11:00:00', NULL),  
+(3, 1, '2023-11-13 12:00:00', 15000, '2023-11-13 12:00:00', '2023-11-13 12:00:00', NULL),
+(4, 3, '2023-11-14 13:00:00', 10000, '2023-11-14 13:00:00', '2023-11-14 13:00:00', NULL),
+(5, 4, '2023-11-15 14:00:00', 50000, '2023-11-15 14:00:00', '2023-11-15 14:00:00', NULL);
+
+INSERT INTO `orderdetails` (`detail_id`, `order_id`, `product_id`, `qty`, `subtotal`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
+(1, 1, 1, 1, 15000, '2023-11-11 10:00:00', '2023-11-11 10:00:00', NULL),
+(2, 2, 2, 1, 25000, '2023-11-12 11:00:00', '2023-11-12 11:00:00', NULL),
+(3, 3, 1, 1, 15000, '2023-11-13 12:00:00', '2023-11-13 12:00:00', NULL),  
+(4, 4, 4, 1, 10000, '2023-11-14 13:00:00', '2023-11-14 13:00:00', NULL),
+(5, 5, 5, 1, 50000, '2023-11-15 14:00:00', '2023-11-15 14:00:00', NULL);
+
+INSERT INTO `reviews` (`review_id`, `rating`, `comment`, `createdAt`, `updatedAt`, `deletedAt`, `user_id`, `product_id`) VALUES
+(1, 5, 'Bagus sekali', '2023-11-06 13:00:00', '2023-11-06 13:00:00', NULL, 1, 1),
+(2, 4, 'Lumayan', '2023-11-07 14:00:00', '2023-11-07 14:00:00', NULL, 2, 2),
+(3, 3, 'Biasa saja', '2023-11-08 15:00:00', '2023-11-08 15:00:00', NULL, 1, 3),
+(4, 2, 'Kurang bagus', '2023-11-09 16:00:00', '2023-11-09 16:00:00', NULL, 5, 4),  
+(5, 1, 'Tidak bagus', '2023-11-10 17:00:00', '2023-11-10 17:00:00', NULL, 4, 5);
