@@ -47,18 +47,18 @@ function HomePage() {
       .then((response) => {
         console.log(response.data);
         Swal.fire({
-          icon: 'success',
-          title: 'Berhasil ditambahkan ke keranjang',
+          icon: "success",
+          title: "Berhasil ditambahkan ke keranjang",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
         Swal.fire({
-          icon: 'error',
-          title: 'Gagal menambahkan ke keranjang',
-          text: 'Terjadi kesalahan saat menambahkan ke keranjang',
+          icon: "error",
+          title: "Gagal menambahkan ke keranjang",
+          text: "Terjadi kesalahan saat menambahkan ke keranjang",
         });
       });
     setQuantity(1);
@@ -74,6 +74,11 @@ function HomePage() {
             <div
               key={product.product_id}
               className="bg-white border border-gray-300 col-2 m-4 p-0"
+              onClick={() => {
+                !cookie.user_id && navigate("/login");
+                cookie.user_id && navigate(`/products/${product.product_id}`);
+                // cookie.user_id && handleShowModal(product.product_id);
+              }}
             >
               <img
                 src="http://via.placeholder.com/640x360"
@@ -91,15 +96,17 @@ function HomePage() {
                     <span style={{ fontSize: "0.75rem" }}>10RB+ sold</span>
                   </div>
                   <div className="text-end">
-                    <button
+                    {/* <button
                       className="btn btn-warning"
                       onClick={() => {
                         !cookie.user_id && navigate("/login");
-                        cookie.user_id && handleShowModal(product.product_id);
+                        cookie.user_id &&
+                          navigate(`/products/${product.product_id}`);
+                        // cookie.user_id && handleShowModal(product.product_id);
                       }}
                     >
                       <img src={cart} width={"20rem"} />
-                    </button>
+                    </button> */}
                   </div>
                 </p>
               </div>
