@@ -158,7 +158,7 @@ export function MainLayout() {
       >
         <div style={{ marginLeft: "2.5rem" }}><Link to={"/"}><p style={{ fontFamily: "Literata", fontSize: "16pt", fontWeight: 600, color: "white" }}>Home</p></Link></div>
         <div style={{ marginLeft: "7rem" }}><Link to={"/community"}><p style={{ fontFamily: "Literata", fontSize: "16pt", fontWeight: 600, color: "white" }}>Community</p></Link></div>
-        <div style={{ marginLeft: "7rem" }}><Link to={"/"}><p style={{ fontFamily: "Literata", fontSize: "16pt", fontWeight: 600, color: "white" }}>FAQ</p></Link></div>
+        <div style={{ marginLeft: "7rem" }}><Link to={"/faq"}><p style={{ fontFamily: "Literata", fontSize: "16pt", fontWeight: 600, color: "white" }}>FAQ</p></Link></div>
       </div>
       <div style={{ top: "100px", position: "relative" }}>
         <Outlet />
