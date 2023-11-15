@@ -26,6 +26,7 @@ import Search from "./pages/Search.jsx";
 import ShoppingCart from "./pages/ShoppingCart.jsx";
 import DetailPost from "./pages/DetailPost.jsx";
 import ProductDetail from "./pages/ProductDetail.jsx";
+import FAQ from "./pages/FAQ.jsx";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
         ],
       },
       { path: "/login", element: <Login /> },
+      { path: "/faq", element: <FAQ /> },
       { path: "/register", element: <Register /> },
       { path: "/profile", element: <Profile /> },
       {
