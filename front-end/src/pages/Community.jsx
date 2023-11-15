@@ -9,12 +9,14 @@ import { useCookies } from "react-cookie";
 function Community() {
   const [cookie, setCookie] = useCookies("user_id");
   const [response, setResponse] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
       .get("http://localhost:3000/post/")
       .then((res) => {
         setResponse(res.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -26,36 +28,38 @@ function Community() {
     <>
       <MainLayout />
       <div>
-        <div
-          className="row text-center m-auto"
-          style={{ zIndex: -1, width: "80rem" }}
-        >
-          {response.map((post) => (
-            <div key={post.post_id} className="col-6">
-              <NavLink to={`/post/${post.post_id}`}>
-                <div className="m-4 bg-info border border-dark rounded-4">
-                  <div style={{ display: "flex" }}>
-                    <div className="text-start m-2 ms-4">
-                      {post.nama_pengepost}
+        {loading == true && "Loading..."}
+        {loading == false && (
+          <div
+            className="row text-center m-auto"
+            style={{ zIndex: -1, width: "80rem" }}
+          >
+            {response.map((post) => (
+              <div key={post.post_id} className="col-6">
+                <NavLink to={`/post/${post.post_id}`}>
+                  <div className="m-4 bg-info border border-dark rounded-4">
+                    <div style={{ display: "flex" }}>
+                      <div className="text-start m-2 ms-4">
+                        {post.nama_pengepost}
+                      </div>
+                      <div
+                        className="mt-3 text-black-50"
+                        style={{ fontSize: "0.6rem" }}
+                      >
+                        1h ago
+                      </div>
+                    </div>
+                    <div className=" ">
+                      <img src={dogo} width={"100%"} />
                     </div>
                     <div
-                      className="mt-3 text-black-50"
-                      style={{ fontSize: "0.6rem" }}
+                      className="row text-start mx-4"
+                      style={{ fontSize: "1rem" }}
                     >
-                      1h ago
-                    </div>
-                  </div>
-                  <div className=" ">
-                    <img src={dogo} width={"100%"} />
-                  </div>
-                  <div
-                    className="row text-start mx-4"
-                    style={{ fontSize: "1rem" }}
-                  >
-                    <p className="col-4">Likes: {post.jumlah_like}</p>
-                    <h3 className="col-4"></h3>
-                    <p className="col-4">
-                      {/* <span>
+                      <p className="col-4">Likes: {post.jumlah_like}</p>
+                      <h3 className="col-4"></h3>
+                      <p className="col-4">
+                        {/* <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     x="0px"
@@ -69,44 +73,44 @@ function Community() {
                   </svg>
                   {post.jumlah_share}
                 </span> */}
-                      Shares: {post.jumlah_share}
-                    </p>
-                  </div>
-                  <div className="text-black-50 m-4 text-start row">
-                    <div className="row-12">
-                      {post.comment.length > 0 && (
-                        <span
-                          className="text-black-50"
-                          style={{
-                            wordWrap: "break-word",
-                            textOverflow: "ellipsis",
-                            display: "-webkit-box",
-                            WebkitBoxOrient: "vertical",
-                            WebkitLineClamp: 2,
-                            overflow: "hidden",
-                          }}
-                        >
-                          <span className="text-white">
-                            {
-                              post.comment[post.comment.length - 1]
-                                .nama_pengomen
-                            }
-                            {": "}
+                        Shares: {post.jumlah_share}
+                      </p>
+                    </div>
+                    <div className="text-black-50 m-4 text-start row">
+                      <div className="row-12">
+                        {post.comment.length > 0 && (
+                          <span
+                            className="text-black-50"
+                            style={{
+                              wordWrap: "break-word",
+                              textOverflow: "ellipsis",
+                              display: "-webkit-box",
+                              WebkitBoxOrient: "vertical",
+                              WebkitLineClamp: 2,
+                              overflow: "hidden",
+                            }}
+                          >
+                            <span className="text-white">
+                              {
+                                post.comment[post.comment.length - 1]
+                                  .nama_pengomen
+                              }
+                              {": "}
+                            </span>
+                            {post.comment[post.comment.length - 1].komentar}
                           </span>
-                          {post.comment[post.comment.length - 1].komentar}
-                        </span>
-                      )}
-                      <br />
-                      <div className="mt-2">
-                        {post.comment.length > 0 ? (
-                          "View all " + post.comment.length + " comments"
-                        ) : (
-                          <br />
                         )}
+                        <br />
+                        <div className="mt-2">
+                          {post.comment.length > 0 ? (
+                            "View all " + post.comment.length + " comments"
+                          ) : (
+                            <br />
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  {/* <ul className="text-left m-4">
+                    {/* <ul className="text-left m-4">
               Comments:
               {post.comment.map((comment, index) => (
                 <li key={index} className="mb-2">
@@ -116,11 +120,12 @@ function Community() {
                 </li>
               ))}
             </ul> */}
-                </div>
-              </NavLink>
-            </div>
-          ))}
-        </div>
+                  </div>
+                </NavLink>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );

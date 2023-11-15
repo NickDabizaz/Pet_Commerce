@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useParams, useSearchParams } from "react-router-dom";
+import {
+  NavLink,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { MainLayout } from "../Components";
 import axios from "axios";
 import cart from "../assets/cart.png";
 import filter from "../assets/filter-icon.png";
+import { useCookies } from "react-cookie";
 
 function Search() {
   const [searchParams] = useSearchParams();
+  const [cookie, setCookie, removeCookie] = useCookies(["user_id"]);
+  const navigate = useNavigate();
 
   const queryParam = searchParams.get("q");
   //   console.log(queryParam);
@@ -75,6 +83,11 @@ function Search() {
               <div
                 key={product.product_id}
                 className="bg-white border border-gray-300 col-3 m-4 p-0"
+                onClick={() => {
+                  !cookie.user_id && navigate("/login");
+                  cookie.user_id && navigate(`/products/${product.product_id}`);
+                  // cookie.user_id && handleShowModal(product.product_id);
+                }}
               >
                 <img
                   src="http://via.placeholder.com/640x360"
@@ -95,9 +108,9 @@ function Search() {
                       <span style={{ fontSize: "0.75rem" }}>10RB+ sold</span>
                     </div>
                     <div className="text-end">
-                      <button className="btn btn-warning">
+                      {/* <button className="btn btn-warning">
                         <img src={cart} width={"20rem"} />
-                      </button>
+                      </button> */}
                     </div>
                   </p>
                 </div>
