@@ -74,6 +74,16 @@ export function MainLayout() {
           </div>
 
           <div style={{ flex: 2 }}></div>
+          <div>
+            {cookie.user_id && (
+              <button
+                className="btn btn-warning mx-4"
+                onClick={() => navigate("/community")}
+              >
+                Community
+              </button>
+            )}
+          </div>
 
           <div>
             {!cookie.user_id && (
@@ -96,6 +106,14 @@ export function MainLayout() {
             )}
             {cookie.user_id && (
               <button
+                className="btn btn-warning mx-4"
+                onClick={() => navigate("/cart")}
+              >
+                Cart
+              </button>
+            )}
+            {/* {cookie.user_id && (
+              <button
                 className="btn btn-danger mx-4"
                 onClick={() => {
                   removeCookie("user_id");
@@ -104,7 +122,7 @@ export function MainLayout() {
               >
                 Logout
               </button>
-            )}
+            )} */}
           </div>
 
           <div>

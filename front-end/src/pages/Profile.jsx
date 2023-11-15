@@ -4,9 +4,10 @@ import dogo from "../assets/dogo.jpg";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
+import { NavLink } from "react-router-dom";
 
 function Profile() {
-  const [cookie, setCookie] = useCookies("user_id");
+  const [cookie, setCookie, removeCookie] = useCookies("user_id");
   const [response, setResponse] = useState([]);
   const [toko, setToko] = useState([]);
   const navigate = useNavigate();
@@ -143,6 +144,17 @@ function Profile() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="m-5">
+        <button
+          className="btn btn-danger mx-4"
+          onClick={() => {
+            removeCookie("user_id");
+            navigate("/");
+          }}
+        >
+          Logout
+        </button>
       </div>
       <div className="m-5">
         <div

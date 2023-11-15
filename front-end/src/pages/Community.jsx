@@ -98,7 +98,11 @@ function Community() {
                       )}
                       <br />
                       <div className="mt-2">
-                        View all {post.comment.length} comments
+                        {post.comment.length > 0 ? (
+                          "View all " + post.comment.length + " comments"
+                        ) : (
+                          <br />
+                        )}
                       </div>
                     </div>
                   </div>
@@ -132,7 +136,7 @@ function Detail() {
   useEffect(() => {
     if (post_id.post_id) {
       fetchPost();
-      console.log({response});
+      console.log({ response });
     }
   }, [post_id.post_id]);
 
