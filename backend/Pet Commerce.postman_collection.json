@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "731cf1d9-2141-4949-aa60-e85dc6642fcb",
+		"_postman_id": "0542266c-1083-4ab5-bbc1-28ae9aeb467f",
 		"name": "Pet Commerce",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27256047"
 	},
 	"item": [
 		{
@@ -94,6 +95,72 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "getUserStore",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/store/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"store",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "rama",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "rama123@yahoo.com",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "gunung anyar",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "1233456773",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"3"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -107,7 +174,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user_id\": 1,\n    \"store_name\": \"My Store\",\n    \"store_description\": \"This is my store\"\n}",
+							"raw": "{\n    \"user_id\": 4,\n    \"store_name\": \"My Store\",\n    \"store_description\": \"This is my store\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -136,7 +203,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user_id\": 1,\n    \"store_id\": 1,\n    \"product_name\": \"Product 3\",\n    \"price\": 100,\n    \"rating\" : 0,\n    \"quantity\": 10,\n    \"category_id\": 1\n}",
+							"raw": "{\n    \"user_id\": 3,\n    \"store_id\": 3,\n    \"product_name\": \"Product 1\",\n    \"price\": 100,\n    \"rating\" : 0,\n    \"quantity\": 10,\n    \"category_id\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -255,7 +322,36 @@
 					"name": "GetAllProducts",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "searchProduct",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/sellers/products?q=s",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"sellers",
+								"products"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "s"
+								}
+							]
+						}
 					},
 					"response": []
 				}
