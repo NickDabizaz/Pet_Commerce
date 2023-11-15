@@ -3,3 +3,8 @@
   background: transparent !important;
   display: none !important;
 }
+
+.prod-card:hover {
+  border: 1px solid #1286ce !important;
+  cursor: pointer;
+}
