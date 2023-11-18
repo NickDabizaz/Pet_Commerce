@@ -41,7 +41,7 @@ const DetailPost = () => {
       .then((response) => {
         console.log(response.data);
         reset();
-        navigate(0)
+        navigate(0);
       })
       .catch((error) => console.log(error));
   };
@@ -55,9 +55,15 @@ const DetailPost = () => {
       <Row>
         <Col>
           <Card>
-            <Card.Body>
+            <Card.Body className="text-center">
               <Card.Title>{post.title}</Card.Title>
-              <Card.Text>{post.content}</Card.Text>
+              <Card.Text>
+                <img
+                  src="http://via.placeholder.com/640x360"
+                  alt="post_image"
+                  className="m-auto"
+                />
+              </Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -68,9 +74,24 @@ const DetailPost = () => {
             <Card.Header>Comments</Card.Header>
             <ListGroup variant="flush">
               {post.Comments.map((comment) => (
-                <ListGroup.Item key={comment.comment_id}>
-                  <p>{comment.comment_text}</p>
-                  <p>By {comment.User.name}</p>
+                <ListGroup.Item
+                  key={comment.comment_id}
+                  style={{ display: "flex" }}
+                >
+                  <div style={{ flex: 1 }}>
+                    <img
+                      src="https://icon-library.com/images/guest-icon-png/guest-icon-png-29.jpg"
+                      style={{
+                        height: "4rem",
+                        border: "1px solid black",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </div>
+                  <div style={{ flex: 10 }}>
+                    <b>{comment.User.name}</b>
+                    <p>{comment.comment_text}</p>
+                  </div>
                 </ListGroup.Item>
               ))}
             </ListGroup>
