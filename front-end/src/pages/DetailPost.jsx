@@ -101,7 +101,7 @@ const DetailPost = () => {
                       />
                     </div>
                     <div style={{ flex: 10 }}>
-                      <b>{comment.User.name}</b>
+                      <b>{comment.user}</b>
                       <p>{comment.comment_text}</p>
                     </div>
                   </ListGroup.Item>

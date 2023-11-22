@@ -128,6 +128,21 @@ const getPostById = async (req, res) => {
         },
       ],
     });
+    // Get the comments for the post
+    const comments = await Comment.findAll({
+      where: { post_id: id },
+      include: [{ model: User, attributes: ['name'] }],
+      order: [['comment_time', 'ASC']]
+  });
+
+   // Map through the comments to format the output
+   const formattedComments = comments.map(comment => ({
+    comment_id: comment.dataValues.comment_id,
+    comment_text: comment.dataValues.comment_text,
+    comment_time: comment.dataValues.comment_time,
+    post_id: comment.dataValues.post_id,
+    user: comment.dataValues.User.dataValues.name
+}));
 
     const likeCount =
       post.PostLikes.length > 0 ? post.PostLikes[0].get("likeCount") : 0;
@@ -140,7 +155,7 @@ const getPostById = async (req, res) => {
       nama_pengepost: post.User.name,
       jumlah_like: likeCount,
       jumlah_share: shareCount,
-      comment: post.Comments,
+      comment: formattedComments,
     };
 
     if (!post) {

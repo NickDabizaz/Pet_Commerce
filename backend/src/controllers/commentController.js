@@ -1,5 +1,7 @@
 
 const db = require('../models');
+const Post = require('../models/Post');
+const User = require('../models/User');
 
 const createComment = async (req, res) => {
     try {
@@ -46,15 +48,15 @@ const getCommentsByPostId = async (req, res) => {
         const { post_id } = req.params;
 
         // Check if post exists
-        const post = await db.Post.findOne({ where: { post_id: post_id } });
+        const post = await Post.findOne({ where: { post_id: post_id } });
         if (!post) {
             return res.status(404).json({ message: 'Post not found' });
         }
 
         // Get the comments for the post
-        const comments = await db.Comment.findAll({
+        const comments = await Comment.findAll({
             where: { post_id: post_id },
-            include: [{ model: db.User, attributes: ['name'] }],
+            include: [{ model: User, attributes: ['name'] }],
             order: [['comment_time', 'ASC']]
         });
 
