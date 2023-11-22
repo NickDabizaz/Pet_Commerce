@@ -7,6 +7,8 @@ const upload = require("../utils/multerConfig")
 
 router.post('/:type', upload.single("file"), postController.addPost);
 
+router.get('/pic/:post_id', postController.getPostPic);
+
 router.get('/', postController.getAllPosts);
 
 router.get('/:id', postController.getPostById);

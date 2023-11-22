@@ -20,6 +20,13 @@ const addPost = async (req, res) => {
 
 };
 
+const getPostPic = (req, res) => {
+  const post_id = req.params.post_id;
+  const lokasinya = `uploads/post/${post_id}.jpg`;
+  // ./uploads/esther/profpic.jpg
+  return res.status(200).sendFile(lokasinya, { root: "." });
+};
+
 let tempArrayLengkap = []
 const getAllPosts = async (req, res) => {
   try {
@@ -181,5 +188,6 @@ module.exports = {
   getAllPosts,
   getPostById,
   updatePost,
-  deletePost
+  deletePost,
+  getPostPic
 };

@@ -11,6 +11,9 @@ router.get('/store/:store_id', sellerController.getDetailStore)
 // Route for seller to add product to store  
 router.post('/add-product/:type', upload.single("file"), sellerController.addProduct);
 
+// get product picture
+router.get("/product/pic/:product_id", sellerController.getProductPic)
+
 // Route for seller to edit product in store
 router.put('/edit-product/:product_id', sellerController.editProduct);
 
