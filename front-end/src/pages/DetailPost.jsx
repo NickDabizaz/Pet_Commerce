@@ -22,7 +22,7 @@ const DetailPost = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/post/${post_id}`)
+      .get(`http://localhost:3000/comments/${post_id}`)
       .then((response) => {
         console.log(response.data);
         setPost(response.data);
