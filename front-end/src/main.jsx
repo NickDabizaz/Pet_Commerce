@@ -11,7 +11,7 @@ import {
   ManageCommunity,
   ManageFAQ,
 } from "./pages/AdminDashboard.jsx";
-import { Community, Detail } from "./pages/Community.jsx";
+import { Community } from "./pages/Community.jsx";
 import {
   AlwaysErrorPage,
   ContactUsPage,

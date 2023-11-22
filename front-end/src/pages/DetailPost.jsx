@@ -17,17 +17,27 @@ const DetailPost = () => {
   const { post_id } = useParams();
   const [post, setPost] = useState(null);
   const [cookies] = useCookies(["user_id"]);
+  const [loading, setLoading] = useState(true);
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/comments/${post_id}`)
-      .then((response) => {
-        console.log(response.data);
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `http://localhost:3000/post/${post_id}`
+        );
         setPost(response.data);
-      })
-      .catch((error) => console.log(error));
+      } catch (error) {
+        console.error("Error fetching post:", error);
+        alert("error hiks");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, [post_id]);
 
   const onSubmit = (data) => {
@@ -73,27 +83,29 @@ const DetailPost = () => {
           <Card>
             <Card.Header>Comments</Card.Header>
             <ListGroup variant="flush">
-              {post.comment.map((comment) => (
-                <ListGroup.Item
-                  key={comment.comment_id}
-                  style={{ display: "flex" }}
-                >
-                  <div style={{ flex: 1 }}>
-                    <img
-                      src="https://icon-library.com/images/guest-icon-png/guest-icon-png-29.jpg"
-                      style={{
-                        height: "4rem",
-                        border: "1px solid black",
-                        borderRadius: "50%",
-                      }}
-                    />
-                  </div>
-                  <div style={{ flex: 10 }}>
-                    <b>{comment.User.name}</b>
-                    <p>{comment.comment_text}</p>
-                  </div>
-                </ListGroup.Item>
-              ))}
+              {console.log([post.comment])}
+              {post.comment &&
+                post.comment.map((comment) => (
+                  <ListGroup.Item
+                    key={comment.comment_id}
+                    style={{ display: "flex" }}
+                  >
+                    <div style={{ flex: 1 }}>
+                      <img
+                        src="https://icon-library.com/images/guest-icon-png/guest-icon-png-29.jpg"
+                        style={{
+                          height: "4rem",
+                          border: "1px solid black",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </div>
+                    <div style={{ flex: 10 }}>
+                      <b>{comment.User.name}</b>
+                      <p>{comment.comment_text}</p>
+                    </div>
+                  </ListGroup.Item>
+                ))}
             </ListGroup>
           </Card>
         </Col>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MainLayout } from "../Components";
 import dogo from "../assets/dogo.jpg";
 import axios from "axios";
@@ -10,6 +10,7 @@ function Profile() {
   const [cookie, setCookie, removeCookie] = useCookies("user_id");
   const [response, setResponse] = useState([]);
   const [toko, setToko] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -120,20 +121,24 @@ function Profile() {
               className=" text-center"
               style={{ display: "block", width: "15rem" }}
             >
-              <img
-                className="mx-auto"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
-                style={{
-                  height: "10rem",
-                  width: "10rem",
-                  objectFit: "cover",
-                  borderRadius: "50%  ",
-                  border: "1px solid black",
-                }}
-              />
+              {selectedFile ? (
+                <div id="imageContainer"></div>
+              ) : (
+                <img
+                  className="mx-auto"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
+                  style={{
+                    height: "10rem",
+                    width: "10rem",
+                    objectFit: "cover",
+                    borderRadius: "50%  ",
+                    border: "1px solid black",
+                  }}
+                />
+              )}
               <div className="mx-auto mt-3">
                 <button className="mx-auto btn btn-secondary">
-                  Select Image
+                  <FileUploader setSelectedFile={setSelectedFile} />
                 </button>
               </div>
               <br />
@@ -166,9 +171,10 @@ function Profile() {
         <h1 style={{ fontSize: "2rem" }} className="mb-2">
           List Toko:
         </h1>
-        {toko.map((toko) => (
+        {toko.map((toko, index) => (
           <>
             <div
+              key={index}
               className="border border-dark rounded-1 mb-4"
               onClick={() => navigate(`/store/${toko.store_id}`)}
             >
@@ -197,5 +203,86 @@ function Profile() {
     </>
   );
 }
+
+const FileUploader = ({ setSelectedFile }) => {
+  const [tempFile, setTempFile] = useState("");
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    setTempFile(file);
+    displayImage(file);
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    setSelectedFile(file);
+    setTempFile(file);
+    displayImage(file);
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleClick = () => {
+    // Trigger the file input when the drop zone is clicked
+    fileInputRef.current.click();
+  };
+
+  const displayImage = (file) => {
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        // Create an image element and set the data URL as its source
+        const imgElement = document.createElement("img");
+        imgElement.src = e.target.result;
+        imgElement.alt = "Selected Image";
+
+        imgElement.style.marginLeft = "auto";
+        imgElement.style.marginRight = "auto";
+        imgElement.style.height = "10rem";
+        imgElement.style.width = "10rem";
+        imgElement.style.objectFit = "cover";
+        imgElement.style.borderRadius = "50%";
+        imgElement.style.border = "1px solid black";
+
+        // Append the image element to the component
+        document.getElementById("imageContainer").innerHTML = "";
+        document.getElementById("imageContainer").appendChild(imgElement);
+      };
+
+      // Use readAsDataURL for images
+      reader.readAsDataURL(file);
+    }
+  };
+
+  return (
+    <div>
+      <input
+        type="file"
+        id="fileInput"
+        style={{ display: "none" }}
+        onChange={handleFileChange}
+        ref={fileInputRef}
+        accept=".jpeg, .jpg, .png"
+      />
+      <div
+        onClick={handleClick}
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        style={{
+          textAlign: "center",
+          cursor: "pointer",
+          height: "auto",
+        }}
+      >
+        <p>Select Image</p>
+      </div>
+    </div>
+  );
+};
 
 export default Profile;
