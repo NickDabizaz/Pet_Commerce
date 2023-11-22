@@ -5,6 +5,7 @@ import { MainLayout } from "../Components";
 import "../index.css";
 import { NavLink, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import logoAdd from "../assets/addPost.png";
 
 function Community() {
   const [cookie, setCookie] = useCookies("user_id");
@@ -27,6 +28,45 @@ function Community() {
   return (
     <>
       <MainLayout />
+      {cookie.user_id && (
+        <div
+          className="m-4 mb-0 mx-auto border border-dark rounded-4"
+          style={{ width: "75rem", backgroundColor: "#6CD4FF" }}
+        >
+          <div className="m-2 row">
+            <div className="col-auto p-0" style={{ width: "6rem" }}>
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
+                style={{
+                  height: "5rem",
+                  width: "5rem",
+                  objectFit: "cover",
+                  borderRadius: "50%  ",
+                  border: "1px solid black",
+                }}
+              />
+            </div>
+            <div className="col-auto my-auto" style={{ width: "59rem" }}>
+              <div className="border border-dark rounded-2 bg-white">
+                <div className="m-2">
+                  <input
+                    type="text"
+                    style={{
+                      width: "100%",
+                      fontSize: "1rem",
+                    }}
+                    placeholder="What's on your mind?"
+                    disabled={true}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-auto my-auto bg-white border border-dark rounded-2">
+              <div className="m-2 mx-1">Add picture</div>
+            </div>
+          </div>
+        </div>
+      )}
       <div>
         {loading == true && "Loading..."}
         {loading == false && (
@@ -37,7 +77,10 @@ function Community() {
             {response.map((post) => (
               <div key={post.post_id} className="col-6">
                 <NavLink to={`/post/${post.post_id}`}>
-                  <div className="m-4 bg-info border border-dark rounded-4">
+                  <div
+                    className="m-4 border border-dark rounded-4"
+                    style={{ backgroundColor: "#6CD4FF" }}
+                  >
                     <div style={{ display: "flex" }}>
                       <div className="text-start m-2 ms-4">
                         {post.nama_pengepost}
@@ -125,7 +168,87 @@ function Community() {
               </div>
             ))}
           </div>
+          // <div className="row">
+          //   <div className="col-1"></div>
+          //   <div className="col-5 bg-info">
+          //     <div
+          //       className="m-5 mx-auto"
+          //       style={{
+          //         width: "30vw",
+          //         height: "500px",
+          //         backgroundColor: "white",
+          //       }}
+          //     ></div>
+          //     <div
+          //       className="m-5 mx-auto"
+          //       style={{
+          //         width: "30vw",
+          //         height: "500px",
+          //         backgroundColor: "white",
+          //       }}
+          //     ></div>
+          //     <div
+          //       className="m-5 mx-auto"
+          //       style={{
+          //         width: "30vw",
+          //         height: "500px",
+          //         backgroundColor: "white",
+          //       }}
+          //     ></div>
+          //   </div>
+          //   <div className="col-5 bg-warning">
+          //     <div
+          //       className="m-5 mx-auto"
+          //       style={{
+          //         width: "30vw",
+          //         height: "500px",
+          //         backgroundColor: "white",
+          //       }}
+          //     ></div>
+          //     <div
+          //       className="m-5 mx-auto"
+          //       style={{
+          //         width: "30vw",
+          //         height: "500px",
+          //         backgroundColor: "white",
+          //       }}
+          //     ></div>
+          //     <div
+          //       className="m-5 mx-auto"
+          //       style={{
+          //         width: "30vw",
+          //         height: "500px",
+          //         backgroundColor: "white",
+          //       }}
+          //     ></div>
+          //   </div>
+          //   <div className="col-1"></div>
+          // </div>
         )}
+      </div>
+      <div
+        className="row"
+        style={{
+          position: "fixed",
+          bottom: "10vh",
+          left: "10vh",
+          border: "1px solid blue",
+          backgroundColor: "white",
+          borderRadius: "26px",
+        }}
+      >
+        <div
+          style={{
+            width: "50px",
+            height: "50px",
+            backgroundColor: "red",
+            borderRadius: "50%",
+          }}
+          className="col-auto p-0"
+        >
+          <img src={logoAdd} alt="add-post" style={{ objectFit: "cover" }} />
+        </div>
+        <div className="col-auto my-auto fw-bold">Add Post</div>
       </div>
     </>
   );
