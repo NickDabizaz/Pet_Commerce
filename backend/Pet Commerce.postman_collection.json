@@ -161,6 +161,37 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "upload profpic",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/D:/campuran/instagram pp/HD-wallpaper-neon-mask-hacker-hackers-lonely-hacker-neon-mask.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/profilpic/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"profilpic",
+								"2"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -202,16 +233,52 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"user_id\": 3,\n    \"store_id\": 3,\n    \"product_name\": \"Product 1\",\n    \"price\": 100,\n    \"rating\" : 0,\n    \"quantity\": 10,\n    \"category_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/D:/campuran/instagram pp/1681367985_6437a3b1c80be_3PIsFnFHZ05xHEUqvE28.jpg"
+								},
+								{
+									"key": "user_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "store_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "product_name",
+									"value": "Product 1",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "rating",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "1",
+									"type": "text"
 								}
-							}
+							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/sellers/add-product",
+							"raw": "http://localhost:3000/sellers/add-product/product",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -219,7 +286,8 @@
 							"port": "3000",
 							"path": [
 								"sellers",
-								"add-product"
+								"add-product",
+								"product"
 							]
 						}
 					},
@@ -439,11 +507,21 @@
 									"key": "file",
 									"type": "file",
 									"src": "/D:/campuran/instagram pp/1681367985_6437a3b1c80be_3PIsFnFHZ05xHEUqvE28.jpg"
+								},
+								{
+									"key": "user_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "idol3",
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/post/2/idol3",
+							"raw": "http://localhost:3000/post/post",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -451,8 +529,7 @@
 							"port": "3000",
 							"path": [
 								"post",
-								"2",
-								"idol3"
+								"post"
 							]
 						}
 					},
