@@ -108,6 +108,10 @@ const login = async (req, res) => {
   }
 };
 
+const profilpic = async(req, res) => {
+  return res.status(201).json({msg:"profile picture berhasil di upload"})
+}
+
 const logout = async (req, res) => {
   // Validate input
   const schema = Joi.object({
@@ -192,5 +196,6 @@ module.exports = {
   logout,
   getUser,
   getUserStore,
-  updateUser
+  updateUser,
+  profilpic
 };

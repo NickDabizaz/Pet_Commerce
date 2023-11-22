@@ -1,12 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
+const upload = require("../utils/multerConfig")
 
 // Registration process
 router.post("/register", userController.register);
 
 // Login process
 router.post("/login", userController.login);
+
+//profil picture
+router.post("/:type/:user_id", upload.single("file"), userController.profilpic);
 
 // Logout process
 router.post("/logout", userController.logout);
