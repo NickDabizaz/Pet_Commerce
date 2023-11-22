@@ -84,8 +84,8 @@ function Search() {
                 key={product.product_id}
                 className="bg-white border border-gray-300 col-3 m-4 p-0"
                 onClick={() => {
-                  !cookie.user_id && navigate("/login");
-                  cookie.user_id && navigate(`/products/${product.product_id}`);
+                  // !cookie.user_id && navigate("/login");
+                  navigate(`/products/${product.product_id}`);
                   // cookie.user_id && handleShowModal(product.product_id);
                 }}
               >
