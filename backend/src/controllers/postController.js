@@ -5,7 +5,7 @@ const addPost = async (req, res) => {
 
   try {
 
-    const { user_id, title } = req.params
+    const { user_id, title } = req.body
 
     const post = await Post.create({
       title,
