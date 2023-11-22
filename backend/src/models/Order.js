@@ -6,6 +6,8 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true
       },
       user_id : DataTypes.INTEGER,
+      transaction_status : DataTypes.BOOLEAN,
+      response_midtrans : DataTypes.STRING,
       order_date: DataTypes.DATE,
       total_price: DataTypes.INTEGER
     },
@@ -20,3 +22,5 @@ module.exports = (sequelize, DataTypes) => {
   
     return Order;
   };
+
+
