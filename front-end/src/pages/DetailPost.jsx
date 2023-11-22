@@ -56,7 +56,7 @@ const DetailPost = () => {
         <Col>
           <Card>
             <Card.Body className="text-center">
-              <Card.Title>{post.title}</Card.Title>
+              {/* <Card.Title>{post.title}</Card.Title> */}
               <Card.Text>
                 <img
                   src="http://via.placeholder.com/640x360"
@@ -73,7 +73,7 @@ const DetailPost = () => {
           <Card>
             <Card.Header>Comments</Card.Header>
             <ListGroup variant="flush">
-              {post.Comments.map((comment) => (
+              {post.comment.map((comment) => (
                 <ListGroup.Item
                   key={comment.comment_id}
                   style={{ display: "flex" }}
