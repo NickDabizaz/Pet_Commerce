@@ -11,6 +11,7 @@ router.post("/login", userController.login);
 
 //profil picture
 router.post("/:type/:user_id", upload.single("file"), userController.profilpic);
+router.get("/pic/:user_id", userController.getProfilpic);
 
 // Logout process
 router.post("/logout", userController.logout);

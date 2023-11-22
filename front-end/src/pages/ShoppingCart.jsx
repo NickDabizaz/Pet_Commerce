@@ -28,6 +28,9 @@ const ShoppingCart = () => {
   const updateCart = async (productId, qty) => {
     try {
       console.log({ productId, qty });
+      if (qty < 1) {
+        qty = 1; // Jika qty kurang dari 1, set qty menjadi 1
+      }
       await axios.put(`http://localhost:3000/cart/${cookies.user_id}`, {
         product_id: productId,
         qty,

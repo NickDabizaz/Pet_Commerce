@@ -21,6 +21,7 @@ function Search() {
 
   const [response, setResponse] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -52,7 +53,39 @@ function Search() {
         console.error("Error fetching data:", error);
       });
   };
-  console.log(categories);
+
+  const handleCategoryChange = (categoryID) => {
+    const index = selectedCategories.indexOf(categoryID);
+    console.log(index)
+    let updatedCategories = [];
+  
+    if (index === -1) {
+      // Jika kategori belum ada dalam array, tambahkan ke dalam array selectedCategories
+      updatedCategories = [...selectedCategories, categoryID];
+    } else {
+      // Jika kategori sudah dipilih sebelumnya, hapus dari array selectedCategories
+      updatedCategories = selectedCategories.filter(
+        (category) => category !== categoryID
+      );
+    }
+    
+    // console.log(updatedCategories)
+    setSelectedCategories(updatedCategories);
+  };
+
+  const filteredProducts = response.filter((product) => {
+    if (selectedCategories.length === 0) {
+      // Jika tidak ada kategori yang dipilih, tampilkan semua produk
+      return true;
+    } else {
+      // Jika ada kategori yang dipilih, filter produk berdasarkan kategori yang dipilih
+      return selectedCategories.includes(product.category_id);
+      // Pastikan 'product.category' sesuai dengan properti kategori pada objek produk dari response API
+    }
+  });
+  
+  // console.log(selectedCategories)
+  // console.log(filteredProducts);
 
   return (
     <>
@@ -69,9 +102,16 @@ function Search() {
               Search Filter
             </span>
             {categories.map((category) => (
-              <div>
-                <input type="checkbox" />
-                {category.category_name}
+              <div key={category.category_id}>
+                <label>
+                  <input
+                    type="checkbox"
+                    value={category.category_name}
+                    onChange={() => handleCategoryChange(category.category_id)}
+                    checked={selectedCategories.includes(category.category_id)}
+                  />
+                  {category.category_name}
+                </label>
               </div>
             ))}
           </div>
@@ -79,7 +119,7 @@ function Search() {
         <div style={{ flex: 10 }}>
           {/* <div style={{ display: "block" }}> */}
           <div className="row">
-            {response.map((product) => (
+            {filteredProducts.map((product) => (
               <div
                 key={product.product_id}
                 className="bg-white border border-gray-300 col-3 m-4 p-0"

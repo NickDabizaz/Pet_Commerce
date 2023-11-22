@@ -112,6 +112,13 @@ const profilpic = async(req, res) => {
   return res.status(201).json({msg:"profile picture berhasil di upload"})
 }
 
+const getProfilpic = (req, res) => {
+  const user_id = req.params.user_id;
+  const lokasinya = `uploads/profilpic/${user_id}.jpg`;
+  // ./uploads/esther/profpic.jpg
+  return res.status(200).sendFile(lokasinya, { root: "." });
+};
+
 const logout = async (req, res) => {
   // Validate input
   const schema = Joi.object({
@@ -197,5 +204,6 @@ module.exports = {
   getUser,
   getUserStore,
   updateUser,
-  profilpic
+  profilpic,
+  getProfilpic
 };

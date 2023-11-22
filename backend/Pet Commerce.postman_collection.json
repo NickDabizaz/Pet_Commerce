@@ -192,6 +192,27 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "getProfilpic",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/pic/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"pic",
+								"2"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -422,6 +443,28 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "getProductPic",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/sellers/product/pic/38",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"sellers",
+								"product",
+								"pic",
+								"38"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -623,6 +666,27 @@
 							"path": [
 								"post",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPostPic",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/post/pic/39",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"post",
+								"pic",
+								"39"
 							]
 						}
 					},

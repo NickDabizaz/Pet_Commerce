@@ -96,6 +96,13 @@ const addProduct = async (req, res) => {
 
 };
 
+const getProductPic = (req, res) => {
+  const product_id = req.params.product_id;
+  const lokasinya = `uploads/product/${product_id}.jpg`;
+  // ./uploads/esther/profpic.jpg
+  return res.status(200).sendFile(lokasinya, { root: "." });
+};
+
 const editProduct = async (req, res) => {
 
   const { user_id } = req.body;
@@ -337,5 +344,6 @@ module.exports = {
   getAllProducts,
   getDetailStore,
   searchProduct,
-  getProductDetail
+  getProductDetail,
+  getProductPic
 };
