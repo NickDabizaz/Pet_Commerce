@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import { Card, Button } from "react-bootstrap";
 import { MainLayout } from "../Components";
 import trash from "../assets/trash.png";
-import Swal from 'sweetalert2/dist/sweetalert2.js'
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 const ShoppingCart = () => {
   const [cartData, setCartData] = useState({ cartItems: [], total: 0 });
@@ -46,94 +46,60 @@ const ShoppingCart = () => {
     const randomLetters = generateRandomLetters(2);
     const orderId = `${randomNumber}${randomLetters}`;
     return orderId;
-  }
+  };
 
   const generateRandomLetters = (length) => {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let result = "";
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const charactersLength = characters.length;
     for (let i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
-  }
-  console.log({generateOrderId: generateOrderId(2)});
+  };
+  console.log({ generateOrderId: generateOrderId() });
 
   const handlePayment = async () => {
     try {
       const paymentBody = {
-        payment_type: "bank_transfer",
-        back_transfer: { bank: "bca", recipient_name: "Nick" },
-        transaction_details: { order_id: generateOrderId(2) , gross_amount: cartData.total },
-        user_id: cookies.user_id,
+        transaction_details: {
+          order_id: generateOrderId(),
+          gross_amount: cartData.total,
+        },
+        user_id : cookies.user_id
       };
       const response = await axios.post(
         "http://localhost:3000/create-payment",
-        paymentBody,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization:
-              "Basic " +
-              btoa("SB-Mid-server-iXfWxGK0DQ5rZpWWVvWt-We0").toString("base64")
-            // Above is API server key for the Midtrans account, encoded to base64
-          },
-        }
+        paymentBody
       );
-      console.log({ response: response });
-      // setToken(response.data.data.response_midtrans);
-      Swal.fire({
-        title: "Berhasil Bayar!",
-        text: "Selamat Pembayaran Anda Sudah Sukses!",
-        icon: "success"
-      });
-
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log("Pembayaran berhasil:", responseData);
-        // Tambahkan logika atau navigasi ke halaman konfirmasi pembayaran
-      } else {
-        const errorData = await response.json();
-        console.error("Gagal melakukan pembayaran:", errorData);
-        // Tampilkan pesan kesalahan kepada pengguna
-      }
+      console.log({ response });
+      setToken(response.data);
+      console.log({token});
+      window.snap.pay(token)
+      
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
       // Tampilkan pesan kesalahan kepada pengguna
     }
   };
 
-  // useEffect(() => {
-  //   if (token) {
-  //     console.log({token});
-  //     window.snap.pay(token, {
-  //       onSuccess: function(result){console.log('success');console.log(result);},
-  //       onPending: function(result){console.log('pending');console.log(result);},
-  //       onError: function(result){console.log('error');console.log(result);},
-  //       onClose: function(){console.log('customer closed the popup without finishing the payment');}
-  //     })
-  //   }
-  // }, [token]);
+  
 
-  // useEffect(() => {
-  //   const midtransUrl = "https://api.midtrans.com";
-  //   const midtransClientKey = "SB-Mid-client-w2NPR2ZdFeoLGB7C";
-  
-  //   // Buat elemen <script> dan atur atributnya
-  //   const scriptTag = document.createElement("script");
-  //   scriptTag.src = midtransUrl;
-  //   scriptTag.setAttribute("data-client-key", midtransClientKey);
-  
-  //   // Tambahkan elemen <script> ke dalam body
-  //   document.body.appendChild(scriptTag);
-  
-  //   // Cleanup: Hapus elemen <script> dari body saat komponen tidak lagi digunakan
-  //   return () => {
-  //     document.body.removeChild(scriptTag);
-  //   };
-  // }, []); // dependencies diubah menjadi array kosong karena hanya ingin menjalankan efek sekali saat komponen dipasang
-  
+  useEffect(() => {
+    const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+    const midtransClientKey = "SB-Mid-client-w2NPR2ZdFeoLGB7C";
+
+    // Buat elemen <script> dan atur atributnya
+    const scriptTag = document.createElement("script");
+    scriptTag.src = midtransUrl;
+    scriptTag.setAttribute("data-client-key", midtransClientKey);
+    scriptTag.async = true;
+    document.body.appendChild(scriptTag);
+
+    return () => {
+      document.body.removeChild(scriptTag);
+    };
+  }, []);
 
   useEffect(() => {
     fetchCart();

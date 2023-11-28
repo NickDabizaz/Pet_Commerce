@@ -34,7 +34,7 @@ models.sequelize.sync().then(() => {
 
   app.post("/create-payment", async (req, res) => {
     console.log({ body: req.body });
-    const snap = new midtransClient.CoreApi({
+    const snap = new midtransClient.Snap({
       isProduction: false,
       serverKey: "SB-Mid-server-iXfWxGK0DQ5rZpWWVvWt-We0",
       clientKey: "SB-Mid-client-w2NPR2ZdFeoLGB7C",
@@ -48,38 +48,17 @@ models.sequelize.sync().then(() => {
     }
 
     try {
-      snap
-        .charge(req.body)
-        .then((chargeResponse) => {
-          models.Order.create({
-            order_id: chargeResponse.order_id,
-            nama: req.body.nama,
-            transaction_status: chargeResponse.transaction_status,
-            response_midtrans: chargeResponse.transaction_id,
-            order_date: new Date(),
-            total_price: chargeResponse.gross_amount,
-          })
-            .then((data) => {
-              return res.status(201).json({
-                success: true,
-                message: "Berhasil melakukan charge transaction!",
-                data: data,
-              });
-            })
-            .catch((error) => {
-              console.log({ error });
-              return res
-                .status(400)
-                .json({ success: false, message: error.message });
-            });
-        })
-        .catch((error) => {
-          console.log({ error });
-          return res
-            .status(400)
-
-            .json({ success: false, message: error.message });
-        });
+      snap.createTransaction(req.body).then((transaction) => {
+        // transaction token
+        let transactionToken = transaction.token;
+        console.log("transactionToken:", transactionToken);
+        return res.send(transaction.token);
+      });
+      await models.Order.create({
+        user_id: req.body.user_id,
+        order_date: new Date(),
+        total_price: req.body.transaction_details.gross_amount,
+      })
     } catch (error) {
       console.log({ error });
       return res.status(500).json({ success: false, message: error.message });
