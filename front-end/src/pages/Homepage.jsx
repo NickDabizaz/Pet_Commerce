@@ -38,7 +38,8 @@ function HomePage() {
               }}
             >
               <img
-                src="http://via.placeholder.com/640x360"
+                src={`../../../backend/uploads/product/dogfood.jpeg`}
+                alt={product.product_name}
                 style={{ width: "100%" }}
               ></img>
               <div className="m-3">

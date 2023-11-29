@@ -244,7 +244,13 @@ const DetailPost = () => {
           </div>
 
           {/* Ini kotak kanan, ukuran */}
-          <div style={{ height: "40rem", width: "40rem" }}>
+          <div
+            style={{
+              height: "40rem",
+              width: "40rem",
+              borderLeft: "1px solid black",
+            }}
+          >
             <div
               className="bg-info bg-opacity-25"
               style={{ height: "100%", textAlign: "left" }}

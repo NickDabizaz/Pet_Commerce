@@ -1,18 +1,18 @@
 const models = require("../models");
-const {Op} = require("sequelize")
-const { Sequelize } = require('sequelize');
+const { Op } = require("sequelize");
+const { Sequelize } = require("sequelize");
 
 const createStore = async (req, res) => {
-
   const { user_id, store_name, store_description } = req.body;
 
   try {
-
     // Validate seller role
     const user = await models.User.findByPk(user_id);
 
     if (!user || user.role !== "seller") {
-      return res.status(403).send("You don't have permission to create a store");
+      return res
+        .status(403)
+        .send("You don't have permission to create a store");
     }
 
     // Generate store id
@@ -24,21 +24,18 @@ const createStore = async (req, res) => {
       store_id: nextId,
       store_name,
       store_description,
-      user_id
+      user_id,
     });
 
     // Return created store
     res.json(store);
-
   } catch (error) {
     console.error(error);
     res.status(500).send("Error creating store");
   }
-
 };
 
 const addProduct = async (req, res) => {
-
   const {
     user_id,
     store_id,
@@ -46,11 +43,10 @@ const addProduct = async (req, res) => {
     price,
     quantity,
     rating,
-    category_id
+    category_id,
   } = req.body;
 
   try {
-
     // Validate seller role
     const user = await models.User.findByPk(user_id);
 
@@ -61,12 +57,10 @@ const addProduct = async (req, res) => {
     // Generate product id
     const latestProduct = await models.Product.findOne({
       where: {
-        deletedAt: null
+        deletedAt: null,
       },
-      order: [
-        ['product_id', 'DESC']
-      ],
-      attributes: ['product_id']
+      order: [["product_id", "DESC"]],
+      attributes: ["product_id"],
     });
 
     let nextProductId = 1;
@@ -83,17 +77,15 @@ const addProduct = async (req, res) => {
       quantity,
       store_id,
       rating,
-      category_id
+      category_id,
     });
 
     // Return created product
     res.json(product);
-
   } catch (error) {
     console.error(error);
     res.status(500).send("Error adding product");
   }
-
 };
 
 const getProductPic = (req, res) => {
@@ -104,26 +96,20 @@ const getProductPic = (req, res) => {
 };
 
 const editProduct = async (req, res) => {
-
   const { user_id } = req.body;
   const { product_id } = req.params;
 
-  const {
-    product_name,
-    price,
-    quantity,
-    rating,
-    category_id
-  } = req.body;
+  const { product_name, price, quantity, rating, category_id } = req.body;
 
   try {
-
     // Validate seller permission
     const user = await models.User.findByPk(user_id);
     const product = await models.Product.findByPk(product_id);
 
     if (!user || user.role !== "seller" || product.store_id !== user.user_id) {
-      return res.status(403).send("You don't have permission to edit this product");
+      return res
+        .status(403)
+        .send("You don't have permission to edit this product");
     }
 
     // Update product
@@ -132,36 +118,36 @@ const editProduct = async (req, res) => {
       price,
       quantity,
       rating,
-      category_id
+      category_id,
     });
 
     // Return updated product
     res.json(product);
-
   } catch (error) {
     console.error(error);
     res.status(500).send("Error editing product");
   }
-
 };
 
 const deleteProduct = async (req, res) => {
-
   const { user_id } = req.body;
   const { product_id } = req.params;
 
   try {
-
     // Validate seller permission
     const user = await models.User.findByPk(user_id);
     const product = await models.Product.findByPk(product_id);
 
     if (!user || user.role !== "seller") {
-      return res.status(403).send("You don't have permission to delete this product");
+      return res
+        .status(403)
+        .send("You don't have permission to delete this product");
     }
 
     if (!product || product.store_id !== user.user_id) {
-      return res.status(403).send("You don't have permission to delete this product");
+      return res
+        .status(403)
+        .send("You don't have permission to delete this product");
     }
 
     // Delete product
@@ -169,22 +155,17 @@ const deleteProduct = async (req, res) => {
 
     // Return response
     res.send("Product deleted successfully");
-
   } catch (error) {
     console.error(error);
     res.status(500).send("Error deleting product");
   }
-
 };
 
-
 const viewProducts = async (req, res) => {
-
   const { user_id } = req.params;
 
   try {
-
-    // Validate seller role  
+    // Validate seller role
     const user = await models.User.findByPk(user_id);
 
     if (!user || user.role !== "seller") {
@@ -193,17 +174,15 @@ const viewProducts = async (req, res) => {
 
     // Get products
     const products = await models.Product.findAll({
-      where: { store_id: user_id }
+      where: { store_id: user_id },
     });
 
     // Return products
     res.json(products);
-
   } catch (error) {
     console.error(error);
     res.status(500).send("Error getting products");
   }
-
 };
 
 const getAllProducts = async (req, res) => {
@@ -212,23 +191,27 @@ const getAllProducts = async (req, res) => {
       include: [
         {
           model: models.Category,
-          attributes: ['category_name'],
+          attributes: ["category_name"],
         },
         {
           model: models.Store,
-          attributes: ['store_name'],
+          attributes: ["store_name"],
         },
       ],
       attributes: {
-        exclude: ['category_id', 'store_id'], // Exclude category_id and store_id
+        exclude: ["category_id", "store_id"], // Exclude category_id and store_id
       },
     });
 
     // Manipulasi hasil untuk memformat sesuai keinginan Anda
-    const formattedProducts = products.map(product => {
+    const formattedProducts = products.map((product) => {
+      const product_id = product.product_id;
+      const lokasinya = `uploads/product/${product_id}.jpg`;
+
       return {
         product_id: product.product_id,
         product_name: product.product_name,
+        product_img: lokasinya,
         price: product.price,
         rating: product.rating,
         category_name: product.Category.category_name,
@@ -244,7 +227,8 @@ const getAllProducts = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
+
 const getDetailStore = async (req, res) => {
   const { store_id } = req.params;
 
@@ -252,22 +236,22 @@ const getDetailStore = async (req, res) => {
     const storeData = await models.Store.findOne({
       where: { store_id: store_id },
       include: [
-        { model: models.User, attributes: ['name'] },
-        { model: models.Product } // Menambahkan relasi untuk mendapatkan produk
-      ]
+        { model: models.User, attributes: ["name"] },
+        { model: models.Product }, // Menambahkan relasi untuk mendapatkan produk
+      ],
     });
 
     if (!storeData) {
-      return res.status(404).json({ message: 'Toko tidak ditemukan' });
+      return res.status(404).json({ message: "Toko tidak ditemukan" });
     }
 
-    const products = storeData.Products.map(product => ({
+    const products = storeData.Products.map((product) => ({
       product_id: product.product_id,
       product_name: product.product_name,
       price: product.price,
       rating: product.rating,
       category_id: product.category_id,
-      quantity: product.quantity
+      quantity: product.quantity,
     }));
 
     const result = {
@@ -275,44 +259,47 @@ const getDetailStore = async (req, res) => {
       store_name: storeData.store_name,
       store_description: storeData.store_description,
       owner: storeData.User.name,
-      products: products // Menambahkan data produk
+      products: products, // Menambahkan data produk
     };
 
     res.json(result);
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ message: 'Terjadi kesalahan saat mengambil data toko' });
+    console.error("Error:", error);
+    res
+      .status(500)
+      .json({ message: "Terjadi kesalahan saat mengambil data toko" });
   }
 };
 
 const searchProduct = async (req, res) => {
   try {
-    const { q } = req.query
+    const { q } = req.query;
     console.log(q);
     const processKeyword = `%${q}%`;
-    const results = await models.Product.findAll({ where: { product_name: { [Op.like]: processKeyword } } })
+    const results = await models.Product.findAll({
+      where: { product_name: { [Op.like]: processKeyword } },
+    });
     res.status(200).json(results);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
-
+};
 
 const getProductDetail = async (req, res) => {
   try {
     const { product_id } = req.params;
-    const product = await models.Product.findOne({ 
+    const product = await models.Product.findOne({
       where: { product_id: product_id },
       include: [
-        { 
-          model: models.Store, 
-          attributes: ['store_name'] 
+        {
+          model: models.Store,
+          attributes: ["store_name"],
         },
-        { 
-          model: models.Category, 
-          attributes: ['category_name'] 
-        }
-      ]
+        {
+          model: models.Category,
+          attributes: ["category_name"],
+        },
+      ],
     });
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
@@ -345,5 +332,5 @@ module.exports = {
   getDetailStore,
   searchProduct,
   getProductDetail,
-  getProductPic
+  getProductPic,
 };
