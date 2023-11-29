@@ -60,6 +60,7 @@ const getAllPosts = async (req, res) => {
         post_id: item.post_id,
         nama_pengepost: user.name,
         title: item.title,
+        createdAt: item.createedAt,
         jumlah_like: like,
         jumlah_share: share,
         comment: tempArray,
@@ -81,7 +82,11 @@ const getAllPosts = async (req, res) => {
       // console.log({ tempArrayLengkap });
     });
 
-    res.status(200).json(tempArrayLengkap);
+    const sortedResults = tempArrayLengkap.sort(
+      (a, b) => a.post_id - b.post_id
+    );
+
+    res.status(200).json(sortedResults);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -131,18 +136,18 @@ const getPostById = async (req, res) => {
     // Get the comments for the post
     const comments = await Comment.findAll({
       where: { post_id: id },
-      include: [{ model: User, attributes: ['name'] }],
-      order: [['comment_time', 'ASC']]
-  });
+      include: [{ model: User, attributes: ["name"] }],
+      order: [["comment_time", "ASC"]],
+    });
 
-   // Map through the comments to format the output
-   const formattedComments = comments.map(comment => ({
-    comment_id: comment.dataValues.comment_id,
-    comment_text: comment.dataValues.comment_text,
-    comment_time: comment.dataValues.comment_time,
-    post_id: comment.dataValues.post_id,
-    user: comment.dataValues.User.dataValues.name
-}));
+    // Map through the comments to format the output
+    const formattedComments = comments.map((comment) => ({
+      comment_id: comment.dataValues.comment_id,
+      comment_text: comment.dataValues.comment_text,
+      comment_time: comment.dataValues.comment_time,
+      post_id: comment.dataValues.post_id,
+      user: comment.dataValues.User.dataValues.name,
+    }));
 
     const likeCount =
       post.PostLikes.length > 0 ? post.PostLikes[0].get("likeCount") : 0;
@@ -153,6 +158,7 @@ const getPostById = async (req, res) => {
       post_id: id,
       title: post.title,
       nama_pengepost: post.User.name,
+      createdAt: post.createdAt,
       jumlah_like: likeCount,
       jumlah_share: shareCount,
       comment: formattedComments,

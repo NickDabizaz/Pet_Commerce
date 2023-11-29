@@ -177,6 +177,7 @@ function Community() {
             className="row text-center m-auto"
             style={{ zIndex: -1, width: "80rem" }}
           >
+            {console.log(response)}
             {response.map((post) => (
               <div key={post.post_id} className="col-6">
                 <NavLink to={`/post/${post.post_id}`}>
