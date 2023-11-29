@@ -27,60 +27,48 @@ let tempArrayLengkap = [];
 const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.findAll();
-    posts.map(async (item) => {
-      const user = await User.findOne({ where: { user_id: item.user_id } });
-      const like = await PostLike.count({
-        where: {
-          post_id: item.post_id,
-        },
-      });
-      const share = await PostShare.count({
-        where: {
-          post_id: item.post_id,
-        },
-      });
-
-      let tempArray = [];
-      const comment = await Comment.findAll({
-        where: { post_id: item.post_id },
-      });
-      const tempComment = comment.map(async (item) => {
-        const tempUser = await User.findOne({
-          where: { user_id: item.user_id },
+    const tempArrayLengkap = await Promise.all(
+      posts.map(async (item) => {
+        const user = await User.findOne({ where: { user_id: item.user_id } });
+        const like = await PostLike.count({
+          where: {
+            post_id: item.post_id,
+          },
         });
-        let temp = {
-          nama_pengomen: tempUser.name,
-          komentar: item.comment_text,
-          waktu_komentar: item.comment_time,
-        };
-        tempArray.push(temp);
-      });
+        const share = await PostShare.count({
+          where: {
+            post_id: item.post_id,
+          },
+        });
 
-      let temp2 = {
-        post_id: item.post_id,
-        nama_pengepost: user.name,
-        title: item.title,
-        createdAt: item.createedAt,
-        jumlah_like: like,
-        jumlah_share: share,
-        comment: tempArray,
-      };
-
-      if (tempArrayLengkap.length > 0) {
-        const check = tempArrayLengkap.filter(
-          (item) => item.post_id === temp2.post_id
+        const tempArray = await Promise.all(
+          (
+            await Comment.findAll({
+              where: { post_id: item.post_id },
+            })
+          ).map(async (item) => {
+            const tempUser = await User.findOne({
+              where: { user_id: item.user_id },
+            });
+            return {
+              nama_pengomen: tempUser.name,
+              komentar: item.comment_text,
+              waktu_komentar: item.comment_time,
+            };
+          })
         );
-        // console.log({ check });
-        if (check.length == 0) {
-          tempArrayLengkap.push(temp2);
-        }
-      }
-      if (tempArrayLengkap.length == 0) {
-        tempArrayLengkap.push(temp2);
-      }
 
-      // console.log({ tempArrayLengkap });
-    });
+        return {
+          post_id: item.post_id,
+          nama_pengepost: user.name,
+          title: item.title,
+          createdAt: item.createedAt,
+          jumlah_like: like,
+          jumlah_share: share,
+          comment: tempArray,
+        };
+      })
+    );
 
     const sortedResults = tempArrayLengkap.sort(
       (a, b) => a.post_id - b.post_id
