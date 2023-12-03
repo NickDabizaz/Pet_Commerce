@@ -16,6 +16,24 @@ function Community() {
   const [newPostText, setnewPostText] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
 
+  /* nanti dihapus */
+  // const [pic, setPic] = useState("");
+
+  // useEffect(
+  //   axios
+  //     .get("http://localhost:3000/post/pic/7")
+  //     .then((response) => {
+  //       const picData = response.data;
+  //       setPic(picData);
+  //       console.log({pic});
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching pic data:", error);
+  //     }),
+  //   []
+  // );
+  /* nanti dihapus */
+
   const handlenewPostTextChange = (event) => {
     setnewPostText(event.target.value);
   };
@@ -197,7 +215,7 @@ function Community() {
                       </div>
                     </div>
                     <div className=" ">
-                      <img src={dogo} width={"100%"} />
+                      <img src={`http://localhost:3000/post/pic/${post.post_id}`} width={"100%"} />
                     </div>
                     <div
                       className="row text-start mx-4"

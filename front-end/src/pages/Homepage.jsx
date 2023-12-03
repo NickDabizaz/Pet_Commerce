@@ -38,7 +38,7 @@ function HomePage() {
               }}
             >
               <img
-                src={`../../../backend/uploads/product/dogfood.jpeg`}
+                src={`http://localhost:3000/sellers/product/pic/${product.product_id}`}
                 alt={product.product_name}
                 style={{ width: "100%" }}
               ></img>
