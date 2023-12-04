@@ -9,7 +9,6 @@ import {
   AdminDashboard,
   ManageUser,
   ManageCommunity,
-  ManageFAQ,
 } from "./pages/AdminDashboard.jsx";
 import { Community } from "./pages/Community.jsx";
 import {
@@ -55,7 +54,6 @@ const router = createBrowserRouter([
           { index: true, element: <AdminDashboard /> },
           { path: "/admin/manage-users", element: <ManageUser /> },
           { path: "/admin/manage-community", element: <ManageCommunity /> },
-          { path: "/admin/manage-faq", element: <ManageFAQ /> },
         ],
       },
       {

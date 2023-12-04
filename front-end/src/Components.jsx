@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dogo from "./assets/dogo.jpg";
-import cart_profile from "./assets/cart_profile.png"
+import cart_profile from "./assets/cart_profile.png";
 
 export function HomePage() {
   return <h1>Home</h1>;
@@ -57,7 +57,7 @@ export function MainLayout() {
               className="form-control me-3"
               type="search"
               aria-label="Search"
-              placeholder="Colorful Pet Leash"
+              placeholder="Search"
               style={{
                 fontFamily: "Literata",
                 fontSize: "12pt",
@@ -66,10 +66,26 @@ export function MainLayout() {
               onChange={handleInputChange}
             ></input>
             <NavLink to={`/products?q=${searchValue}`}>
-              <div className="btn btn-info justify-content-center" style={{ backgroundColor: "#1286CE", borderColor: "#1286CE", width: "60px", height: "2.5rem", maxHeight: "2.5rem", maxWidth: "60px" }}>
+              <div
+                className="btn btn-info justify-content-center"
+                style={{
+                  backgroundColor: "#1286CE",
+                  borderColor: "#1286CE",
+                  width: "60px",
+                  height: "2.5rem",
+                  maxHeight: "2.5rem",
+                  maxWidth: "60px",
+                }}
+              >
                 <img
                   src={searchLogo}
-                  style={{ display: "block", width: "25px", height: "25px", color: "white", margin: "0 auto" }}
+                  style={{
+                    display: "block",
+                    width: "25px",
+                    height: "25px",
+                    color: "white",
+                    margin: "0 auto",
+                  }}
                 />
               </div>
             </NavLink>
@@ -98,8 +114,14 @@ export function MainLayout() {
             )}
             {cookie.user_id && (
               <NavLink to={"/cart"}>
-                <div className="me-10 cursor-pointer" style={{ height: "2rem", width: "2rem" }}>
-                  <img src={cart_profile} style={{ width: "2rem", height: "2rem" }} />
+                <div
+                  className="me-10 cursor-pointer"
+                  style={{ height: "2rem", width: "2rem" }}
+                >
+                  <img
+                    src={cart_profile}
+                    style={{ width: "2rem", height: "2rem" }}
+                  />
                 </div>
               </NavLink>
             )}
@@ -150,15 +172,57 @@ export function MainLayout() {
             )}
           </div>
         </nav>
-
       </div>
       <div
         className="container-fluid"
-        style={{ display: "flex", backgroundColor: "#1286CE", height: "2.1rem" }}
+        style={{
+          display: "flex",
+          backgroundColor: "#1286CE",
+          height: "2.1rem",
+        }}
       >
-        <div style={{ marginLeft: "2.5rem" }}><Link to={"/"}><p style={{ fontFamily: "Literata", fontSize: "16pt", fontWeight: 600, color: "white" }}>Home</p></Link></div>
-        <div style={{ marginLeft: "7rem" }}><Link to={"/community"}><p style={{ fontFamily: "Literata", fontSize: "16pt", fontWeight: 600, color: "white" }}>Community</p></Link></div>
-        <div style={{ marginLeft: "7rem" }}><Link to={"/faq"}><p style={{ fontFamily: "Literata", fontSize: "16pt", fontWeight: 600, color: "white" }}>FAQ</p></Link></div>
+        <div style={{ marginLeft: "2.5rem" }}>
+          <Link to={"/"}>
+            <p
+              style={{
+                fontFamily: "Literata",
+                fontSize: "16pt",
+                fontWeight: 600,
+                color: "white",
+              }}
+            >
+              Home
+            </p>
+          </Link>
+        </div>
+        <div style={{ marginLeft: "7rem" }}>
+          <Link to={"/community"}>
+            <p
+              style={{
+                fontFamily: "Literata",
+                fontSize: "16pt",
+                fontWeight: 600,
+                color: "white",
+              }}
+            >
+              Community
+            </p>
+          </Link>
+        </div>
+        <div style={{ marginLeft: "7rem" }}>
+          <Link to={"/faq"}>
+            <p
+              style={{
+                fontFamily: "Literata",
+                fontSize: "16pt",
+                fontWeight: 600,
+                color: "white",
+              }}
+            >
+              FAQ
+            </p>
+          </Link>
+        </div>
       </div>
       <div style={{ top: "100px", position: "relative" }}>
         <Outlet />
