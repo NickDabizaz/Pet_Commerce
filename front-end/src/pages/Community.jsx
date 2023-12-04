@@ -202,13 +202,14 @@ function Community() {
               <div key={post.post_id} className="">
                 <NavLink to={`/post/${post.post_id}`}>
                   <div
-                    className="m-4 border border-dark rounded-4"
+                    className="m-4 border-2 border-black rounded-4"
                     style={{ backgroundColor: "#6CD4FF" }}
                   >
                     <div style={{ display: "flex" }}>
                       <div className="text-start m-2 ms-4">
                         {post.nama_pengepost}
                       </div>
+
                       <div
                         className="mt-3 text-black-50"
                         style={{ fontSize: "0.6rem" }}
@@ -216,6 +217,7 @@ function Community() {
                         1h ago
                       </div>
                     </div>
+
                     <div className="bg-white">
                       <div
                         className="align-center"
@@ -225,24 +227,24 @@ function Community() {
                           backgroundImage: `url(http://localhost:3000/post/pic/${post.post_id})`,
                           backgroundRepeat: "repeat",
                           backgroundSize: "cover",
-                          backgroundPositionX: "50%",
-                          opacity: "1",
                         }}
                       >
                         <img
-                          className="max-w-full max-w-full object-contain my-auto"
+                          className="max-w-full max-w-full bg-black object-contain my-auto bg-opacity-75"
                           style={{
                             width: "100%",
                             height: "100%",
-                            maxHeight: "36.9rem",
-                            maxWidth: "36.9rem",
+                            maxHeight: "37rem",
+                            maxWidth: "36.8rem",
                             position: "absolute",
+                            opacity: "10",
                           }}
                           src={`http://localhost:3000/post/pic/${post.post_id}`}
                           alt={post.post_name}
                         />
                       </div>
                     </div>
+
                     <div
                       className="row text-start mx-4"
                       style={{ fontSize: "1rem" }}
@@ -250,6 +252,7 @@ function Community() {
                       <div className="col-1" style={{ fontSize: "2rem" }}>
                         ♡
                       </div>
+
                       <div className="col-1">
                         <img
                           src="https://static-00.iconduck.com/assets.00/chat-icon-256x239-arsmqxao.png"
@@ -262,6 +265,7 @@ function Community() {
                           }}
                         />
                       </div>
+
                       <div className="col-1">
                         <img
                           src="https://static-00.iconduck.com/assets.00/share-emoji-512x512-j2qmf7um.png"
@@ -275,31 +279,21 @@ function Community() {
                         />
                       </div>
                     </div>
+
                     <div
                       className="row text-start mx-4"
                       style={{ fontSize: "1rem" }}
                     >
                       <p className="col-4">{post.jumlah_like} likes </p>
                       <h3 className="col-4"></h3>
-                      <p className="col-4">
-                        {/* <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    x="0px"
-                    y="0px"
-                    width="1.2rem"
-                    height="1.2rem"
-                    viewBox="0 0 30 30"
-                    style={{ display: "inherit" }}
-                  >
-                    <path d="M 23 3 A 4 4 0 0 0 19 7 A 4 4 0 0 0 19.09375 7.8359375 L 10.011719 12.376953 A 4 4 0 0 0 7 11 A 4 4 0 0 0 3 15 A 4 4 0 0 0 7 19 A 4 4 0 0 0 10.013672 17.625 L 19.089844 22.164062 A 4 4 0 0 0 19 23 A 4 4 0 0 0 23 27 A 4 4 0 0 0 27 23 A 4 4 0 0 0 23 19 A 4 4 0 0 0 19.986328 20.375 L 10.910156 15.835938 A 4 4 0 0 0 11 15 A 4 4 0 0 0 10.90625 14.166016 L 19.988281 9.625 A 4 4 0 0 0 23 11 A 4 4 0 0 0 27 7 A 4 4 0 0 0 23 3 z"></path>
-                  </svg>
-                  {post.jumlah_share}
-                </span> */}
-                        {/* Shares: {post.jumlah_share} */}
-                      </p>
+                      <p className="col-4"></p>
                     </div>
-                    <div className="text-black-50 m-4 text-start row">
+
+                    <div className="text-start mt-4 ms-8">
+                      <b>{post.nama_pengepost}</b> {post.title}
+                    </div>
+
+                    <div className="text-black-50 m-4 text-start row h-20">
                       <div className="row-12">
                         {post.comment.length > 0 && (
                           <span
@@ -324,7 +318,7 @@ function Community() {
                           </span>
                         )}
                         <br />
-                        <div className="mt-2">
+                        <div className="mt-1">
                           {post.comment.length > 0 ? (
                             "View all " + post.comment.length + " comments"
                           ) : (
@@ -333,77 +327,24 @@ function Community() {
                         </div>
                       </div>
                     </div>
-                    {/* <ul className="text-left m-4">
-              Comments:
-              {post.comment.map((comment, index) => (
-                <li key={index} className="mb-2">
-                  <p className=" ">{comment.nama_pengomen}</p>
-                  <p className=" ">{comment.komentar}</p>
-                  <p className=" ">{comment.waktu_komentar}</p>
-                </li>
-              ))}
-            </ul> */}
+
+                    {/* 
+                    <ul className="text-left m-4">
+                    Comments:
+                    {post.comment.map((comment, index) => (
+                      <li key={index} className="mb-2">
+                        <p className=" ">{comment.nama_pengomen}</p>
+                        <p className=" ">{comment.komentar}</p>
+                        <p className=" ">{comment.waktu_komentar}</p>
+                      </li>
+                    ))}
+                    </ul> 
+                    */}
                   </div>
                 </NavLink>
               </div>
             ))}
           </div>
-          // <div className="row">
-          //   <div className="col-1"></div>
-          //   <div className="col-5 bg-info">
-          //     <div
-          //       className="m-5 mx-auto"
-          //       style={{
-          //         width: "30vw",
-          //         height: "500px",
-          //         backgroundColor: "white",
-          //       }}
-          //     ></div>
-          //     <div
-          //       className="m-5 mx-auto"
-          //       style={{
-          //         width: "30vw",
-          //         height: "500px",
-          //         backgroundColor: "white",
-          //       }}
-          //     ></div>
-          //     <div
-          //       className="m-5 mx-auto"
-          //       style={{
-          //         width: "30vw",
-          //         height: "500px",
-          //         backgroundColor: "white",
-          //       }}
-          //     ></div>
-          //   </div>
-          //   <div className="col-5 bg-warning">
-          //     <div
-          //       className="m-5 mx-auto"
-          //       style={{
-          //         width: "30vw",
-          //         height: "500px",
-          //         backgroundColor: "white",
-          //       }}
-          //     ></div>
-          //     <div
-          //       className="m-5 mx-auto"
-          //       style={{
-          //         width: "30vw",
-          //         height: "500px",
-          //         backgroundColor: "white",
-          //       }}
-          //     ></div>
-          //     <div
-          //       className="m-5 mx-auto"
-          //       style={{
-          //         width: "30vw",
-          //         height: "500px",
-          //         backgroundColor: "white",
-          //       }}
-          //     ></div>
-          //   </div>
-          //   <div className="col-1"></div>
-          // </div>
         )}
       </div>
 

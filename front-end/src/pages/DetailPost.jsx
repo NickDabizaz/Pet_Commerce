@@ -18,8 +18,29 @@ const DetailPost = () => {
   const [post, setPost] = useState(null);
   const [cookies] = useCookies(["user_id"]);
   const [loading, setLoading] = useState(true);
+  const [commentText, setCommentText] = useState();
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
+
+  const handleCommentTextChange = (e) => {
+    setCommentText(e.target.value);
+  };
+
+  const handleSendChat = async () => {
+    console.log(commentText);
+    try {
+      const response = await axios.post("http://localhost:3000/comments", {
+        comment_text: commentText,
+        user_id: cookies.user_id,
+        post_id: post_id,
+      });
+
+      console.log(response.data);
+      navigate(0);
+    } catch (error) {
+      alert("GABISA POST");
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,21 +61,21 @@ const DetailPost = () => {
     fetchData();
   }, [post_id]);
 
-  const onSubmit = (data) => {
-    const commentData = {
-      comment_text: data.comment,
-      user_id: cookies.user_id,
-      post_id: post_id,
-    };
-    axios
-      .post("http://localhost:3000/comments", commentData)
-      .then((response) => {
-        console.log(response.data);
-        reset();
-        navigate(0);
-      })
-      .catch((error) => console.log(error));
-  };
+  // const handleSendChat = (data) => {
+  //   const commentData = {
+  //     comment_text: data.comment,
+  //     user_id: cookies.user_id,
+  //     post_id: post_id,
+  //   };
+  //   axios
+  //     .post("http://localhost:3000/comments", commentData)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       reset();
+  //       navigate(0);
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -154,7 +175,7 @@ const DetailPost = () => {
               width: "40rem",
             }}
           >
-            <div className="bg-info bg-opacity-25" style={{ height: "100%" }}>
+            <div style={{ height: "100%" }}>
               {/* ini container dari nama-waktu sampai like comment share */}
               <div
                 style={{
@@ -164,6 +185,7 @@ const DetailPost = () => {
                   top: "50%",
                   position: "absolute",
                   transform: "translateY(-50%)",
+                  borderRadius: "1rem 0 0 1rem",
                 }}
                 className="bg-info"
               >
@@ -209,15 +231,13 @@ const DetailPost = () => {
                 </div>
 
                 {/* Ini bagian image dari post */}
-                <div>
+                <div className="bg-info">
                   <img
+                    className="bg-white bg-opacity-75"
                     src={`http://localhost:3000/post/pic/${post_id}`}
-                    // src="https://icons.iconarchive.com/icons/simpleicons-team/simple/128/icon-icon.png"
-                    // src="https://icon-library.com/images/guest-icon-png/guest-icon-png-29.jpg"
-                    // src="http://via.placeholder.com/640x360"
                     alt="post-image"
                     style={{
-                      height: "100%",
+                      height: "30rem",
                       width: "100%",
                       maxHeight: "34rem",
                       maxWidth: "40rem",
@@ -228,6 +248,7 @@ const DetailPost = () => {
                 </div>
 
                 {/* Ini bagian like, share */}
+
                 <div
                   style={{
                     display: "flex",
@@ -238,6 +259,10 @@ const DetailPost = () => {
                   <div>💖</div>
                   <div>💬</div>
                   <div>🔗</div>
+                </div>
+
+                <div className="ms-8" style={{ height: "4rem" }}>
+                  {post.title}
                 </div>
               </div>
             </div>
@@ -253,7 +278,11 @@ const DetailPost = () => {
           >
             <div
               className="bg-info bg-opacity-25"
-              style={{ height: "100%", textAlign: "left" }}
+              style={{
+                height: "100%",
+                textAlign: "left",
+                borderRadius: "0 1rem 1rem 0",
+              }}
             >
               {/* Ini bagian Comment post*/}
               <div
@@ -274,24 +303,49 @@ const DetailPost = () => {
                 ))}
               </div>
 
+              <hr />
+
               {/* Ini bagian input comment */}
-              <div style={{ height: "5rem", backgroundColor: "red" }}>
-                <div style={{ overflow: "hidden" }}>
-                  <div
-                    className="border border-dark rounded-3 bg-white"
-                    style={{ marginTop: "1rem" }}
-                  >
-                    <div style={{ height: "3rem" }}>
-                      <input
-                        type="text"
-                        style={{
-                          marginTop: "0.5rem",
-                          marginLeft: "0.5rem",
-                          height: "2rem",
-                        }}
-                        placeholder="Write a comment..."
-                      />
-                    </div>
+              <div className="h-20 mx-4">
+                {/* <div style={{ overflow: "hidden" }}> */}
+
+                {/* <div
+                  className="border border-dark rounded-3 bg-white w-full"
+                  style={{ marginTop: "1rem" }}
+                >
+                  <div style={{ height: "3rem" }}>
+                    <input
+                      className="w-full me-4"
+                      type="text"
+                      style={{
+                        marginTop: "0.5rem",
+                        marginLeft: "0.5rem",
+                        height: "2rem",
+                      }}
+                      value={commentText}
+                      onChange={handleCommentTextChange}
+                      placeholder="Write a comment..."
+                    />
+                  </div>
+                </div> */}
+
+                <div className="row">
+                  <div className="col-10" style={{ marginTop: "1rem" }}>
+                    <input
+                      type="text"
+                      placeholder="Type here..."
+                      className="w-full h-12 rounded-3 p-3"
+                      value={commentText}
+                      onChange={handleCommentTextChange}
+                    />
+                  </div>
+                  <div className="col-2" style={{ marginTop: "1rem" }}>
+                    <button
+                      className="btn btn-info h-full w-full"
+                      onClick={handleSendChat}
+                    >
+                      Send
+                    </button>
                   </div>
                 </div>
               </div>
