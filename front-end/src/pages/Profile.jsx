@@ -191,7 +191,7 @@ function Profile() {
                     }}
                   />
                 </div>
-                <div className="col-1">
+                <div className="col-auto">
                   <div style={{ fontSize: "1.2rem" }}>{toko.store_name}</div>
                   <div>{toko.store_description}</div>
                 </div>

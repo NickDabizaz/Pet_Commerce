@@ -7,6 +7,11 @@ import addpict from "../assets/add.png";
 
 export default function FormAddProduct() {
   const [cookies] = useCookies(["user_id"]);
+  // const [product_name, setProduct_name] = useState(null);
+  // const [price, setPrice] = useState(null);
+  // const [quantity, setQuantity] = useState(null);
+  // const [rating, setRating] = useState(null);
+  // const [category_id, setCategory_id] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
 
   const {
@@ -47,6 +52,16 @@ export default function FormAddProduct() {
         const { user_id } = cookies;
         rating = 0;
 
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+        formData.append("user_id", user_id);
+        formData.append("store_id", store_id);
+        formData.append("product_name", product_name);
+        formData.append("price", price);
+        formData.append("quantity", quantity);
+        formData.append("rating", rating);
+        formData.append("category_id", category_id);
+
         const response = await axios.post(
           "http://localhost:3000/sellers/add-product/product",
           {
@@ -60,6 +75,19 @@ export default function FormAddProduct() {
             store_id,
           }
         );
+        // const response = await axios.post(
+        //   "http://localhost:3000/sellers/add-product/product",
+        //   {
+        //     file: selectedFile,
+        //     user_id,
+        //     product_name,
+        //     price,
+        //     quantity,
+        //     rating,
+        //     category_id,
+        //     store_id,
+        //   }
+        // );
         console.log({ response });
 
         setLoading(false);
@@ -97,6 +125,7 @@ export default function FormAddProduct() {
             }}
           >
             <form onSubmit={handleSubmit(onSubmit)}>
+              {/* Gambar add product */}
               <img
                 className="mx-auto"
                 src={addpict}
@@ -108,23 +137,28 @@ export default function FormAddProduct() {
                 }}
               />
 
-              <div
-                className=" text-center row p-0"
-                style={{ marginLeft: "2rem" }}
-              >
+              {/* Upload gambar */}
+              <div className="p-0 row gap-2" style={{ marginLeft: "2rem" }}>
                 {selectedFile ? (
-                  <div id="imageContainer" className="col-auto p-0"></div>
+                  <div id="imageContainer" className="p-0 w-fit col-1"></div>
                 ) : (
-                  <>
-                    <div className="p-0">
-                      <FileUploader setSelectedFile={setSelectedFile} />
-                    </div>
-                  </>
+                  <div className="w-40 h-40 p-0" style={{ objectFit: "cover" }}>
+                    {" "}
+                    <img
+                      src="https://i.pinimg.com/736x/64/53/c8/6453c8226817e6ab85a6321aeee19e80.jpg"
+                      alt="image"
+                      className="w-full h-full"
+                    />
+                  </div>
                 )}
+                <div className="col-1 border border-dark">
+                  <FileUploader setSelectedFile={setSelectedFile} />
+                </div>
 
                 <br />
               </div>
 
+              {/* Product name */}
               <div>
                 <label
                   style={{
@@ -147,6 +181,7 @@ export default function FormAddProduct() {
                 />
               </div>
 
+              {/* Price */}
               <div>
                 <label
                   style={{
@@ -167,6 +202,7 @@ export default function FormAddProduct() {
                 />
               </div>
 
+              {/* Quantity */}
               <div>
                 <label
                   style={{
@@ -189,6 +225,7 @@ export default function FormAddProduct() {
                 />
               </div>
 
+              {/* Category */}
               <div>
                 <label
                   style={{
@@ -216,6 +253,7 @@ export default function FormAddProduct() {
                 </select>
               </div>
 
+              {/* Add product button */}
               <button
                 type="submit"
                 className="btn btn-info"
@@ -251,6 +289,7 @@ export default function FormAddProduct() {
               </b>
             </p>
 
+            {/* Error product name */}
             {errors.product_name && (
               <p
                 className="text-center"
@@ -260,6 +299,7 @@ export default function FormAddProduct() {
               </p>
             )}
 
+            {/* Error price */}
             {errors.price && (
               <p
                 className="text-center"
@@ -269,6 +309,7 @@ export default function FormAddProduct() {
               </p>
             )}
 
+            {/* Error quantity */}
             {errors.quantity && (
               <p
                 className="text-center"
@@ -358,16 +399,7 @@ const FileUploader = ({ setSelectedFile }) => {
           height: "auto",
         }}
       >
-        <img
-          className="col-auto p-0"
-          src="https://i.pinimg.com/736x/24/50/ae/2450ae69306cfbffc1260f3d74d7163b.jpg"
-          style={{
-            height: "10rem",
-            width: "10rem",
-            objectFit: "contain",
-            border: "1px solid gray",
-          }}
-        />
+        Select Image
       </div>
     </div>
   );
