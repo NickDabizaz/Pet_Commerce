@@ -213,7 +213,7 @@ function Profile() {
               <div className="m-4 row">
                 <div className="col-1">
                   <img
-                    src="https://icon-library.com/images/guest-icon-png/guest-icon-png-29.jpg"
+                    src="https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg"
                     alt="icon-toko"
                     style={{
                       objectFit: "cover",
