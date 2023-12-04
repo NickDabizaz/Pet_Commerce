@@ -58,7 +58,7 @@ function StoreDetail() {
             style={{ display: "flex" }}
           >
             <img
-              src="http://via.placeholder.com/640x360"
+              src={`http://localhost:3000/sellers/product/pic/${product.product_id}`}
               style={{ width: "10rem" }}
             ></img>
             <div className="m-3">

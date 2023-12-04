@@ -24,24 +24,26 @@ function HomePage() {
   return (
     <>
       <MainLayout />
-      <div className="mx-auto">
-        <div className="row m-4">
-          <h1 className="text-2xl font-bold mb-4">List of Products</h1>
+      <div className="mx-auto max-w-screen-xl mt-4">
+        <h1 className="text-2xl font-bold mb-4">List of Products</h1>
+        <div className="grid grid-cols-4 gap-4">
           {products.map((product) => (
             <div
               key={product.product_id}
-              className="bg-white border border-gray-300 col-2 m-4 p-0 prod-card"
+              className="bg-white border border-gray-300"
               onClick={() => {
                 // !cookie.user_id && navigate("/login");
                 navigate(`/products/${product.product_id}`);
                 // cookie.user_id && handleShowModal(product.product_id);
               }}
             >
-              <img
-                src={`http://localhost:3000/sellers/product/pic/${product.product_id}`}
-                alt={product.product_name}
-                style={{ width: "100%" }}
-              ></img>
+              <div className="h-72 max-h-72 border-b-2">
+                <img
+                  src={`http://localhost:3000/sellers/product/pic/${product.product_id}`}
+                  alt={product.product_name}
+                  className="h-full m-auto"
+                ></img>
+              </div>
               <div className="m-3">
                 <h3 className="text-xl mb-2">{product.product_name}</h3>
                 <p className="text-danger mt-4" style={{ fontSize: "1.2rem" }}>

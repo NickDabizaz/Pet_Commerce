@@ -2,17 +2,20 @@ import { useCookies } from "react-cookie";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import addpict from "../assets/add.png";
 
 export default function FormAddProduct() {
   const [cookies] = useCookies(["user_id"]);
+  const [selectedFile, setSelectedFile] = useState(null);
+
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm();
-  const { store_id } = useParams()
+
+  const { store_id } = useParams();
 
   const navigate = useNavigate();
 
@@ -29,26 +32,39 @@ export default function FormAddProduct() {
     fetchCategories();
   }, []);
 
-  const onSubmit = async ({ product_name, price, quantity, rating, category_id }) => {
+  const onSubmit = async ({
+    product_name,
+    price,
+    quantity,
+    rating,
+    category_id,
+  }) => {
     try {
       setLoading(true);
 
-      const { user_id } = cookies;
-      rating = 0;
+      if (selectedFile) {
+        console.log(selectedFile);
+        const { user_id } = cookies;
+        rating = 0;
 
-      const response = await axios.post("http://localhost:3000/sellers/add-product", {
-        user_id,
-        product_name,
-        price,
-        quantity,
-        rating,
-        category_id,
-        store_id
-      });
-      console.log({ response });
+        const response = await axios.post(
+          "http://localhost:3000/sellers/add-product/product",
+          {
+            file: selectedFile,
+            user_id,
+            product_name,
+            price,
+            quantity,
+            rating,
+            category_id,
+            store_id,
+          }
+        );
+        console.log({ response });
 
-      setLoading(false);
-      navigate(`/store/${store_id}`);
+        setLoading(false);
+        navigate(`/store/${store_id}`);
+      }
     } catch (error) {
       setLoading(false);
       console.error(error);
@@ -60,13 +76,13 @@ export default function FormAddProduct() {
   }
 
   return (
-    <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>
+    <div className="container-fluid p-0" style={{ backgroundColor: "#1286CE" }}>
       <div className="pt-20 pb-20">
         <div
-          className="container-fluid rounded d-flex shadow"
+          className="container-fluid rounded d-flex shadow p-0"
           style={{
-            width: "70%",
-            height: "105vh",
+            width: "70rem",
+            height: "auto",
             backgroundColor: "#6CD4FF",
             overflow: "hidden",
           }}
@@ -74,101 +90,132 @@ export default function FormAddProduct() {
           <div
             className="container-fluid rounded"
             style={{
-              width: "100%",
-              height: "100vh",
-              marginTop: "2.5vh",
+              width: "68rem",
+              height: "auto",
+              margin: "1rem",
               backgroundColor: "#FFFFFF",
             }}
           >
             <form onSubmit={handleSubmit(onSubmit)}>
               <img
+                className="mx-auto"
                 src={addpict}
                 style={{
                   display: "block",
-                  margin: "0 auto",
                   width: "26rem",
                   height: "5rem",
-                  marginTop: "1%"
+                  marginTop: "1rem",
                 }}
               />
+
+              <div
+                className=" text-center row p-0"
+                style={{ marginLeft: "2rem" }}
+              >
+                {selectedFile ? (
+                  <div id="imageContainer" className="col-auto p-0"></div>
+                ) : (
+                  <>
+                    <div className="p-0">
+                      <FileUploader setSelectedFile={setSelectedFile} />
+                    </div>
+                  </>
+                )}
+
+                <br />
+              </div>
+
               <div>
                 <label
                   style={{
-                    marginLeft: "2%",
+                    marginLeft: "2rem",
                     fontWeight: 700,
-                    marginBottom: "1%",
-                    marginTop: "1%",
+                    marginBottom: "1rem",
+                    marginTop: "1rem",
                   }}
                 >
                   Product Name
                 </label>
                 <input
                   className="form-control"
-                  style={{ marginLeft: "2%", width: "96%" }}
+                  style={{ marginLeft: "2rem", width: "62rem" }}
                   type="text"
                   placeholder="Product name"
-                  {...register("product_name", { required: "Product name is required" })}
+                  {...register("product_name", {
+                    required: "Product name is required",
+                  })}
                 />
               </div>
+
               <div>
                 <label
                   style={{
-                    marginLeft: "2%",
+                    marginLeft: "2rem",
                     fontWeight: 700,
-                    marginBottom: "1%",
-                    marginTop: "3%",
+                    marginBottom: "1rem",
+                    marginTop: "3rem",
                   }}
                 >
                   Price
                 </label>
                 <input
                   className="form-control"
-                  style={{ marginLeft: "2%", width: "96%" }}
+                  style={{ marginLeft: "2rem", width: "62rem" }}
                   type="number"
                   placeholder="Price"
                   {...register("price", { required: "Price is required" })}
                 />
               </div>
+
               <div>
                 <label
                   style={{
-                    marginLeft: "2%",
+                    marginLeft: "2rem",
                     fontWeight: 700,
-                    marginBottom: "1%",
-                    marginTop: "3%",
+                    marginBottom: "1rem",
+                    marginTop: "3rem",
                   }}
                 >
                   Quantity
                 </label>
                 <input
                   className="form-control"
-                  style={{ marginLeft: "2%", width: "96%" }}
+                  style={{ marginLeft: "2rem", width: "62rem" }}
                   type="number"
                   placeholder="Quantity"
-                  {...register("quantity", { required: "Quantity is required" })}
+                  {...register("quantity", {
+                    required: "Quantity is required",
+                  })}
                 />
               </div>
+
               <div>
                 <label
                   style={{
-                    marginLeft: "2%",
+                    marginLeft: "2rem",
                     fontWeight: 700,
-                    marginBottom: "1%",
-                    marginTop: "3%",
+                    marginBottom: "1rem",
+                    marginTop: "3rem",
                   }}
                 >
                   Category
                 </label>
-                <select className="form-select" style={{ marginLeft: "2%", width: "96%" }} {...register("category_id")}>
-                  <option value={categories[0].category_id}>{categories[0].category_name}</option>
-
-                  {categories.map(category => (
-                    <option key={category.category_id} value={category.category_id}>
+                <select
+                  className="form-select"
+                  style={{ marginLeft: "2rem", width: "62rem" }}
+                  {...register("category_id")}
+                >
+                  {categories.map((category) => (
+                    <option
+                      key={category.category_id}
+                      value={category.category_id}
+                    >
                       {category.category_name}
                     </option>
                   ))}
                 </select>
               </div>
+
               <button
                 type="submit"
                 className="btn btn-info"
@@ -176,10 +223,10 @@ export default function FormAddProduct() {
                 style={{
                   backgroundColor: "#C46E85",
                   borderColor: "#C46E85",
-                  marginTop: "4%",
-                  marginLeft: "2%",
+                  marginTop: "4rem",
+                  marginLeft: "2rem",
                   fontWeight: 700,
-                  width: "96%",
+                  width: "62rem",
                   height: "2.5rem",
                   color: "white",
                 }}
@@ -187,30 +234,45 @@ export default function FormAddProduct() {
                 {loading ? "Submitting..." : "Add Product"}
               </button>
             </form>
-            <p className="text-center" style={{ marginTop: "2%" }}>
+
+            <p
+              className="text-center"
+              style={{ marginTop: "2rem", marginBottom: "2rem" }}
+            >
               Change Of Mind?{" "}
-              <b className="cursor-pointer" style={{ color: "#D39C39" }} onClick={() => { navigate(`/store/${store_id}`) }}>Back To Store</b>
+              <b
+                className="cursor-pointer"
+                style={{ color: "#D39C39" }}
+                onClick={() => {
+                  navigate(`/store/${store_id}`);
+                }}
+              >
+                Back To Store
+              </b>
             </p>
+
             {errors.product_name && (
               <p
                 className="text-center"
-                style={{ marginTop: "1%", color: "red" }}
+                style={{ marginTop: "1rem", color: "red" }}
               >
                 {errors.product_name.message}
               </p>
             )}
+
             {errors.price && (
               <p
                 className="text-center"
-                style={{ marginTop: "1%", color: "red" }}
+                style={{ marginTop: "1rem", color: "red" }}
               >
                 {errors.price.message}
               </p>
             )}
+
             {errors.quantity && (
               <p
                 className="text-center"
-                style={{ marginTop: "1%", color: "red" }}
+                style={{ marginTop: "1rem", color: "red" }}
               >
                 {errors.quantity.message}
               </p>
@@ -221,3 +283,92 @@ export default function FormAddProduct() {
     </div>
   );
 }
+
+const FileUploader = ({ setSelectedFile }) => {
+  const [tempFile, setTempFile] = useState("");
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    setTempFile(file);
+    displayImage(file);
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    setSelectedFile(file);
+    setTempFile(file);
+    displayImage(file);
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleClick = () => {
+    // Trigger the file input when the drop zone is clicked
+    fileInputRef.current.click();
+  };
+
+  const displayImage = (file) => {
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        // Create an image element and set the data URL as its source
+        const imgElement = document.createElement("img");
+        imgElement.src = e.target.result;
+        imgElement.alt = "Selected Image";
+
+        imgElement.style.marginLeft = "auto";
+        imgElement.style.marginRight = "auto";
+        imgElement.style.height = "10rem";
+        imgElement.style.width = "10rem";
+        imgElement.style.objectFit = "cover";
+        imgElement.style.border = "1px solid black";
+
+        // Append the image element to the component
+        document.getElementById("imageContainer").innerHTML = "";
+        document.getElementById("imageContainer").appendChild(imgElement);
+      };
+
+      // Use readAsDataURL for images
+      reader.readAsDataURL(file);
+    }
+  };
+
+  return (
+    <div>
+      <input
+        type="file"
+        id="fileInput"
+        style={{ display: "none" }}
+        onChange={handleFileChange}
+        ref={fileInputRef}
+        accept=".jpeg, .jpg, .png"
+      />
+      <div
+        onClick={handleClick}
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        style={{
+          textAlign: "center",
+          cursor: "pointer",
+          height: "auto",
+        }}
+      >
+        <img
+          className="col-auto p-0"
+          src="https://i.pinimg.com/736x/24/50/ae/2450ae69306cfbffc1260f3d74d7163b.jpg"
+          style={{
+            height: "10rem",
+            width: "10rem",
+            objectFit: "contain",
+            border: "1px solid gray",
+          }}
+        />
+      </div>
+    </div>
+  );
+};
