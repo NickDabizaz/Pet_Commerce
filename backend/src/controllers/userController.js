@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
 const models = require("../models");
 const Joi = require("joi");
-const { Store } = require("../models")
+const { Store } = require("../models");
+const User = require("../models/User");
 
 const generateToken = (user) => {
   return jwt.sign({ id: user.id, email: user.email }, "PETCOMMERCE", {
@@ -175,6 +176,15 @@ const getUser = async (req, res) => {
   }
 };
 
+const getAllUser = async (req,res) => {
+  try {
+    const users = await User.findAll()
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 const getUserStore = async (req, res) => {
   try {
     const { user_id } = req.params
@@ -205,5 +215,6 @@ module.exports = {
   getUserStore,
   updateUser,
   profilpic,
-  getProfilpic
+  getProfilpic,
+  getAllUser
 };

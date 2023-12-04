@@ -18,6 +18,8 @@ router.post("/logout", userController.logout);
 
 router.get("/:user_id", userController.getUser);
 
+router.get("/", userController.getAllUser);
+
 router.get("/store/:user_id", userController.getUserStore);
 
 router.put("/:user_id", userController.updateUser)
