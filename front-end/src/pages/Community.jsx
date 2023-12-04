@@ -163,6 +163,7 @@ function Community() {
             value={newPostText}
             onChange={handlenewPostTextChange}
             placeholder="What's on your mind"
+            className="p-2"
             style={{
               height: "5rem",
               resize: "none",
@@ -200,11 +201,11 @@ function Community() {
             {console.log(response)}
             {response.map((post) => (
               <div key={post.post_id} className="">
-                <NavLink to={`/post/${post.post_id}`}>
-                  <div
-                    className="m-4 border-2 border-black rounded-4"
-                    style={{ backgroundColor: "#6CD4FF" }}
-                  >
+                <div
+                  className="m-4 border-2 border-black rounded-4"
+                  style={{ backgroundColor: "#6CD4FF" }}
+                >
+                  <NavLink to={`/post/${post.post_id}`}>
                     <div style={{ display: "flex" }}>
                       <div className="text-start m-2 ms-4">
                         {post.nama_pengepost}
@@ -340,8 +341,8 @@ function Community() {
                     ))}
                     </ul> 
                     */}
-                  </div>
-                </NavLink>
+                  </NavLink>
+                </div>
               </div>
             ))}
           </div>
