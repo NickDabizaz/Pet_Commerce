@@ -14,7 +14,6 @@ import { Community } from "./pages/Community.jsx";
 import {
   AlwaysErrorPage,
   ContactUsPage,
-  ErrorElement,
   MainLayout,
 } from "./Components.jsx";
 import CreateStore from "./pages/CreateStore.jsx";
@@ -26,10 +25,13 @@ import ShoppingCart from "./pages/ShoppingCart.jsx";
 import DetailPost from "./pages/DetailPost.jsx";
 import ProductDetail from "./pages/ProductDetail.jsx";
 import FAQ from "./pages/FAQ.jsx";
+import History from "./pages/History.jsx";
+import ErrorPage from "./pages/ErrorPage.jsx";
+import DetailTransaction from "./pages/DetailTransaction.jsx";
 
 const router = createBrowserRouter([
   {
-    errorElement: <errorElement />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -84,6 +86,16 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <ShoppingCart />,
+      },
+      {
+        path: "/history",
+        element: <History />,
+        children:[
+          {
+            path:":order_id",
+            element: <DetailTransaction />
+          }
+        ]
       },
       {
         path: "/error",

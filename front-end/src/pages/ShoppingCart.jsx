@@ -4,13 +4,14 @@ import { useCookies } from "react-cookie";
 import { Card, Button } from "react-bootstrap";
 import { MainLayout } from "../Components";
 import trash from "../assets/trash.png";
-import Swal from "sweetalert2/dist/sweetalert2.js";
 
 const ShoppingCart = () => {
   const [cartData, setCartData] = useState({ cartItems: [], total: 0 });
   const [isLoading, setIsLoading] = useState(false);
   const [cookies] = useCookies(["user_id"]);
   const [token, setToken] = useState("");
+
+  console.log({ cartData: cartData.cartItems });
 
   const fetchCart = async () => {
     setIsLoading(true);
@@ -57,7 +58,8 @@ const ShoppingCart = () => {
     }
     return result;
   };
-  console.log({ generateOrderId: generateOrderId() });
+
+  const [isPaymentLoading, setIsPaymentLoading] = useState(false);
 
   const handlePayment = async () => {
     try {
@@ -66,24 +68,44 @@ const ShoppingCart = () => {
           order_id: generateOrderId(),
           gross_amount: cartData.total,
         },
-        user_id : cookies.user_id
+        user_id: cookies.user_id,
       };
       const response = await axios.post(
         "http://localhost:3000/create-payment",
         paymentBody
       );
-      console.log({ response });
       setToken(response.data);
-      console.log({token});
-      window.snap.pay(token)
-      
+
+      try {
+        await Promise.all(
+          cartData.cartItems.map(async (cart) => {
+            console.log({ cart });
+            await axios.post(
+              `http://localhost:3000/order/add/${cookies.user_id}`,
+              {
+                product_id: cart.product_id,
+                qty: cart.qty,
+              }
+            );
+          })
+        );
+      } catch (error) {
+        console.error("Terjadi kesalahan:", error);
+      }
+
+      await axios.delete(`http://localhost:3000/cart/${cookies.user_id}`);
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
-      // Tampilkan pesan kesalahan kepada pengguna
     }
   };
 
-  
+  useEffect(() => {
+    if (token !== "") {
+      setIsPaymentLoading(true);
+      window.snap.pay(token);
+      setIsPaymentLoading(false);
+    }
+  }, [token]);
 
   useEffect(() => {
     const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
@@ -306,8 +328,9 @@ const ShoppingCart = () => {
               color: "white",
             }}
             onClick={handlePayment}
+            disabled={isPaymentLoading} // Disable the button while the payment is loading
           >
-            Checkout
+            {isPaymentLoading ? "Processing Payment..." : "Checkout"}
           </button>
         </div>
       </div>

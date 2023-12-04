@@ -141,8 +141,7 @@ exports.deleteCart = async (req, res) => {
       return res.status(400).json({ message: "Invalid input" });
     }
 
-    // Find the cart to delete
-    const cart = await ShoppingCart.findOne({
+    const cart = await ShoppingCart.findAll({
       where: { user_id },
     });
 
@@ -150,8 +149,10 @@ exports.deleteCart = async (req, res) => {
       return res.status(404).json({ message: "Cart not found" });
     }
 
-    // Delete the cart
-    await cart.destroy();
+    // Delete all carts for this user
+    await ShoppingCart.destroy({
+      where: { user_id },
+    });
 
     res.status(200).json({ message: "Cart deleted successfully" });
   } catch (err) {

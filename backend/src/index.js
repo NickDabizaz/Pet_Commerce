@@ -44,7 +44,7 @@ models.sequelize.sync().then(() => {
       return res.status(400).send({
         success: false,
         message: "Content can not be empty!",
-      });
+      }); 
     }
 
     try {
