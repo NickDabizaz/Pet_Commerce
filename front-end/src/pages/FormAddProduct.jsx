@@ -122,33 +122,40 @@ export default function FormAddProduct() {
           >
             <form onSubmit={handleSubmit(onSubmit)}>
               {/* Gambar add product */}
-              <img
-                className="mx-auto"
-                src={addpict}
-                style={{
-                  display: "block",
-                  width: "26rem",
-                  height: "5rem",
-                  marginTop: "1rem",
-                }}
-              />
+              <div className="mx-auto w-fit">
+                <img
+                  className="ms-4"
+                  src={addpict}
+                  style={{
+                    display: "block",
+                    width: "26rem",
+                    height: "5rem",
+                    marginTop: "1rem",
+                  }}
+                />
+              </div>
 
               {/* Upload gambar */}
-              <div className="p-0 row gap-2" style={{ marginLeft: "2rem" }}>
-                {selectedFile ? (
-                  <div id="imageContainer" className="p-0 w-fit col-1"></div>
-                ) : (
-                  <div className="w-40 h-40 p-0" style={{ objectFit: "cover" }}>
-                    {" "}
-                    <img
-                      src="https://i.pinimg.com/736x/64/53/c8/6453c8226817e6ab85a6321aeee19e80.jpg"
-                      alt="image"
-                      className="w-full h-full"
-                    />
+              <div className="row mt-5 p-0" style={{ marginLeft: "2rem" }}>
+                <div className="col-auto p-0 mx-auto">
+                  {selectedFile ? (
+                    <div id="imageContainer" className="p-0 w-fit"></div>
+                  ) : (
+                    <div
+                      className="w-72 h-72 p-0"
+                      style={{ objectFit: "cover" }}
+                    >
+                      {" "}
+                      <img
+                        src="https://i.pinimg.com/736x/64/53/c8/6453c8226817e6ab85a6321aeee19e80.jpg"
+                        alt="image"
+                        className="w-full h-full"
+                      />
+                    </div>
+                  )}
+                  <div className="btn btn-secondary w-full mt-2">
+                    <FileUploader setSelectedFile={setSelectedFile} />
                   </div>
-                )}
-                <div className="col-1 border border-dark">
-                  <FileUploader setSelectedFile={setSelectedFile} />
                 </div>
 
                 <br />
@@ -360,8 +367,8 @@ const FileUploader = ({ setSelectedFile }) => {
 
         imgElement.style.marginLeft = "auto";
         imgElement.style.marginRight = "auto";
-        imgElement.style.height = "10rem";
-        imgElement.style.width = "10rem";
+        imgElement.style.height = "14rem";
+        imgElement.style.width = "14rem";
         imgElement.style.objectFit = "cover";
         imgElement.style.border = "1px solid black";
 

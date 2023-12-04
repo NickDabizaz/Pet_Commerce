@@ -3,7 +3,7 @@ import axios from "axios";
 import dogo from "../assets/dogo.jpg";
 import { MainLayout } from "../Components";
 import "../index.css";
-import { NavLink, redirect, useParams } from "react-router-dom";
+import { NavLink, redirect, useNavigate, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import logoAdd from "../assets/addPost.png";
 import { Modal, Button } from "react-bootstrap";
@@ -15,6 +15,8 @@ function Community() {
   const [showModal, setShowModal] = useState(false);
   const [newPostText, setnewPostText] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+
+  const navigate = useNavigate();
 
   /* nanti dihapus */
   // const [pic, setPic] = useState("");
@@ -71,7 +73,7 @@ function Community() {
 
       setTimeout(handleCloseModal(), 3000);
 
-      redirect("/post");
+      navigate(0);
     } catch (error) {
       alert("GABISA POST");
     }
@@ -87,7 +89,7 @@ function Community() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [response]);
+  }, []);
   // console.log(response);
 
   return (
@@ -97,7 +99,7 @@ function Community() {
       {cookie.user_id && (
         <div
           className="m-4 mb-0 mx-auto border border-dark rounded-4"
-          style={{ width: "75rem", backgroundColor: "#6CD4FF" }}
+          style={{ width: "77rem", backgroundColor: "#6CD4FF" }}
         >
           <div className="m-2 row">
             <div className="col-auto p-0" style={{ width: "6rem" }}>
@@ -192,12 +194,12 @@ function Community() {
         {loading == true && "Loading..."}
         {loading == false && (
           <div
-            className="row text-center m-auto"
+            className="grid grid-cols-2 text-center m-auto"
             style={{ zIndex: -1, width: "80rem" }}
           >
             {console.log(response)}
             {response.map((post) => (
-              <div key={post.post_id} className="col-6">
+              <div key={post.post_id} className="">
                 <NavLink to={`/post/${post.post_id}`}>
                   <div
                     className="m-4 border border-dark rounded-4"
@@ -214,12 +216,32 @@ function Community() {
                         1h ago
                       </div>
                     </div>
-                    <div className=" ">
-                      <img
-                        src={`http://localhost:3000/post/pic/${post.post_id}`}
-                        alt={post.post_name}
-                        width={"100%"}
-                      />
+                    <div className="bg-white">
+                      <div
+                        className="align-center"
+                        style={{
+                          minHeight: "37rem",
+                          alignItems: "center",
+                          backgroundImage: `url(http://localhost:3000/post/pic/${post.post_id})`,
+                          backgroundRepeat: "repeat",
+                          backgroundSize: "cover",
+                          backgroundPositionX: "50%",
+                          opacity: "1",
+                        }}
+                      >
+                        <img
+                          className="max-w-full max-w-full object-contain my-auto"
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            maxHeight: "36.9rem",
+                            maxWidth: "36.9rem",
+                            position: "absolute",
+                          }}
+                          src={`http://localhost:3000/post/pic/${post.post_id}`}
+                          alt={post.post_name}
+                        />
+                      </div>
                     </div>
                     <div
                       className="row text-start mx-4"
