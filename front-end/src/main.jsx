@@ -11,11 +11,7 @@ import {
   ManageCommunity,
 } from "./pages/AdminDashboard.jsx";
 import { Community } from "./pages/Community.jsx";
-import {
-  AlwaysErrorPage,
-  ContactUsPage,
-  MainLayout,
-} from "./Components.jsx";
+import { AlwaysErrorPage, ContactUsPage, MainLayout } from "./Components.jsx";
 import CreateStore from "./pages/CreateStore.jsx";
 import StoreDetail from "./pages/StoreDetail.jsx";
 import Profile from "./pages/Profile.jsx";
@@ -89,13 +85,16 @@ const router = createBrowserRouter([
       },
       {
         path: "/history",
-        element: <History />,
-        children:[
+        children: [
           {
-            path:":order_id",
-            element: <DetailTransaction />
-          }
-        ]
+            index: true,
+            element: <History />,
+          },
+          {
+            path: ":order_id",
+            element: <DetailTransaction />,
+          },
+        ],
       },
       {
         path: "/error",

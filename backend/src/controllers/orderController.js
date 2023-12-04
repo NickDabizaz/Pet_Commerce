@@ -44,9 +44,10 @@ const getOrderById = async (req, res) => {
 
 const addProductToOrder = async (req, res) => {
   try {
-    // Find the order based on user_id
+    // Find the latest order based on user_id
     const order = await Order.findOne({
       where: { user_id: req.params.user_id },
+      order: [["order_id", "DESC"]],
     });
 
     if (!order) {
