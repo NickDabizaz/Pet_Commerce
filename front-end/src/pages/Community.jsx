@@ -87,7 +87,7 @@ function Community() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [response]);
   // console.log(response);
 
   return (
@@ -215,7 +215,11 @@ function Community() {
                       </div>
                     </div>
                     <div className=" ">
-                      <img src={`http://localhost:3000/post/pic/${post.post_id}`} width={"100%"} />
+                      <img
+                        src={`http://localhost:3000/post/pic/${post.post_id}`}
+                        alt={post.post_name}
+                        width={"100%"}
+                      />
                     </div>
                     <div
                       className="row text-start mx-4"
