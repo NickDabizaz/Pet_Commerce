@@ -125,17 +125,6 @@ export function MainLayout() {
                 </div>
               </NavLink>
             )}
-            {/* {cookie.user_id && (
-              <button
-                className="btn btn-danger mx-4"
-                onClick={() => {
-                  removeCookie("user_id");
-                  navigate("/");
-                }}
-              >
-                Logout
-              </button>
-            )} */}
           </div>
 
           <div>
@@ -157,22 +146,39 @@ export function MainLayout() {
                 </button>
               </NavLink>
             ) : (
-              <NavLink to={"/profile"} style={{}}>
-                <img
-                  className="mx-auto"
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
-                  style={{
-                    height: "3rem",
-                    width: "3rem",
-                    objectFit: "cover",
-                    borderRadius: "50%  ",
-                  }}
-                />
-              </NavLink>
+              <>
+                <div className="nav-item dropdown">
+                  <a className="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img
+                      className="mx-auto"
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
+                      style={{
+                        height: "3rem",
+                        width: "3rem",
+                        objectFit: "cover",
+                        borderRadius: "50%  ",
+                      }}
+                    />
+                  </a>
+                  <ul className="dropdown-menu" style={{ position: "absolute", minWidth: "auto", left: -20 }}>
+                    <NavLink to="/profile"><li><a className="dropdown-item" href="#">Profile</a></li></NavLink>
+                    <li><hr className="dropdown-divider" /></li>
+                    <li onClick={() => {
+                      removeCookie("user_id");
+                      navigate("/");
+                    }}><a className="dropdown-item" href="#">Logout</a></li>
+                  </ul>
+                </div>
+                {/* <div className="pt-2 rounded border border-black" style={{ position: "absolute", left: "82.5rem", top: "5.5rem", marginTop: "", width: "5.3rem", height: "5.3rem", zIndex: 1000, backgroundColor: "white" }}>
+                  <NavLink><p className="mb-2 ms-3">Profile</p></NavLink>
+                  <hr />
+                  <NavLink><p className="mt-2 ms-3">Logout</p></NavLink>
+                </div> */}
+              </>
             )}
           </div>
-        </nav>
-      </div>
+        </nav >
+      </div >
       <div
         className="container-fluid"
         style={{
