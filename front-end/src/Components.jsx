@@ -3,10 +3,11 @@ import logo from "./assets/logo.png";
 import searchLogo from "./assets/search.png";
 import cartLogo from "./assets/cart.png";
 import { useCookies } from "react-cookie";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dogo from "./assets/dogo.jpg";
 import cart_profile from "./assets/cart_profile.png";
+import axios from "axios";
 
 export function HomePage() {
   return <h1>Home</h1>;
@@ -32,12 +33,24 @@ export function ErrorElement() {
 export function MainLayout() {
   const navigate = useNavigate();
   const [cookie, setCookie, removeCookie] = useCookies(["user_id"]);
+  const [profpic, setProfPic] = useState()
 
   const [searchValue, setSearchValue] = useState("");
 
   const handleInputChange = (event) => {
     setSearchValue(event.target.value);
   };
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/users/pic/${cookie.user_id}`)
+      .then((res) => {
+        setProfPic(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [])
 
   return (
     <>
@@ -151,7 +164,7 @@ export function MainLayout() {
                   <a className="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img
                       className="mx-auto"
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
+                      src={profpic ? `http://localhost:3000/users/pic/${cookie.user_id}` : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"}
                       style={{
                         height: "3rem",
                         width: "3rem",
