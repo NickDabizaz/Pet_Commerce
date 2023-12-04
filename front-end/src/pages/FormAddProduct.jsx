@@ -64,15 +64,11 @@ export default function FormAddProduct() {
 
         const response = await axios.post(
           "http://localhost:3000/sellers/add-product/product",
+          formData,
           {
-            file: selectedFile,
-            user_id,
-            product_name,
-            price,
-            quantity,
-            rating,
-            category_id,
-            store_id,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           }
         );
         // const response = await axios.post(
