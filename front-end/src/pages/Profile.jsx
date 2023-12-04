@@ -11,6 +11,7 @@ function Profile() {
   const [response, setResponse] = useState([]);
   const [toko, setToko] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [profpic, setProfPic] = useState()
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,6 +36,37 @@ function Profile() {
   //   console.log(response);
   console.log(toko);
 
+  const handleOnSubmit = async () => {
+    try {
+      const formData = new FormData();
+      if (selectedFile) {
+        formData.append("file", selectedFile);
+      }
+      const response = await axios.post(
+        `http://localhost:3000/users/profilpic/${cookie.user_id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/users/pic/${cookie.user_id}`)
+      .then((res) => {
+        setProfPic(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [selectedFile])
+
   return (
     <>
       <MainLayout />
@@ -43,7 +75,7 @@ function Profile() {
         <h1 style={{ fontSize: "1.5rem" }}>Manage your account</h1>
         <div className="mt-5" style={{ display: "flex" }}>
           <div className="mx-auto" style={{ width: "50rem" }}>
-            <form>
+            <form onSubmit={() => handleOnSubmit()}>
               <table className="table text-start">
                 <tr>
                   <td className="text-end" style={{ width: "10rem" }}>
@@ -126,7 +158,7 @@ function Profile() {
               ) : (
                 <img
                   className="mx-auto"
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
+                  src={profpic ? `http://localhost:3000/users/pic/${cookie.user_id}` : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"}
                   style={{
                     height: "10rem",
                     width: "10rem",
@@ -181,7 +213,7 @@ function Profile() {
               <div className="m-4 row">
                 <div className="col-1">
                   <img
-                    src="https://icon-library.com/images/guest-icon-png/guest-icon-png-29.jpg"
+                    src="https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg"
                     alt="icon-toko"
                     style={{
                       objectFit: "cover",

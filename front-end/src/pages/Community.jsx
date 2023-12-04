@@ -15,6 +15,7 @@ function Community() {
   const [showModal, setShowModal] = useState(false);
   const [newPostText, setnewPostText] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [profpic, setProfPic] = useState()
 
   const navigate = useNavigate();
 
@@ -92,6 +93,17 @@ function Community() {
   }, []);
   // console.log(response);
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/users/pic/${cookie.user_id}`)
+      .then((res) => {
+        setProfPic(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [])
+
   return (
     <>
       <MainLayout />
@@ -104,7 +116,7 @@ function Community() {
           <div className="m-2 row">
             <div className="col-auto p-0" style={{ width: "6rem" }}>
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
+                src={profpic ? `http://localhost:3000/users/pic/${cookie.user_id}` : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"}
                 style={{
                   height: "5rem",
                   width: "5rem",
