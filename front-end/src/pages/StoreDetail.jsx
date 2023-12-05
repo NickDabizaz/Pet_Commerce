@@ -19,10 +19,6 @@ function StoreDetail() {
       });
   }, [store_id]);
 
-  if (!storeData) {
-    return <div className="text-center mt-4">Loading...</div>;
-  }
-
   useEffect(() => {
     axios
       .get(`http://localhost:3000/sellers/store/pic/${store_id}`)
@@ -33,6 +29,10 @@ function StoreDetail() {
         console.error("Error fetching data:", error);
       });
   }, []);
+
+  if (!storeData) {
+    return <div className="text-center mt-4">Loading...</div>;
+  }
 
   return (
     <div className="max-w-2xl mx-auto mt-4 p-4 bg-white shadow">
@@ -53,6 +53,7 @@ function StoreDetail() {
           alt="pp-store"
           style={{
             width: "8rem",
+            height: "8rem",
             objectFit: "cover",
             border: "1px solid black",
             borderRadius: "50%",
