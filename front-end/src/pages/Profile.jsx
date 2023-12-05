@@ -12,7 +12,9 @@ function Profile() {
   const [toko, setToko] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [profpic, setProfPic] = useState()
+  const [storepic, setStorePic] = useState();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     axios
@@ -33,8 +35,19 @@ function Profile() {
         console.error("Error fetching data:", error);
       });
   }, []);
-  //   console.log(response);
-  console.log(toko);
+
+  useEffect(() => {
+    setIsLoading(true)
+    axios
+      .get(`http://localhost:3000/sellers/store/pic/${toko.store_id}`)
+      .then((res) => {
+        setStorePic(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+    setIsLoading(false)
+  }, []);
 
   const handleOnSubmit = async () => {
     try {
@@ -203,34 +216,46 @@ function Profile() {
         <h1 style={{ fontSize: "2rem" }} className="mb-2">
           List Toko:
         </h1>
-        {toko.map((toko, index) => (
-          <>
-            <div
-              key={index}
-              className="border border-dark rounded-1 mb-4"
-              onClick={() => navigate(`/store/${toko.store_id}`)}
-            >
-              <div className="m-4 row">
-                <div className="col-1">
-                  <img
-                    src="https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg"
-                    alt="icon-toko"
-                    style={{
-                      objectFit: "cover",
-                      border: "1px solid black",
-                      borderRadius: "50%",
-                      height: "5rem",
-                    }}
-                  />
+        {
+          toko.map((toko, index) => {
+            // const isAdaStorePic = axios.get(`http://localhost:3000/sellers/store/pic/${toko.store_id}`).then((response) => {return response.data})
+            console.log(`http://localhost:3000/sellers/store/pic/${toko.store_id}`);
+            return (
+              !isLoading &&
+              <>
+                <div
+                  key={index}
+                  className="border border-dark rounded-1 mb-4"
+                  onClick={() => navigate(`/store/${toko.store_id}`)}
+                >
+                  <div className="m-4 row">
+                    <div className="col-1">
+                      <img
+                        src={
+                          storepic
+                          ? `http://localhost:3000/sellers/store/pic/${toko.store_id}`
+                          : "https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg"
+                        }
+                        alt="icon-toko"
+                        style={{
+                          objectFit: "cover",
+                          border: "1px solid black",
+                          borderRadius: "50%",
+                          height: "5rem",
+                          width: "5rem"
+                        }}
+                      />
+                    </div>
+                    <div className="col-auto">
+                      <div style={{ fontSize: "1.2rem" }}>{toko.store_name}</div>
+                      <div>{toko.store_description}</div>
+                    </div>
+                  </div>
                 </div>
-                <div className="col-auto">
-                  <div style={{ fontSize: "1.2rem" }}>{toko.store_name}</div>
-                  <div>{toko.store_description}</div>
-                </div>
-              </div>
-            </div>
-          </>
-        ))}
+              </>
+            )
+          })
+        }
       </div>
     </>
   );
