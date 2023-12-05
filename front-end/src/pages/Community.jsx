@@ -19,12 +19,64 @@ function Community() {
   const [newPostText, setnewPostText] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const [likes, setLikes] = useState(response.map(() => false));
+  const [likes, setLikes] = useState([]);
 
-  const handleLikeToggle = (index) => {
-    const newLikes = [...likes];
-    newLikes[index] = !newLikes[index];
-    setLikes(newLikes);
+  useEffect(() => {
+    const fetchLikes = async () => {
+      setLikes(
+        response.map((post) =>
+          axios
+            .get(
+              `http://localhost:3000/like/user/${cookie.user_id}/${post.post_id}`
+            )
+            .then((response) => {
+              return response.data;
+            })
+            .catch((error) => {
+              console.error(
+                `Error fetching likes for post ${post.post_id}:`,
+                error
+              );
+            })
+        )
+      );
+    };
+
+    fetchLikes();
+    console.log({ likes });
+  }, [response, cookie.user_id]);
+
+  const handleLikeToggle = async (post_id) => {
+    if (likes[post_id]) {
+      // Unlike
+      try {
+        await axios.delete("http://localhost:3000/like/", {
+          data: { post_id, user_id: cookie.user_id },
+        });
+        // Update likes state
+        setLikes((prevLikes) => ({
+          ...prevLikes,
+          [post_id]: false,
+        }));
+      } catch (error) {
+        console.error("Error unliking post:", error);
+      }
+    } else {
+      // Like
+      try {
+        await axios.post("http://localhost:3000/like/", {
+          post_id,
+          user_id: cookie.user_id,
+        });
+        // Update likes state
+        setLikes((prevLikes) => ({
+          ...prevLikes,
+          [post_id]: true,
+        }));
+      } catch (error) {
+        console.error("Error liking post:", error);
+      }
+    }
   };
 
   const [profpic, setProfPic] = useState();
@@ -290,7 +342,7 @@ function Community() {
                       className="col-auto p-0"
                       style={{ fontSize: "1.5rem" }}
                     >
-                      <button onClick={() => handleLikeToggle(index)}>
+                      <button onClick={() => handleLikeToggle(post.post_id)}>
                         {likes[index] ? (
                           <FontAwesomeIcon
                             icon={solidHeart}

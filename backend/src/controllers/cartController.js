@@ -31,6 +31,31 @@ exports.addToCart = async (req, res) => {
   }
 };
 
+exports.deleteOneItem = async (req, res) => {
+  try {
+    const { user_id, product_id } = req.params;
+
+    if (!user_id || !product_id) {
+      return res.status(400).json({ message: "Invalid input" });
+    }
+
+    const cart = await ShoppingCart.findOne({
+      where: { user_id, product_id },
+    });
+
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+
+    await cart.destroy();
+
+    res.status(200).json({ message: "Item deleted from cart" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 exports.getCart = async (req, res) => {
   try {
     const { user_id } = req.params;

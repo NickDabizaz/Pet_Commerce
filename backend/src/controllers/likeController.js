@@ -87,3 +87,22 @@ exports.getLikesByPostId = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+exports.getLikeByUserIdAndPostId = async (req, res) => {
+  try {
+    const { user_id, post_id } = req.params;
+
+    const like = await PostLike.findOne({
+      where: {
+        user_id,
+        post_id,
+        deletedAt: null,
+      },
+    });
+
+    return res.status(200).json(like !== null);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}

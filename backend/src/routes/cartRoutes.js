@@ -12,6 +12,9 @@ router.get('/:user_id', getCart);
 // Route untuk mengupdate cart
 router.put('/:user_id', updateCart);
 
+// Route untuk menghapus 1 cart item
+router.delete('/:product_id/:user_id',)
+
 // Route untuk menghapus cart
 router.delete('/:user_id', deleteCart);
 
