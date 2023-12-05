@@ -122,7 +122,7 @@ function Search() {
             {filteredProducts.map((product) => (
               <div
                 key={product.product_id}
-                className="bg-white border border-gray-300 col-3 m-4 p-0"
+                className="bg-white border border-b-2 col-3 m-4 p-0"
                 onClick={() => {
                   // !cookie.user_id && navigate("/login");
                   navigate(`/products/${product.product_id}`);
@@ -130,8 +130,9 @@ function Search() {
                 }}
               >
                 <img
-                  src="http://via.placeholder.com/640x360"
-                  style={{ width: "100%" }}
+                  src={`http://localhost:3000/sellers/product/pic/${product.product_id}`}
+                  alt={product.product_name}
+                  className="h-72 max-h-72 m-auto w-full object-contain"
                 ></img>
                 <div className="m-3">
                   <h3 className="text-xl mb-2">{product.product_name}</h3>

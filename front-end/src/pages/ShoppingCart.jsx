@@ -169,7 +169,7 @@ const ShoppingCart = () => {
         <div>
           {cartData.cartItems.map((item) => (
             <div
-              className="d-flex"
+              className="d-flex rounded"
               key={item.cart_id}
               style={{
                 width: "100%",
@@ -179,12 +179,13 @@ const ShoppingCart = () => {
             >
               <div className="rounded-start" style={{ width: "auto" }}>
                 <img
-                  className="rounded-start"
-                  src="http://via.placeholder.com/640x360"
+                  className="h-full m-auto object-contain"
+                  src={`http://localhost:3000/sellers/product/pic/${item.product_id}`}
                   style={{
                     minHeight: "8rem",
                     maxHeight: "8rem",
-                    minWidth: "auto",
+                    minWidth: "15rem",
+                    maxWidth: "15rem",
                   }}
                 />
               </div>

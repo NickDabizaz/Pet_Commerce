@@ -180,6 +180,7 @@ export default function FormAddProduct() {
                   placeholder="Product name"
                   {...register("product_name", {
                     required: "Product name is required",
+                    maxLength: 72,
                   })}
                 />
               </div>
