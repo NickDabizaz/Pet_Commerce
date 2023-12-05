@@ -12,7 +12,6 @@ function Profile() {
   const [toko, setToko] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [profpic, setProfPic] = useState();
-  const [storepic, setStorePic] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -65,18 +64,6 @@ function Profile() {
         console.error("Error fetching data:", error);
       });
   }, [selectedFile]);
-
-  const checkStorePic = (store_id) => {
-    try {
-      axios
-        .get(`http://localhost:3000/sellers/store/pic/${store_id}`)
-        .then((res) => {
-          setStorePic("ada");
-        });
-    } catch (error) {
-      setStorePic("tidak ada");
-    }
-  };
 
   return (
     <>
@@ -219,7 +206,6 @@ function Profile() {
           List Toko:
         </h1>
         {toko.map((toko, index) => {
-          let picStore = checkStorePic(toko.store_id);
           return (
             <>
               <div
@@ -229,13 +215,13 @@ function Profile() {
               >
                 <div className="m-4 row">
                   <div
-                    className="col-1 p-0"
+                    className="col-1 p-0 me-3"
                     style={{
                       objectFit: "cover",
                       border: "1px solid black",
                       borderRadius: "50%",
-                      height: "5rem",
-                      width: "5rem",
+                      height: "8rem",
+                      width: "8rem",
                       backgroundImage:
                         "url(https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg)",
                       backgroundRepeat: "repeat",
@@ -243,21 +229,11 @@ function Profile() {
                     }}
                   >
                     <img
-                      src={
-                        // storepic == "tidak ada"
-                        //   ? "https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg"
-                        `http://localhost:3000/sellers/store/pic/${toko.store_id}`
-                      }
-                      style={{
-                        objectFit: "cover",
-                        border: "1px solid black",
-                        borderRadius: "50%",
-                        height: "5rem",
-                        width: "5rem",
-                      }}
+                      src={`http://localhost:3000/sellers/store/pic/${toko.store_id}`}
+                      style={{ borderRadius: "50%", height: "8rem", width: "8rem", maxWidth: "100%", marginLeft: "-20"}}
                     />
                   </div>
-                  <div className="col-auto">
+                  <div className="col-auto pt-3">
                     <div style={{ fontSize: "1.2rem" }}>{toko.store_name}</div>
                     <div>{toko.store_description}</div>
                   </div>

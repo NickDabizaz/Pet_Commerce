@@ -33,31 +33,31 @@ function ProductDetail() {
   };
 
   useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`http://localhost:3000/sellers/product/${product_id}`);
-      console.log({ response: response.data });
-      setProduct(response.data);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/sellers/product/${product_id}`);
+        console.log({ response: response.data });
+        setProduct(response.data);
 
-      const storeResponse = await axios.get(`http://localhost:3000/sellers/store/${response.data.store_id}`);
-      console.log({ storeResponse: storeResponse.data });
+        const storeResponse = await axios.get(`http://localhost:3000/sellers/store/${response.data.store_id}`);
+        console.log({ storeResponse: storeResponse.data });
 
-      setStore({
-        store_id : response.data.store_id,
-        name: storeResponse.data.store_name,
-        description: storeResponse.data.store_description,
-      });
+        setStore({
+          store_id: response.data.store_id,
+          name: storeResponse.data.store_name,
+          description: storeResponse.data.store_description,
+        });
 
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  fetchData();
-}, [product_id]);
+    fetchData();
+  }, [product_id]);
 
-  
+
 
   const handleCloseModal = () => {
     setQuantity(1);
@@ -162,14 +162,26 @@ function ProductDetail() {
               </div>
               <div className="col-2"></div>
             </div>
-            <div className="mt-5 row" style={{ height: "auto"}}>
+            <div className="mt-5 row" style={{ height: "auto" }}>
               <div className="col-2"></div>
               <div className="col-8 p-3 border border-dark" onClick={() => navigate(`/store/${store.store_id}`)}>
                 <div className="row">
-                  <div className="col-2">
+                  <div className="col-2 ms-3 p-0"
+                    style={{
+                      objectFit: "cover",
+                      border: "1px solid black",
+                      borderRadius: "50%",
+                      height: "8rem",
+                      width: "8rem",
+                      backgroundImage:
+                        "url(https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg)",
+                      backgroundRepeat: "repeat",
+                      backgroundSize: "cover",
+                    }}
+                  >
                     <img
-                      src="https://png.pngtree.com/png-clipart/20210328/original/pngtree-the-online-shop-logo-uses-a-single-color-home-theme-png-image_6151619.jpg"
-                      style={{ border: "1px solid black", borderRadius: "50%" }}
+                      src={`http://localhost:3000/sellers/store/pic/${store.store_id}`}
+                      style={{ borderRadius: "50%", height: "8rem", width: "8rem", maxWidth: "150%", marginLeft: "-20"}}
                     />
                   </div>
                   <div className="col-10">{store.name}</div>
