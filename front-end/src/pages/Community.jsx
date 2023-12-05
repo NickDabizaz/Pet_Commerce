@@ -109,42 +109,20 @@ function Community() {
           console.error("Error liking post:", error);
         });
     }
-    navigate(0)
+    navigate(0);
   };
 
-  
-
   const navigate = useNavigate();
-
-  /* nanti dihapus */
-  // const [pic, setPic] = useState("");
-
-  // useEffect(
-  //   axios
-  //     .get("http://localhost:3000/post/pic/7")
-  //     .then((response) => {
-  //       const picData = response.data;
-  //       setPic(picData);
-  //       console.log({pic});
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching pic data:", error);
-  //     }),
-  //   []
-  // );
-  /* nanti dihapus */
 
   const handlenewPostTextChange = (event) => {
     setnewPostText(event.target.value);
   };
 
   const handleCloseModal = () => {
-    // setQuantity(1);
     setShowModal(false);
   };
 
   const handleShowModal = (product_id) => {
-    // setProductId(product_id);
     setShowModal(true);
   };
 
@@ -188,7 +166,6 @@ function Community() {
         console.error("Error fetching data:", error);
       });
   }, []);
-  // console.log(response);
 
   useEffect(() => {
     axios
@@ -342,7 +319,46 @@ function Community() {
                         className="mt-3 text-black-50"
                         style={{ fontSize: "0.6rem" }}
                       >
-                        1h ago
+                        {Math.floor(
+                          (new Date() - new Date(post.createdAt)) / (1000 * 60)
+                        ) < 1
+                          ? "Just now"
+                          : Math.floor(
+                              (new Date() - new Date(post.createdAt)) /
+                                (1000 * 60 * 60)
+                            ) < 1
+                          ? Math.floor(
+                              (new Date() - new Date(post.createdAt)) /
+                                (1000 * 60)
+                            ) + "m ago"
+                          : Math.floor(
+                              (new Date() - new Date(post.createdAt)) /
+                                (1000 * 60 * 60)
+                            ) < 24
+                          ? Math.floor(
+                              (new Date() - new Date(post.createdAt)) /
+                                (1000 * 60 * 60)
+                            ) + "h ago"
+                          : Math.floor(
+                              (new Date() - new Date(post.createdAt)) /
+                                (1000 * 60 * 60 * 24)
+                            ) < 30
+                          ? Math.floor(
+                              (new Date() - new Date(post.createdAt)) /
+                                (1000 * 60 * 60 * 24)
+                            ) + "d ago"
+                          : Math.floor(
+                              (new Date() - new Date(post.createdAt)) /
+                                (1000 * 60 * 60 * 24 * 30)
+                            ) < 12
+                          ? Math.floor(
+                              (new Date() - new Date(post.createdAt)) /
+                                (1000 * 60 * 60 * 24 * 30)
+                            ) + "mo ago"
+                          : Math.floor(
+                              (new Date() - new Date(post.createdAt)) /
+                                (1000 * 60 * 60 * 24 * 365)
+                            ) + "y ago"}
                       </div>
                     </div>
 
@@ -443,7 +459,11 @@ function Community() {
                           {post.comment.length > 0 ? (
                             "View all " + post.comment.length + " comments"
                           ) : (
-                            <br />
+                            <div
+                              onClick={() => navigate(`/post/${post.post_id}`)}
+                            >
+                              Add a comment...
+                            </div>
                           )}
                         </div>
                         {post.comment.length > 0 && (
@@ -470,19 +490,6 @@ function Community() {
                         )}
                       </div>
                     </div>
-
-                    {/* 
-                    <ul className="text-left m-4">
-                    Comments:
-                    {post.comment.map((comment, index) => (
-                      <li key={index} className="mb-2">
-                        <p className=" ">{comment.nama_pengomen}</p>
-                        <p className=" ">{comment.komentar}</p>
-                        <p className=" ">{comment.waktu_komentar}</p>
-                      </li>
-                    ))}
-                    </ul> 
-                    */}
                   </div>
                 </div>
               );
@@ -490,31 +497,6 @@ function Community() {
           </div>
         )}
       </div>
-
-      {/* <div
-        className="row"
-        style={{
-          position: "fixed",
-          bottom: "10vh",
-          left: "10vh",
-          border: "1px solid blue",
-          backgroundColor: "white",
-          borderRadius: "26px",
-        }}
-      >
-        <div
-          style={{
-            width: "50px",
-            height: "50px",
-            backgroundColor: "red",
-            borderRadius: "50%",
-          }}
-          className="col-auto p-0"
-        >
-          <img src={logoAdd} alt="add-post" style={{ objectFit: "cover" }} />
-        </div>
-        <div className="col-auto my-auto fw-bold">Add Post</div>
-      </div> */}
     </>
   );
 }

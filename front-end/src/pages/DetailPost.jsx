@@ -14,6 +14,7 @@ const DetailPost = () => {
   const [cookies] = useCookies(["user_id"]);
   const [loading, setLoading] = useState(true);
   const [commentText, setCommentText] = useState();
+  const [like, setLike] = useState(false);
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
 
@@ -243,7 +244,7 @@ const DetailPost = () => {
               {/* Ini bagian Comment post*/}
               <div
                 style={{
-                  height: "35rem",
+                  height: "29rem",
                   overflow: "auto",
                 }}
                 className="custom-scrollbar"
@@ -300,14 +301,18 @@ const DetailPost = () => {
                 <hr />
 
                 {/* Ini comment-comment nya */}
-                {console.log(post)}
                 {post.comment.map((comment, index) => (
                   <div key={index} className="border border-dark rounded-3 m-4">
                     <div className="m-2">
+                      {/* commentator */}
                       <div style={{ fontWeight: "bold" }}>{comment.user}</div>
+
+                      {/* comment content */}
                       <div style={{ wordBreak: "break-all" }}>
                         {comment.comment_text}
                       </div>
+
+                      {/* comment time */}
                       <div
                         className="text-black-50"
                         style={{ fontSize: "0.8rem" }}
@@ -362,29 +367,43 @@ const DetailPost = () => {
               <hr />
 
               {/* Ini bagian input comment */}
-              <div className="h-28 mx-4">
-                {/* <div style={{ overflow: "hidden" }}> */}
-
-                {/* <div
-                  className="border border-dark rounded-3 bg-white w-full"
-                  style={{ marginTop: "1rem" }}
+              <div className="h-16 m-2 mx-4 ">
+                <div
+                  className="row text-start m-0 mt-2"
+                  style={{ fontSize: "1.5rem" }}
                 >
-                  <div style={{ height: "3rem" }}>
-                    <input
-                      className="w-full me-4"
-                      type="text"
-                      style={{
-                        marginTop: "0.5rem",
-                        marginLeft: "0.5rem",
-                        height: "2rem",
-                      }}
-                      value={commentText}
-                      onChange={handleCommentTextChange}
-                      placeholder="Write a comment..."
+                  <div className="col-auto p-0" style={{ fontSize: "1.5rem" }}>
+                    <button>
+                      {like ? (
+                        <FontAwesomeIcon
+                          icon={solidHeart}
+                          style={{ color: "#FF0000" }}
+                        />
+                      ) : (
+                        <FontAwesomeIcon
+                          icon={regularHeart}
+                          style={{ color: "#000000" }}
+                        />
+                      )}
+                    </button>
+                  </div>
+
+                  <div className=" col-auto p-0 ms-3">
+                    <FontAwesomeIcon
+                      icon={faComment}
+                      style={{ color: "#000000", cursor: "pointer" }}
                     />
                   </div>
-                </div> */}
+                </div>
 
+                <div className="text-start" style={{ fontSize: "1rem" }}>
+                  <b>{post.jumlah_like} likes </b>
+                </div>
+              </div>
+
+              <hr />
+
+              <div className="h-16 m-2 mx-4">
                 <div className="row">
                   <div className="col-10" style={{ marginTop: "1rem" }}>
                     <input

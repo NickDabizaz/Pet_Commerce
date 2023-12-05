@@ -62,7 +62,7 @@ const getAllPosts = async (req, res) => {
           post_id: item.post_id,
           nama_pengepost: user.name,
           title: item.title,
-          createdAt: item.createedAt,
+          createdAt: item.createdAt,
           jumlah_like: like,
           jumlah_share: share,
           comment: tempArray,
