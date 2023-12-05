@@ -176,6 +176,8 @@ export function MainLayout() {
                   <ul className="dropdown-menu" style={{ position: "absolute", minWidth: "auto", left: -20 }}>
                     <NavLink to="/profile"><li><a className="dropdown-item" href="#">Profile</a></li></NavLink>
                     <li><hr className="dropdown-divider" /></li>
+                    <NavLink to="/History"><li><a className="dropdown-item" href="#">History</a></li></NavLink>
+                    <li><hr className="dropdown-divider" /></li>
                     <li onClick={() => {
                       removeCookie("user_id");
                       navigate("/");
