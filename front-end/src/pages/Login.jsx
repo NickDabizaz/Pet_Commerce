@@ -30,7 +30,7 @@ const Login = () => {
       );
       const responseData = response.data;
       setCookie("user_id", responseData.user_id, { path: "/" }); // Set cookie dengan user_id dari responseData
-      navigate("/"); // Navigasi ke halaman utama setelah login berhasil
+      navigate(-1); // Navigasi ke halaman utama setelah login berhasil
     } catch (error) {
       if (error.response) {
         // Request berhasil dikirim tetapi server merespons dengan status yang tidak dalam kisaran 2xx
