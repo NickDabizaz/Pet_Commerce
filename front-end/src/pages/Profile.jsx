@@ -14,7 +14,6 @@ function Profile() {
   const [profpic, setProfPic] = useState();
   const [storepic, setStorePic] = useState();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -34,19 +33,6 @@ function Profile() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
-
-  useEffect(() => {
-    setIsLoading(true);
-    axios
-      .get(`http://localhost:3000/sellers/store/pic/${toko.store_id}`)
-      .then((res) => {
-        setStorePic(res.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-    setIsLoading(false);
   }, []);
 
   const handleOnSubmit = async () => {
@@ -80,19 +66,17 @@ function Profile() {
       });
   }, [selectedFile]);
 
-  function isImage(url) {
-    return fetch(url, { method: "HEAD" })
-      .then(response => {
-        // Periksa apakah respons memiliki tipe konten yang menandakan gambar
-        return response.headers.get("content-type")?.startsWith("image/") || false;
-      })
-      .catch(error => {
-        // Handle error (misalnya, jika gambar tidak ditemukan)
-        console.error("Error checking image:", error);
-        return false;
-      });
-  }
-  
+  const checkStorePic = (store_id) => {
+    try {
+      axios
+        .get(`http://localhost:3000/sellers/store/pic/${store_id}`)
+        .then((res) => {
+          setStorePic("ada");
+        });
+    } catch (error) {
+      setStorePic("tidak ada");
+    }
+  };
 
   return (
     <>
@@ -235,50 +219,51 @@ function Profile() {
           List Toko:
         </h1>
         {toko.map((toko, index) => {
-          // const isAdaStorePic = axios.get(`http://localhost:3000/sellers/store/pic/${toko.store_id}`).then((response) => {return response.data})
-          console.log(
-            `http://localhost:3000/sellers/store/pic/${toko.store_id}`
-          );
+          let picStore = checkStorePic(toko.store_id);
           return (
-            !isLoading && (
-              <>
-                <div
-                  key={index}
-                  className="border border-dark rounded-1 mb-4"
-                  onClick={() => navigate(`/store/${toko.store_id}`)}
-                >
-                  <div className="m-4 row">
-                    <div className="col-1">
-                      <img
-                        src={
-                          storepic
-                            ? isImage(
-                                `http://localhost:3000/sellers/store/pic/${toko.store_id}`
-                              )
-                              ? `http://localhost:3000/sellers/store/pic/${toko.store_id}`
-                              : "https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg"
-                            : "https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg"
-                        }
-                        alt="icon-toko"
-                        style={{
-                          objectFit: "cover",
-                          border: "1px solid black",
-                          borderRadius: "50%",
-                          height: "5rem",
-                          width: "5rem",
-                        }}
-                      />
-                    </div>
-                    <div className="col-auto">
-                      <div style={{ fontSize: "1.2rem" }}>
-                        {toko.store_name}
-                      </div>
-                      <div>{toko.store_description}</div>
-                    </div>
+            <>
+              <div
+                key={index}
+                className="border border-dark rounded-1 mb-4"
+                onClick={() => navigate(`/store/${toko.store_id}`)}
+              >
+                <div className="m-4 row">
+                  <div
+                    className="col-1 p-0"
+                    style={{
+                      objectFit: "cover",
+                      border: "1px solid black",
+                      borderRadius: "50%",
+                      height: "5rem",
+                      width: "5rem",
+                      backgroundImage:
+                        "url(https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg)",
+                      backgroundRepeat: "repeat",
+                      backgroundSize: "cover",
+                    }}
+                  >
+                    <img
+                      src={
+                        // storepic == "tidak ada"
+                        //   ? "https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg"
+                        `http://localhost:3000/sellers/store/pic/${toko.store_id}`
+                      }
+                      style={{
+                        objectFit: "cover",
+                        border: "1px solid black",
+                        borderRadius: "50%",
+                        height: "5rem",
+                        width: "5rem",
+                      }}
+                    />
+                  </div>
+                  <div className="col-auto">
+                    <div style={{ fontSize: "1.2rem" }}>{toko.store_name}</div>
+                    <div>{toko.store_description}</div>
                   </div>
                 </div>
-              </>
-            )
+              </div>
+            </>
           );
         })}
       </div>
