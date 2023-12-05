@@ -18,6 +18,21 @@ const DetailPost = () => {
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetchLikeStatus = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/like/user/${cookies.user_id}/${post_id}`
+        );
+        setLike(response.data);
+      } catch (error) {
+        console.error("Error fetching like status:", error);
+      }
+    };
+
+    fetchLikeStatus();
+  }, [cookies.user_id, post_id]);
+
   const handleCommentTextChange = (e) => {
     setCommentText(e.target.value);
   };
@@ -373,7 +388,27 @@ const DetailPost = () => {
                   style={{ fontSize: "1.5rem" }}
                 >
                   <div className="col-auto p-0" style={{ fontSize: "1.5rem" }}>
-                    <button>
+                    <button onClick={() => {
+                      if (like) {
+                        axios.delete(`http://localhost:3000/like/`,{data: {post_id: post_id, user_id: cookies.user_id}})
+                          .then((response) => {
+                            console.log(response.data);
+                            setLike(false);
+                          })
+                          .catch((error) => console.log(error));
+                      } else {
+                        axios.post("http://localhost:3000/like", {
+                          user_id: cookies.user_id,
+                          post_id: post_id,
+                        })
+                          .then((response) => {
+                            console.log(response.data);
+                            setLike(true);
+                          })
+                          .catch((error) => console.log(error));
+                      }
+                      navigate(0)
+                    }}>
                       {like ? (
                         <FontAwesomeIcon
                           icon={solidHeart}
