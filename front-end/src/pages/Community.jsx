@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import dogo from "../assets/dogo.jpg";
 import { MainLayout } from "../Components";
 import "../index.css";
 import { NavLink, redirect, useNavigate, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { faComment } from "@fortawesome/free-regular-svg-icons";
 import logoAdd from "../assets/addPost.png";
 import { Modal, Button } from "react-bootstrap";
 
@@ -15,7 +18,16 @@ function Community() {
   const [showModal, setShowModal] = useState(false);
   const [newPostText, setnewPostText] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-  const [profpic, setProfPic] = useState()
+
+  const [likes, setLikes] = useState(response.map(() => false));
+
+  const handleLikeToggle = (index) => {
+    const newLikes = [...likes];
+    newLikes[index] = !newLikes[index];
+    setLikes(newLikes);
+  };
+
+  const [profpic, setProfPic] = useState();
 
   const navigate = useNavigate();
 
@@ -102,7 +114,7 @@ function Community() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [])
+  }, []);
 
   return (
     <>
@@ -111,12 +123,16 @@ function Community() {
       {cookie.user_id && (
         <div
           className="m-4 mb-0 mx-auto border border-dark rounded-4"
-          style={{ width: "77rem", backgroundColor: "#6CD4FF" }}
+          style={{ width: "63rem", backgroundColor: "#6CD4FF" }}
         >
           <div className="m-2 row">
             <div className="col-auto p-0" style={{ width: "6rem" }}>
               <img
-                src={profpic ? `http://localhost:3000/users/pic/${cookie.user_id}` : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"}
+                src={
+                  profpic
+                    ? `http://localhost:3000/users/pic/${cookie.user_id}`
+                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
+                }
                 style={{
                   height: "5rem",
                   width: "5rem",
@@ -126,7 +142,7 @@ function Community() {
                 }}
               />
             </div>
-            <div className="col-auto my-auto" style={{ width: "59rem" }}>
+            <div className="col-auto my-auto" style={{ width: "48rem" }}>
               <div
                 className="border border-dark rounded-2 bg-white"
                 style={{ cursor: "pointer" }}
@@ -211,137 +227,160 @@ function Community() {
             style={{ zIndex: -1, width: "80rem" }}
           >
             {console.log(response)}
-            {response.map((post) => (
-              <div key={post.post_id} className="">
+            {response.map((post, index) => (
+              <div
+                key={post.post_id}
+                className={`${
+                  index % 2 == 0 ? "ms-auto me-4" : "ms-4 me-auto"
+                }`}
+              >
                 <div
-                  className="m-4 border-2 border-black rounded-4"
-                  style={{ backgroundColor: "#6CD4FF" }}
+                  className="mt-4 mb-4 border-2 border-black rounded-4"
+                  style={{
+                    backgroundColor: "#6CD4FF",
+                    width: "30rem",
+                    minHeight: "49rem",
+                  }}
                 >
-                  <NavLink to={`/post/${post.post_id}`}>
-                    <div style={{ display: "flex" }}>
-                      <div className="text-start m-2 ms-4">
-                        {post.nama_pengepost}
-                      </div>
-
-                      <div
-                        className="mt-3 text-black-50"
-                        style={{ fontSize: "0.6rem" }}
-                      >
-                        1h ago
-                      </div>
+                  <div style={{ display: "flex" }}>
+                    <div className="text-start m-2 ms-4">
+                      {post.nama_pengepost}
                     </div>
 
-                    <div className="bg-white">
-                      <div
-                        className="align-center"
+                    <div
+                      className="mt-3 text-black-50"
+                      style={{ fontSize: "0.6rem" }}
+                    >
+                      1h ago
+                    </div>
+                  </div>
+
+                  <div className="bg-white">
+                    <div
+                      className="align-center"
+                      style={{
+                        minHeight: "29.8rem",
+                        alignItems: "center",
+                        backgroundImage: `url(http://localhost:3000/post/pic/${post.post_id})`,
+                        backgroundRepeat: "repeat",
+                        backgroundSize: "cover",
+                      }}
+                    >
+                      <img
+                        className="max-w-full max-w-full bg-black object-contain my-auto bg-opacity-75"
                         style={{
-                          minHeight: "37rem",
-                          alignItems: "center",
-                          backgroundImage: `url(http://localhost:3000/post/pic/${post.post_id})`,
-                          backgroundRepeat: "repeat",
-                          backgroundSize: "cover",
+                          width: "100%",
+                          height: "100%",
+                          maxHeight: "29.8rem",
+                          maxWidth: "29.8rem",
+                          position: "absolute",
+                          opacity: "10",
                         }}
-                      >
-                        <img
-                          className="max-w-full max-w-full bg-black object-contain my-auto bg-opacity-75"
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            maxHeight: "37rem",
-                            maxWidth: "36.8rem",
-                            position: "absolute",
-                            opacity: "10",
-                          }}
-                          src={`http://localhost:3000/post/pic/${post.post_id}`}
-                          alt={post.post_name}
-                        />
-                      </div>
+                        src={`http://localhost:3000/post/pic/${post.post_id}`}
+                        alt={post.post_name}
+                      />
                     </div>
+                  </div>
 
+                  <div
+                    className="row text-start ms-8 mt-4"
+                    style={{ fontSize: "1.5rem" }}
+                  >
                     <div
-                      className="row text-start mx-4"
-                      style={{ fontSize: "1rem" }}
+                      className="col-auto p-0"
+                      style={{ fontSize: "1.5rem" }}
                     >
-                      <div className="col-1" style={{ fontSize: "2rem" }}>
-                        ♡
-                      </div>
-
-                      <div className="col-1">
-                        <img
-                          src="https://static-00.iconduck.com/assets.00/chat-icon-256x239-arsmqxao.png"
-                          alt=""
-                          className="mt-2"
-                          style={{
-                            height: "2rem",
-                            width: "2rem",
-                            objectFit: "contain",
-                          }}
-                        />
-                      </div>
-
-                      <div className="col-1">
-                        <img
-                          src="https://static-00.iconduck.com/assets.00/share-emoji-512x512-j2qmf7um.png"
-                          alt=""
-                          className="mt-2"
-                          style={{
-                            height: "2rem",
-                            width: "2rem",
-                            objectFit: "contain",
-                          }}
-                        />
-                      </div>
-                    </div>
-
-                    <div
-                      className="row text-start mx-4"
-                      style={{ fontSize: "1rem" }}
-                    >
-                      <p className="col-4">{post.jumlah_like} likes </p>
-                      <h3 className="col-4"></h3>
-                      <p className="col-4"></p>
-                    </div>
-
-                    <div className="text-start mt-4 ms-8">
-                      <b>{post.nama_pengepost}</b> {post.title}
-                    </div>
-
-                    <div className="text-black-50 m-4 text-start row h-20">
-                      <div className="row-12">
-                        {post.comment.length > 0 && (
-                          <span
-                            className="text-black-50"
-                            style={{
-                              wordWrap: "break-word",
-                              textOverflow: "ellipsis",
-                              display: "-webkit-box",
-                              WebkitBoxOrient: "vertical",
-                              WebkitLineClamp: 2,
-                              overflow: "hidden",
-                            }}
-                          >
-                            <span className="text-white">
-                              {
-                                post.comment[post.comment.length - 1]
-                                  .nama_pengomen
-                              }
-                              {": "}
-                            </span>
-                            {post.comment[post.comment.length - 1].komentar}
-                          </span>
+                      <button onClick={() => handleLikeToggle(index)}>
+                        {likes[index] ? (
+                          <FontAwesomeIcon
+                            icon={solidHeart}
+                            style={{ color: "#FF0000" }}
+                          />
+                        ) : (
+                          <FontAwesomeIcon
+                            icon={regularHeart}
+                            style={{ color: "#000000" }}
+                          />
                         )}
-                        <br />
-                        <div className="mt-1">
-                          {post.comment.length > 0 ? (
-                            "View all " + post.comment.length + " comments"
-                          ) : (
-                            <br />
-                          )}
-                        </div>
-                      </div>
+                      </button>
                     </div>
 
-                    {/* 
+                    <div className=" col-auto p-0 ms-3">
+                      <FontAwesomeIcon
+                        icon={faComment}
+                        style={{ color: "#000000", cursor: "pointer" }}
+                        onClick={() => {
+                          !cookie.user_id && navigate("/login");
+                          cookie.user_id && navigate(`/post/${post.post_id}`);
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    className="row text-start mx-4"
+                    style={{ fontSize: "1rem" }}
+                  >
+                    <b className="col-4">{post.jumlah_like} likes </b>
+                  </div>
+
+                  <div
+                    className="text-start mt-4 mx-8"
+                    style={{
+                      cursor: "pointer",
+                      wordWrap: "break-word",
+                      textOverflow: "ellipsis",
+                      display: "-webkit-box",
+                      WebkitBoxOrient: "vertical",
+                      WebkitLineClamp: 2,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <b>{post.nama_pengepost}</b> {post.title}
+                  </div>
+
+                  <div className="text-black-50 mt-4 ms-8 me-8 mb-2 text-start h-20">
+                    <div
+                      className="p-0"
+                      onClick={() => {
+                        !cookie.user_id && navigate("/login");
+                        cookie.user_id && navigate(`/post/${post.post_id}`);
+                      }}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div className="mt-1">
+                        {post.comment.length > 0 ? (
+                          "View all " + post.comment.length + " comments"
+                        ) : (
+                          <br />
+                        )}
+                      </div>
+                      {post.comment.length > 0 && (
+                        <span
+                          className="text-black"
+                          style={{
+                            wordWrap: "break-word",
+                            textOverflow: "ellipsis",
+                            display: "-webkit-box",
+                            WebkitBoxOrient: "vertical",
+                            WebkitLineClamp: 2,
+                            overflow: "hidden",
+                          }}
+                        >
+                          <b>
+                            {
+                              post.comment[post.comment.length - 1]
+                                .nama_pengomen
+                            }
+                            {": "}
+                          </b>
+                          {post.comment[post.comment.length - 1].komentar}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* 
                     <ul className="text-left m-4">
                     Comments:
                     {post.comment.map((comment, index) => (
@@ -353,7 +392,6 @@ function Community() {
                     ))}
                     </ul> 
                     */}
-                  </NavLink>
                 </div>
               </div>
             ))}
