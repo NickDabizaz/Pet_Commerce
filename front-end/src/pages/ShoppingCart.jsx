@@ -42,6 +42,16 @@ const ShoppingCart = () => {
     }
   };
 
+  const deleteOneItem = async (productId) => {
+    try {
+      console.log({ productId });
+      await axios.delete(`http://localhost:3000/cart/${productId}/${cookies.user_id}`);
+      fetchCart();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const generateOrderId = () => {
     const randomNumber = Math.floor(Math.random() * 90 + 10);
     const randomLetters = generateRandomLetters(2);
@@ -226,6 +236,7 @@ const ShoppingCart = () => {
                       marginRight: 25,
                       marginLeft: "auto",
                     }}
+                    onClick={() => deleteOneItem(item.product_id)}
                   />
                   <div
                     className="d-flex"
