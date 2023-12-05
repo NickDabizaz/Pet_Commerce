@@ -63,34 +63,30 @@ function CreateStore() {
   return (
     <>
       <MainLayout />
-      <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>{/* #61A0AF or #1286CE*/}
+      <div className="container-fluid" style={{ backgroundColor: "#F3F0F0" }}>{/* #61A0AF or #1286CE*/}
         <div className="pt-20 pb-20">
-          <div className="container-fluid rounded d-flex shadow" style={{ width: "90%", height: "100vh", backgroundColor: "#6CD4FF", overflow: "hidden" }}>
-            <div className="container-fluid rounded" style={{ width: "100%", height: "75vh", position: "relative" }}>
-              <img src={createpict} className="rounded" style={{ width: "120vh", height: "56.7rem", left: 0, top: 23, position: "absolute", zIndex: 1 }} />
+          <div className="container-fluid rounded d-flex shadow" style={{ width: "86rem", height: "46rem", backgroundColor: "#6CD4FF", overflow: "hidden" }}>
+            <div className="container-fluid rounded" style={{ width: "100%", height: "55rem", position: "relative" }}>
+              <img src={createpict} className="rounded" style={{ width: "100%", height: "46rem", left: -15, position: "absolute", zIndex: 1}} />
             </div>
-            <div className="container-fluid rounded" style={{ width: "60%", height: "95vh", marginTop: "2.5vh", backgroundColor: "#FFFFFF" }}>
+            <div className="container-fluid rounded" style={{ width: "50%", height: "44rem", marginTop: "1rem", backgroundColor: "#FFFFFF" }}>
               <img src={create} style={{ display: "block", margin: "0 auto", width: "22rem", height: "6rem", marginTop: "4%" }} />
               <form onSubmit={handleSubmit(onSubmit)}>
                 {/* Upload gambar */}
-                <div className="row mt-5 p-0" style={{ marginLeft: "2rem" }}>
-                  <div className="col-auto p-0" style={{marginLeft: "22%"}}>
+                <div className="row mt-5 p-0">
+                  <div className="m-auto w-36 h-36 p-0" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                     {selectedFile ? (
-                      <div id="imageContainer" className="p-0 w-72 h-72"></div>
+                      <div id="imageContainer" className="p-0 w-36 h-36"></div>
                     ) : (
-                      <div
-                        className="w-72 h-72 p-0"
-                        style={{ objectFit: "cover" }}
-                      >
-                        {" "}
+                      <div className="w-36 h-36 p-0">
                         <img
                           src="https://i.pinimg.com/736x/64/53/c8/6453c8226817e6ab85a6321aeee19e80.jpg"
                           alt="image"
-                          className="w-full h-full"
+                          className="w-36 h-36"
                         />
                       </div>
                     )}
-                    <div className="btn btn-secondary w-full mt-2">
+                    <div className="btn btn-secondary w-36 mt-2">
                       <FileUploader setSelectedFile={setSelectedFile} />
                     </div>
                   </div>
@@ -184,8 +180,10 @@ const FileUploader = ({ setSelectedFile }) => {
 
         imgElement.style.marginLeft = "auto";
         imgElement.style.marginRight = "auto";
-        imgElement.style.height = "14rem";
-        imgElement.style.width = "14rem";
+        imgElement.style.height = "9rem";
+        imgElement.style.width = "9rem";
+        imgElement.style.maxWidth = "9rem";
+        imgElement.style.maxHeight = "9rem";
         imgElement.style.objectFit = "cover";
         imgElement.style.border = "1px solid black";
 
