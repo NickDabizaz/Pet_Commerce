@@ -80,9 +80,17 @@ function Profile() {
       });
   }, [selectedFile]);
 
-  function isImageURL(url) {
-    // Mendeteksi apakah URL berakhir dengan salah satu ekstensi gambar yang umum
-    return /\.(jpg|jpeg|png|gif)$/.test(url);
+  function isImage(url) {
+    return fetch(url, { method: "HEAD" })
+      .then(response => {
+        // Periksa apakah respons memiliki tipe konten yang menandakan gambar
+        return response.headers.get("content-type")?.startsWith("image/") || false;
+      })
+      .catch(error => {
+        // Handle error (misalnya, jika gambar tidak ditemukan)
+        console.error("Error checking image:", error);
+        return false;
+      });
   }
   
 
@@ -244,7 +252,7 @@ function Profile() {
                       <img
                         src={
                           storepic
-                            ? isImageURL(
+                            ? isImage(
                                 `http://localhost:3000/sellers/store/pic/${toko.store_id}`
                               )
                               ? `http://localhost:3000/sellers/store/pic/${toko.store_id}`
