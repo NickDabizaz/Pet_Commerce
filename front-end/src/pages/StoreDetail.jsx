@@ -6,6 +6,7 @@ function StoreDetail() {
   const navigate = useNavigate();
   let { store_id } = useParams();
   const [storeData, setStoreData] = useState(null);
+  const [storepic, setStorePic] = useState();
 
   useEffect(() => {
     axios
@@ -22,6 +23,17 @@ function StoreDetail() {
     return <div className="text-center mt-4">Loading...</div>;
   }
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/sellers/store/pic/${store_id}`)
+      .then((res) => {
+        setStorePic(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
   return (
     <div className="max-w-2xl mx-auto mt-4 p-4 bg-white shadow">
       <div
@@ -33,7 +45,11 @@ function StoreDetail() {
       </div>
       <div className="text-center">
         <img
-          src="https://icon-library.com/images/guest-icon-png/guest-icon-png-29.jpg"
+          src={
+            storepic
+              ? `http://localhost:3000/sellers/store/pic/${store_id}`
+              : "https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg"
+          }
           alt="pp-store"
           style={{
             width: "8rem",

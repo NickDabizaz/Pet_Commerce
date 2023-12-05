@@ -18,6 +18,7 @@ function Community() {
   const [showModal, setShowModal] = useState(false);
   const [newPostText, setnewPostText] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [profpic, setProfPic] = useState();
 
   const [likes, setLikes] = useState([]);
 
@@ -79,7 +80,7 @@ function Community() {
     }
   };
 
-  const [profpic, setProfPic] = useState();
+  
 
   const navigate = useNavigate();
 
