@@ -71,13 +71,12 @@ function Profile() {
       axios
         .get(`http://localhost:3000/sellers/store/pic/${store_id}`)
         .then((res) => {
-          setStorePic("ada")
-        })
+          setStorePic("ada");
+        });
     } catch (error) {
-      setStorePic("tidak ada")
+      setStorePic("tidak ada");
     }
-  }
-
+  };
 
   return (
     <>
@@ -220,7 +219,7 @@ function Profile() {
           List Toko:
         </h1>
         {toko.map((toko, index) => {
-          let picStore = checkStorePic(toko.store_id)
+          let picStore = checkStorePic(toko.store_id);
           return (
             <>
               <div
@@ -229,23 +228,26 @@ function Profile() {
                 onClick={() => navigate(`/store/${toko.store_id}`)}
               >
                 <div className="m-4 row">
-                  <div className="col-1"
-                    // style={{
-                    //   objectFit: "cover",
-                    //   border: "1px solid black",
-                    //   borderRadius: "50%",
-                    //   height: "5rem",
-                    //   width: "5rem",
-                    //   backgroundImage: "url(https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg)"
-                    // }}
+                  <div
+                    className="col-1 p-0"
+                    style={{
+                      objectFit: "cover",
+                      border: "1px solid black",
+                      borderRadius: "50%",
+                      height: "5rem",
+                      width: "5rem",
+                      backgroundImage:
+                        "url(https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg)",
+                      backgroundRepeat: "repeat",
+                      backgroundSize: "cover",
+                    }}
                   >
                     <img
                       src={
-                        storepic == "tidak ada"
-                          ? "https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg"
-                          : `http://localhost:3000/sellers/store/pic/${toko.store_id}`
+                        // storepic == "tidak ada"
+                        //   ? "https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg"
+                        `http://localhost:3000/sellers/store/pic/${toko.store_id}`
                       }
-                      alt="icon-toko"
                       style={{
                         objectFit: "cover",
                         border: "1px solid black",
@@ -256,9 +258,7 @@ function Profile() {
                     />
                   </div>
                   <div className="col-auto">
-                    <div style={{ fontSize: "1.2rem" }}>
-                      {toko.store_name}
-                    </div>
+                    <div style={{ fontSize: "1.2rem" }}>{toko.store_name}</div>
                     <div>{toko.store_description}</div>
                   </div>
                 </div>
