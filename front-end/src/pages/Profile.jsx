@@ -233,8 +233,8 @@ function Profile() {
                       style={{ borderRadius: "50%", height: "8rem", width: "8rem", maxWidth: "100%", marginLeft: "-20"}}
                     />
                   </div>
-                  <div className="col-auto pt-3">
-                    <div style={{ fontSize: "1.2rem" }}>{toko.store_name}</div>
+                  <div className="col-auto pt-4">
+                    <div style={{ fontSize: "1.8rem" }}>{toko.store_name}</div>
                     <div>{toko.store_description}</div>
                   </div>
                 </div>

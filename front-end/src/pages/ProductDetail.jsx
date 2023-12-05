@@ -166,7 +166,7 @@ function ProductDetail() {
               <div className="col-2"></div>
               <div className="col-8 p-3 border border-dark" onClick={() => navigate(`/store/${store.store_id}`)}>
                 <div className="row">
-                  <div className="col-2 ms-3 p-0"
+                  <div className="col-2 ms-3 p-0 me-3"
                     style={{
                       objectFit: "cover",
                       border: "1px solid black",
@@ -184,7 +184,7 @@ function ProductDetail() {
                       style={{ borderRadius: "50%", height: "8rem", width: "8rem", maxWidth: "150%", marginLeft: "-20"}}
                     />
                   </div>
-                  <div className="col-10">{store.name}</div>
+                  <div className="col-10 p-3 fs-3">{store.name}</div>
                 </div>
               </div>
               <div className="col-2"></div>
