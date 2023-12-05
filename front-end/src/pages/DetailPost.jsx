@@ -1,15 +1,10 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  ListGroup,
-  Form,
-  Button,
-} from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { faComment } from "@fortawesome/free-regular-svg-icons";
 import { useForm } from "react-hook-form";
 import { useCookies } from "react-cookie";
 
@@ -189,7 +184,71 @@ const DetailPost = () => {
                 }}
                 className="bg-info"
               >
-                {/* Ini bagian nama - waktu post */}
+                {/* Ini bagian image dari post */}
+                <div
+                  className="bg-white"
+                  style={{
+                    backgroundImage: `url(http://localhost:3000/post/pic/${post_id})`,
+                    backgroundRepeat: "repeat",
+                    backgroundSize: "cover",
+                  }}
+                >
+                  <img
+                    className="bg-dark bg-opacity-75"
+                    src={`http://localhost:3000/post/pic/${post_id}`}
+                    alt="post-image"
+                    style={{
+                      height: "40rem",
+                      width: "40rem",
+                      maxHeight: "40rem",
+                      maxWidth: "40rem",
+                      objectFit: "contain",
+                      margin: "auto",
+                    }}
+                  />
+                </div>
+
+                {/* Ini bagian like, share */}
+                {/* <div
+                  style={{
+                    display: "flex",
+                    height: "3rem",
+                    alignItems: "center",
+                  }}
+                >
+                  <div>💖</div>
+                  <div>💬</div>
+                  <div>🔗</div>
+                </div> */}
+              </div>
+            </div>
+          </div>
+
+          {/* Ini kotak kanan, ukuran */}
+          <div
+            style={{
+              height: "40rem",
+              width: "40rem",
+              borderLeft: "1px solid black",
+            }}
+          >
+            <div
+              className="bg-info bg-opacity-25"
+              style={{
+                height: "100%",
+                textAlign: "left",
+                borderRadius: "0 1rem 1rem 0",
+              }}
+            >
+              {/* Ini bagian Comment post*/}
+              <div
+                style={{
+                  height: "35rem",
+                  overflow: "auto",
+                }}
+                className="custom-scrollbar"
+              >
+                {/* ini nama pengepost - tanggal postnya */}
                 <div
                   style={{
                     display: "flex",
@@ -230,74 +289,71 @@ const DetailPost = () => {
                   </div>
                 </div>
 
-                {/* Ini bagian image dari post */}
-                <div className="bg-info">
-                  <img
-                    className="bg-white bg-opacity-75"
-                    src={`http://localhost:3000/post/pic/${post_id}`}
-                    alt="post-image"
-                    style={{
-                      height: "30rem",
-                      width: "100%",
-                      maxHeight: "34rem",
-                      maxWidth: "40rem",
-                      objectFit: "contain",
-                      margin: "auto",
-                    }}
-                  />
+                {/* Ini description post */}
+                <div className="m-4 mt-2" style={{ wordBreak: "break-all" }}>
+                  <div className="m-2">
+                    {/* <b>{post.nama_pengepost}</b>  */}
+                    {post.title}
+                  </div>
                 </div>
 
-                {/* Ini bagian like, share */}
+                <hr />
 
-                <div
-                  style={{
-                    display: "flex",
-                    height: "3rem",
-                    alignItems: "center",
-                  }}
-                >
-                  <div>💖</div>
-                  <div>💬</div>
-                  <div>🔗</div>
-                </div>
-
-                <div className="ms-8" style={{ height: "4rem" }}>
-                  {post.title}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Ini kotak kanan, ukuran */}
-          <div
-            style={{
-              height: "40rem",
-              width: "40rem",
-              borderLeft: "1px solid black",
-            }}
-          >
-            <div
-              className="bg-info bg-opacity-25"
-              style={{
-                height: "100%",
-                textAlign: "left",
-                borderRadius: "0 1rem 1rem 0",
-              }}
-            >
-              {/* Ini bagian Comment post*/}
-              <div
-                style={{
-                  height: "35rem",
-                  overflow: "auto",
-                }}
-                className="custom-scrollbar"
-              >
+                {/* Ini comment-comment nya */}
                 {console.log(post)}
                 {post.comment.map((comment, index) => (
                   <div key={index} className="border border-dark rounded-3 m-4">
-                    <div style={{ fontWeight: "bold" }}>{comment.user}</div>
-                    <div style={{ wordBreak: "break-all" }}>
-                      {comment.comment_text}
+                    <div className="m-2">
+                      <div style={{ fontWeight: "bold" }}>{comment.user}</div>
+                      <div style={{ wordBreak: "break-all" }}>
+                        {comment.comment_text}
+                      </div>
+                      <div
+                        className="text-black-50"
+                        style={{ fontSize: "0.8rem" }}
+                      >
+                        {Math.floor(
+                          (new Date() - new Date(comment.comment_time)) /
+                            (1000 * 60)
+                        ) < 1
+                          ? "Just now"
+                          : Math.floor(
+                              (new Date() - new Date(comment.comment_time)) /
+                                (1000 * 60 * 60)
+                            ) < 1
+                          ? Math.floor(
+                              (new Date() - new Date(comment.comment_time)) /
+                                (1000 * 60)
+                            ) + "m ago"
+                          : Math.floor(
+                              (new Date() - new Date(comment.comment_time)) /
+                                (1000 * 60 * 60)
+                            ) < 24
+                          ? Math.floor(
+                              (new Date() - new Date(comment.comment_time)) /
+                                (1000 * 60 * 60)
+                            ) + "h ago"
+                          : Math.floor(
+                              (new Date() - new Date(comment.comment_time)) /
+                                (1000 * 60 * 60 * 24)
+                            ) < 30
+                          ? Math.floor(
+                              (new Date() - new Date(comment.comment_time)) /
+                                (1000 * 60 * 60 * 24)
+                            ) + "d ago"
+                          : Math.floor(
+                              (new Date() - new Date(comment.comment_time)) /
+                                (1000 * 60 * 60 * 24 * 30)
+                            ) < 12
+                          ? Math.floor(
+                              (new Date() - new Date(comment.comment_time)) /
+                                (1000 * 60 * 60 * 24 * 30)
+                            ) + "mo ago"
+                          : Math.floor(
+                              (new Date() - new Date(comment.comment_time)) /
+                                (1000 * 60 * 60 * 24 * 365)
+                            ) + "y ago"}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -306,7 +362,7 @@ const DetailPost = () => {
               <hr />
 
               {/* Ini bagian input comment */}
-              <div className="h-20 mx-4">
+              <div className="h-28 mx-4">
                 {/* <div style={{ overflow: "hidden" }}> */}
 
                 {/* <div
