@@ -23,61 +23,93 @@ function Community() {
   const [likes, setLikes] = useState([]);
 
   useEffect(() => {
+    // Buat fungsi async untuk mengambil data like
     const fetchLikes = async () => {
-      setLikes(
-        response.map((post) =>
-          axios
-            .get(
-              `http://localhost:3000/like/user/${cookie.user_id}/${post.post_id}`
-            )
-            .then((response) => {
-              return response.data;
-            })
-            .catch((error) => {
+      try {
+        const likesData = await Promise.all(
+          response.map(async (post) => {
+            try {
+              const response = await axios.get(
+                `http://localhost:3000/like/user/${cookie.user_id}/${post.post_id}`
+              );
+
+              // Jika respons adalah boolean langsung, gunakan nilainya
+              return {
+                post_id: post.post_id,
+                isLike: response.data,
+              };
+            } catch (error) {
               console.error(
-                `Error fetching likes for post ${post.post_id}:`,
+                `Error fetching like data for post ${post.post_id}:`,
                 error
               );
-            })
-        )
-      );
+              // Jika ada error, kembalikan nilai default atau sesuai kebutuhan
+              return {
+                post_id: post.post_id,
+                isLike: false,
+              };
+            }
+          })
+        );
+
+        // Setel state setelah semua data like diambil
+        setLikes(likesData);
+      } catch (error) {
+        console.error("Error fetching like data:", error);
+        // Handle error jika diperlukan
+      }
     };
 
+    // Panggil fungsi fetchLikes
     fetchLikes();
-    console.log({ likes });
   }, [response, cookie.user_id]);
+  console.log({ likes });
 
-  const handleLikeToggle = async (post_id) => {
-    if (likes[post_id]) {
-      // Unlike
-      try {
-        await axios.delete("http://localhost:3000/like/", {
-          data: { post_id, user_id: cookie.user_id },
+  const handleLikeToggle = (post_id) => {
+    // Temukan data like yang sesuai dengan post_id
+    const likeData = likes.find((like) => like.post_id === post_id).isLike;
+    if (likeData) {
+      // Jika post telah dilike, lakukan unlike
+
+      axios
+        .delete(`http://localhost:3000/like/`, {
+          data: { post_id: post_id, user_id: cookie.user_id },
+        })
+        .then((response) => {
+          // Handle respons setelah melakukan unlike
+          console.log("Post unliked:", response.data);
+
+          // Perbarui state likes setelah melakukan unlike
+          setLikes((prevLikes) =>
+            prevLikes.map((prevLike) =>
+              prevLike.post_id === post_id
+                ? { ...prevLike, isLike: false }
+                : prevLike
+            )
+          );
+        })
+        .catch((error) => {
+          console.error("Error unliking post:", error);
         });
-        // Update likes state
-        setLikes((prevLikes) => ({
-          ...prevLikes,
-          [post_id]: false,
-        }));
-      } catch (error) {
-        console.error("Error unliking post:", error);
-      }
     } else {
-      // Like
-      try {
-        await axios.post("http://localhost:3000/like/", {
-          post_id,
+      // Jika post belum dilike, lakukan like
+      axios
+        .post(`http://localhost:3000/like/`, {
+          post_id: post_id,
           user_id: cookie.user_id,
+        })
+        .then((response) => {
+          // Handle respons setelah melakukan like
+          console.log("Post liked:", response.data);
+
+          // Perbarui state likes setelah melakukan like
+          setLikes((prevLikes) => [...prevLikes, { post_id, isLike: true }]);
+        })
+        .catch((error) => {
+          console.error("Error liking post:", error);
         });
-        // Update likes state
-        setLikes((prevLikes) => ({
-          ...prevLikes,
-          [post_id]: true,
-        }));
-      } catch (error) {
-        console.error("Error liking post:", error);
-      }
     }
+    navigate(0)
   };
 
   
@@ -280,160 +312,166 @@ function Community() {
             style={{ zIndex: -1, width: "80rem" }}
           >
             {console.log(response)}
-            {response.map((post, index) => (
-              <div
-                key={post.post_id}
-                className={`${
-                  index % 2 == 0 ? "ms-auto me-4" : "ms-4 me-auto"
-                }`}
-              >
+            {response.map((post, index) => {
+              const isLikes = (
+                likes.find((like) => like.post_id === post.post_id) || {}
+              ).isLike;
+
+              console.log({ isLikes });
+              return (
                 <div
-                  className="mt-4 mb-4 border-2 border-black rounded-4"
-                  style={{
-                    backgroundColor: "#6CD4FF",
-                    width: "30rem",
-                    minHeight: "49rem",
-                  }}
+                  key={post.post_id}
+                  className={`${
+                    index % 2 == 0 ? "ms-auto me-4" : "ms-4 me-auto"
+                  }`}
                 >
-                  <div style={{ display: "flex" }}>
-                    <div className="text-start m-2 ms-4">
-                      {post.nama_pengepost}
-                    </div>
-
-                    <div
-                      className="mt-3 text-black-50"
-                      style={{ fontSize: "0.6rem" }}
-                    >
-                      1h ago
-                    </div>
-                  </div>
-
-                  <div className="bg-white">
-                    <div
-                      className="align-center"
-                      style={{
-                        minHeight: "29.8rem",
-                        alignItems: "center",
-                        backgroundImage: `url(http://localhost:3000/post/pic/${post.post_id})`,
-                        backgroundRepeat: "repeat",
-                        backgroundSize: "cover",
-                      }}
-                    >
-                      <img
-                        className="max-w-full max-w-full bg-black object-contain my-auto bg-opacity-75"
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          maxHeight: "29.8rem",
-                          maxWidth: "29.8rem",
-                          position: "absolute",
-                          opacity: "10",
-                        }}
-                        src={`http://localhost:3000/post/pic/${post.post_id}`}
-                        alt={post.post_name}
-                      />
-                    </div>
-                  </div>
-
                   <div
-                    className="row text-start ms-8 mt-4"
-                    style={{ fontSize: "1.5rem" }}
+                    className="mt-4 mb-4 border-2 border-black rounded-4"
+                    style={{
+                      backgroundColor: "#6CD4FF",
+                      width: "30rem",
+                      minHeight: "49rem",
+                    }}
                   >
+                    <div style={{ display: "flex" }}>
+                      <div className="text-start m-2 ms-4">
+                        {post.nama_pengepost}
+                      </div>
+
+                      <div
+                        className="mt-3 text-black-50"
+                        style={{ fontSize: "0.6rem" }}
+                      >
+                        1h ago
+                      </div>
+                    </div>
+
+                    <div className="bg-white">
+                      <div
+                        className="align-center"
+                        style={{
+                          minHeight: "29.8rem",
+                          alignItems: "center",
+                          backgroundImage: `url(http://localhost:3000/post/pic/${post.post_id})`,
+                          backgroundRepeat: "repeat",
+                          backgroundSize: "cover",
+                        }}
+                      >
+                        <img
+                          className="max-w-full max-w-full bg-black object-contain my-auto bg-opacity-75"
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            maxHeight: "29.8rem",
+                            maxWidth: "29.8rem",
+                            position: "absolute",
+                            opacity: "10",
+                          }}
+                          src={`http://localhost:3000/post/pic/${post.post_id}`}
+                          alt={post.post_name}
+                        />
+                      </div>
+                    </div>
+
                     <div
-                      className="col-auto p-0"
+                      className="row text-start ms-8 mt-4"
                       style={{ fontSize: "1.5rem" }}
                     >
-                      <button onClick={() => handleLikeToggle(post.post_id)}>
-                        {likes[index] ? (
-                          <FontAwesomeIcon
-                            icon={solidHeart}
-                            style={{ color: "#FF0000" }}
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon={regularHeart}
-                            style={{ color: "#000000" }}
-                          />
-                        )}
-                      </button>
+                      <div
+                        className="col-auto p-0"
+                        style={{ fontSize: "1.5rem" }}
+                      >
+                        <button onClick={() => handleLikeToggle(post.post_id)}>
+                          {isLikes ? (
+                            <FontAwesomeIcon
+                              icon={solidHeart}
+                              style={{ color: "#FF0000" }}
+                            />
+                          ) : (
+                            <FontAwesomeIcon
+                              icon={regularHeart}
+                              style={{ color: "#000000" }}
+                            />
+                          )}
+                        </button>
+                      </div>
+
+                      <div className=" col-auto p-0 ms-3">
+                        <FontAwesomeIcon
+                          icon={faComment}
+                          style={{ color: "#000000", cursor: "pointer" }}
+                          onClick={() => {
+                            !cookie.user_id && navigate("/login");
+                            cookie.user_id && navigate(`/post/${post.post_id}`);
+                          }}
+                        />
+                      </div>
                     </div>
 
-                    <div className=" col-auto p-0 ms-3">
-                      <FontAwesomeIcon
-                        icon={faComment}
-                        style={{ color: "#000000", cursor: "pointer" }}
+                    <div
+                      className="row text-start mx-4"
+                      style={{ fontSize: "1rem" }}
+                    >
+                      <b className="col-4">{post.jumlah_like} likes </b>
+                    </div>
+
+                    <div
+                      className="text-start mt-4 mx-8"
+                      style={{
+                        cursor: "pointer",
+                        wordWrap: "break-word",
+                        textOverflow: "ellipsis",
+                        display: "-webkit-box",
+                        WebkitBoxOrient: "vertical",
+                        WebkitLineClamp: 2,
+                        overflow: "hidden",
+                      }}
+                    >
+                      <b>{post.nama_pengepost}</b> {post.title}
+                    </div>
+
+                    <div className="text-black-50 mt-4 ms-8 me-8 mb-2 text-start h-20">
+                      <div
+                        className="p-0"
                         onClick={() => {
                           !cookie.user_id && navigate("/login");
                           cookie.user_id && navigate(`/post/${post.post_id}`);
                         }}
-                      />
-                    </div>
-                  </div>
-
-                  <div
-                    className="row text-start mx-4"
-                    style={{ fontSize: "1rem" }}
-                  >
-                    <b className="col-4">{post.jumlah_like} likes </b>
-                  </div>
-
-                  <div
-                    className="text-start mt-4 mx-8"
-                    style={{
-                      cursor: "pointer",
-                      wordWrap: "break-word",
-                      textOverflow: "ellipsis",
-                      display: "-webkit-box",
-                      WebkitBoxOrient: "vertical",
-                      WebkitLineClamp: 2,
-                      overflow: "hidden",
-                    }}
-                  >
-                    <b>{post.nama_pengepost}</b> {post.title}
-                  </div>
-
-                  <div className="text-black-50 mt-4 ms-8 me-8 mb-2 text-start h-20">
-                    <div
-                      className="p-0"
-                      onClick={() => {
-                        !cookie.user_id && navigate("/login");
-                        cookie.user_id && navigate(`/post/${post.post_id}`);
-                      }}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <div className="mt-1">
-                        {post.comment.length > 0 ? (
-                          "View all " + post.comment.length + " comments"
-                        ) : (
-                          <br />
+                        style={{ cursor: "pointer" }}
+                      >
+                        <div className="mt-1">
+                          {post.comment.length > 0 ? (
+                            "View all " + post.comment.length + " comments"
+                          ) : (
+                            <br />
+                          )}
+                        </div>
+                        {post.comment.length > 0 && (
+                          <span
+                            className="text-black"
+                            style={{
+                              wordWrap: "break-word",
+                              textOverflow: "ellipsis",
+                              display: "-webkit-box",
+                              WebkitBoxOrient: "vertical",
+                              WebkitLineClamp: 2,
+                              overflow: "hidden",
+                            }}
+                          >
+                            <b>
+                              {
+                                post.comment[post.comment.length - 1]
+                                  .nama_pengomen
+                              }
+                              {": "}
+                            </b>
+                            {post.comment[post.comment.length - 1].komentar}
+                          </span>
                         )}
                       </div>
-                      {post.comment.length > 0 && (
-                        <span
-                          className="text-black"
-                          style={{
-                            wordWrap: "break-word",
-                            textOverflow: "ellipsis",
-                            display: "-webkit-box",
-                            WebkitBoxOrient: "vertical",
-                            WebkitLineClamp: 2,
-                            overflow: "hidden",
-                          }}
-                        >
-                          <b>
-                            {
-                              post.comment[post.comment.length - 1]
-                                .nama_pengomen
-                            }
-                            {": "}
-                          </b>
-                          {post.comment[post.comment.length - 1].komentar}
-                        </span>
-                      )}
                     </div>
-                  </div>
 
-                  {/* 
+                    {/* 
                     <ul className="text-left m-4">
                     Comments:
                     {post.comment.map((comment, index) => (
@@ -445,9 +483,10 @@ function Community() {
                     ))}
                     </ul> 
                     */}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

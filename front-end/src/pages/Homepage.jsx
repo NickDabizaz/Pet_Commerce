@@ -41,7 +41,7 @@ function HomePage() {
                 <img
                   src={`http://localhost:3000/sellers/product/pic/${product.product_id}`}
                   alt={product.product_name}
-                  className="h-full m-auto"
+                  className="h-full m-auto w-full object-contain"
                 ></img>
               </div>
               <div className="m-3">
