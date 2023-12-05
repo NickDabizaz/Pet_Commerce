@@ -136,10 +136,25 @@ const getOrderDetailsById = async (req, res) => {
   }
 };
 
+const getCountProductId = async (req, res) => {
+  const { product_id } = req.params;
+
+  OrderDetail.sum("qty", { where: { product_id: product_id } })
+    .then((totalQty) => {
+      if (totalQty === null) {
+        res.send({ totalQty: 0 });
+      } else {
+        res.send({ totalQty });
+      }
+    })
+    .catch((error) => res.status(500).send({ error: error.message }));
+};
+
 // Exporting the functions
 module.exports = {
   getOrderById,
   createNewOrder,
   getOrderDetailsById,
   addProductToOrder,
+  getCountProductId,
 };

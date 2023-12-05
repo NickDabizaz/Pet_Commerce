@@ -1,24 +1,53 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { MainLayout } from "../Components";
-import cart from "../assets/cart.png";
+import { MainLayout } from "../Components"; // Import Loader component
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
 
 function HomePage() {
   const [cookie, setCookie, removeCookie] = useCookies(["user_id"]);
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
+  const [totalQtyMap, setTotalQtyMap] = useState({}); // Add state for totalQty
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/sellers/get-all-products")
-      .then((response) => {
+    // Function to fetch totalQty for a product
+    const fetchTotalQty = async (productId) => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/order/count/${productId}`
+        );
+        setTotalQtyMap((prevTotalQtyMap) => ({
+          ...prevTotalQtyMap,
+          [productId]: response.data.totalQty,
+        }));
+      } catch (error) {
+        console.error(`Error fetching totalQty for product ${productId}:`, error);
+      }
+    };
+
+    // Function to fetch products and their totalQty
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/sellers/get-all-products"
+        );
         setProducts(response.data);
-      })
-      .catch((error) => {
+
+        // Fetch totalQty for each product
+        response.data.forEach((product) => {
+          fetchTotalQty(product.product_id);
+        });
+
+        setLoading(false); // Set loading to false when data is fetched
+      } catch (error) {
         console.error("Error fetching data:", error);
-      });
+        setLoading(false); // Set loading to false in case of an error
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -26,45 +55,49 @@ function HomePage() {
       <MainLayout />
       <div className="mx-auto max-w-screen-xl mt-4">
         <h1 className="text-2xl font-bold mb-4">List of Products</h1>
-        <div className="grid grid-cols-4 gap-4">
-          {products.map((product) => (
-            <div
-              key={product.product_id}
-              className={`bg-white border border-gray prod-card`}
-              onClick={() => {
-                // !cookie.user_id && navigate("/login");
-                navigate(`/products/${product.product_id}`);
-                // cookie.user_id && handleShowModal(product.product_id);
-              }}
-            >
-              <div className="h-72 max-h-72 border-b-2">
-                <img
-                  src={`http://localhost:3000/sellers/product/pic/${product.product_id}`}
-                  alt={product.product_name}
-                  className="h-full m-auto w-full object-contain"
-                ></img>
+        {loading ? (
+          <div className="loader-container">
+            <p>Loading...</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-4 gap-4">
+            {products.map((product) => (
+              <div
+                key={product.product_id}
+                className="bg-white border border-gray-300"
+                onClick={() => {
+                  navigate(`/products/${product.product_id}`);
+                }}
+              >
+                <div className="h-72 max-h-72 border-b-2">
+                  <img
+                    src={`http://localhost:3000/sellers/product/pic/${product.product_id}`}
+                    alt={product.product_name}
+                    className="h-full m-auto w-full object-contain"
+                  ></img>
+                </div>
+                <div className="m-3">
+                  <h3 className="text-xl mb-2">{product.product_name}</h3>
+                  <p className="text-danger mt-4" style={{ fontSize: "1.2rem" }}>
+                    <span style={{ fontSize: "0.9rem" }}>Rp</span>
+                    {product.price}
+                  </p>
+                  <p style={{ display: "flex" }}>
+                    <div style={{ flex: 1 }}>
+                      {printRating(product.rating)}{" "}
+                      <span style={{ fontSize: "0.75rem" }}>
+                        {totalQtyMap[product.product_id] || 0} sold
+                      </span>
+                    </div>
+                    <div className="text-end">
+                      {/* Your button code */}
+                    </div>
+                  </p>
+                </div>
               </div>
-              <div className="m-3">
-                <h3 className="text-xl mb-2">{product.product_name}</h3>
-                <p className="text-danger mt-4" style={{ fontSize: "1.2rem" }}>
-                  <span className="me-1" style={{ fontSize: "0.9rem" }}>
-                    Rp
-                  </span>
-                  {product.price.toLocaleString("id-ID", {
-                    maximumFractionDigits: 2,
-                  })}
-                </p>
-                <p style={{ display: "flex" }}>
-                  <div style={{ flex: 1 }}>
-                    {/* {printRating(product.rating)}{" "} */}
-                    <span style={{ fontSize: "0.75rem" }}>10RB+ sold</span>
-                  </div>
-                  <div className="text-end"></div>
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
