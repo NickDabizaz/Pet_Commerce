@@ -84,31 +84,18 @@ const getPostById = async (req, res) => {
   const { id } = req.params;
 
   try {
+    // Mengambil jumlah like dari model PostLike
+    const likeCount = await PostLike.count({ where: { post_id: id } });
+
+    // Mengambil jumlah comment dari model Comment
+    const commentCount = await Comment.count({ where: { post_id: id } });
+
+    // Mengambil post, user yang membuat post, dan komentar
     const post = await Post.findByPk(id, {
       include: [
         {
           model: User,
           attributes: ["name"],
-        },
-        {
-          model: PostLike,
-          attributes: [
-            [
-              Sequelize.fn("COUNT", Sequelize.col("postLikes.post_id")),
-              "likeCount",
-            ],
-          ],
-          group: ["postLikes.post_id"],
-        },
-        {
-          model: PostShare,
-          attributes: [
-            [
-              Sequelize.fn("COUNT", Sequelize.col("postShares.post_id")),
-              "shareCount",
-            ],
-          ],
-          group: ["postShares.post_id"],
         },
         {
           model: Comment,
@@ -118,18 +105,17 @@ const getPostById = async (req, res) => {
               attributes: ["name"],
             },
           ],
+          order: [["comment_time", "ASC"]],
         },
       ],
     });
-    // Get the comments for the post
-    const comments = await Comment.findAll({
-      where: { post_id: id },
-      include: [{ model: User, attributes: ["name"] }],
-      order: [["comment_time", "ASC"]],
-    });
 
-    // Map through the comments to format the output
-    const formattedComments = comments.map((comment) => ({
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    // Memformat komentar
+    const formattedComments = post.Comments.map((comment) => ({
       comment_id: comment.dataValues.comment_id,
       comment_text: comment.dataValues.comment_text,
       comment_time: comment.dataValues.comment_time,
@@ -137,29 +123,25 @@ const getPostById = async (req, res) => {
       user: comment.dataValues.User.dataValues.name,
     }));
 
-    const likeCount =
-      post.PostLikes.length > 0 ? post.PostLikes[0].get("likeCount") : 0;
-    const shareCount =
-      post.PostShares.length > 0 ? post.PostShares[0].get("shareCount") : 0;
-
     const result = {
       post_id: id,
       title: post.title,
       nama_pengepost: post.User.name,
       createdAt: post.createdAt,
       jumlah_like: likeCount,
-      jumlah_share: shareCount,
+      jumlah_share: 0, // Jumlah share tidak dihitung berdasarkan kode yang ada
       comment: formattedComments,
+      jumlah_comment: commentCount,
     };
 
-    if (!post) {
-      return res.status(404).json({ message: "Post not found" });
-    }
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
+
+
 
 const updatePost = async (req, res) => {
   const { id } = req.params;
