@@ -11,6 +11,9 @@ function ProductDetail() {
   const [product, setProduct] = useState(null);
   const [store, setStore] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [productId, setProductId] = useState(-1);
   const { product_id } = useParams();
   const navigate = useNavigate();
   //   const history = useHistory();
@@ -30,32 +33,31 @@ function ProductDetail() {
   };
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/sellers/product/${product_id}`)
-      .then((response) => {
-        console.log(response.data);
-        setProduct(response.data);
-        setLoading(false);
-        // fetchStore();
-      })
-      .catch((error) => console.log(error));
-  }, [product_id]);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/sellers/product/${product_id}`);
+      console.log({ response: response.data });
+      setProduct(response.data);
 
-  const fetchStore = async () => {
-    console.log(product);
-    axios
-      .get(`http://localhost:3000/sellers/store/${product.store_id}`)
-      .then((response) => {
-        console.log(response.data);
-        setStore(response.data);
-        setLoading(false);
-      })
-      .catch((error) => console.log(error));
+      const storeResponse = await axios.get(`http://localhost:3000/sellers/store/${response.data.store_id}`);
+      console.log({ storeResponse: storeResponse.data });
+
+      setStore({
+        store_id : response.data.store_id,
+        name: storeResponse.data.store_name,
+        description: storeResponse.data.store_description,
+      });
+
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const [showModal, setShowModal] = useState(false);
-  const [quantity, setQuantity] = useState(1);
-  const [productId, setProductId] = useState(-1);
+  fetchData();
+}, [product_id]);
+
+  
 
   const handleCloseModal = () => {
     setQuantity(1);
@@ -160,17 +162,17 @@ function ProductDetail() {
               </div>
               <div className="col-2"></div>
             </div>
-            <div className="mt-5 row" style={{ height: "auto" }}>
+            <div className="mt-5 row" style={{ height: "auto"}}>
               <div className="col-2"></div>
-              <div className="col-8 p-3 border border-dark">
+              <div className="col-8 p-3 border border-dark" onClick={() => navigate(`/store/${store.store_id}`)}>
                 <div className="row">
                   <div className="col-2">
                     <img
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
+                      src="https://png.pngtree.com/png-clipart/20210328/original/pngtree-the-online-shop-logo-uses-a-single-color-home-theme-png-image_6151619.jpg"
                       style={{ border: "1px solid black", borderRadius: "50%" }}
                     />
                   </div>
-                  <div className="col-10">Toko Surya</div>
+                  <div className="col-10">{store.name}</div>
                 </div>
               </div>
               <div className="col-2"></div>
@@ -178,7 +180,7 @@ function ProductDetail() {
             <div className="mt-5 row" style={{ height: "auto" }}>
               <div className="col-2"></div>
               <div className="col-8 p-3 border border-dark">
-                Deskripsi Produk
+                {store.description}
               </div>
               <div className="col-2"></div>
             </div>
