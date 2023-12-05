@@ -105,7 +105,7 @@ function ProductDetail() {
         {loading == true && "loading..."}
         {loading == false && (
           <>
-            <div>⬅️</div>
+            <div className="cursor-pointer" onClick={() => navigate(-1)}>⬅️</div>
             <div className="row">
               <div className="col-2"></div>
               <div className="col-3 " style={{ height: "" }}>
