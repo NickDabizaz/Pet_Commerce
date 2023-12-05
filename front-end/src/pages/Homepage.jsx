@@ -30,7 +30,7 @@ function HomePage() {
           {products.map((product) => (
             <div
               key={product.product_id}
-              className="bg-white border border-gray-300"
+              className={`bg-white border border-gray prod-card`}
               onClick={() => {
                 // !cookie.user_id && navigate("/login");
                 navigate(`/products/${product.product_id}`);
@@ -47,27 +47,19 @@ function HomePage() {
               <div className="m-3">
                 <h3 className="text-xl mb-2">{product.product_name}</h3>
                 <p className="text-danger mt-4" style={{ fontSize: "1.2rem" }}>
-                  <span style={{ fontSize: "0.9rem" }}>Rp</span>
-                  {product.price}
+                  <span className="me-1" style={{ fontSize: "0.9rem" }}>
+                    Rp
+                  </span>
+                  {product.price.toLocaleString("id-ID", {
+                    maximumFractionDigits: 2,
+                  })}
                 </p>
                 <p style={{ display: "flex" }}>
                   <div style={{ flex: 1 }}>
-                    {printRating(product.rating)}{" "}
+                    {/* {printRating(product.rating)}{" "} */}
                     <span style={{ fontSize: "0.75rem" }}>10RB+ sold</span>
                   </div>
-                  <div className="text-end">
-                    {/* <button
-                      className="btn btn-warning"
-                      onClick={() => {
-                        !cookie.user_id && navigate("/login");
-                        cookie.user_id &&
-                          navigate(`/products/${product.product_id}`);
-                        // cookie.user_id && handleShowModal(product.product_id);
-                      }}
-                    >
-                      <img src={cart} width={"20rem"} />
-                    </button> */}
-                  </div>
+                  <div className="text-end"></div>
                 </p>
               </div>
             </div>

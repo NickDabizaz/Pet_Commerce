@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faComment } from "@fortawesome/free-regular-svg-icons";
+import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { useForm } from "react-hook-form";
 import { useCookies } from "react-cookie";
 
@@ -72,95 +73,9 @@ const DetailPost = () => {
     fetchData();
   }, [post_id]);
 
-  // const handleSendChat = (data) => {
-  //   const commentData = {
-  //     comment_text: data.comment,
-  //     user_id: cookies.user_id,
-  //     post_id: post_id,
-  //   };
-  //   axios
-  //     .post("http://localhost:3000/comments", commentData)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       reset();
-  //       navigate(0);
-  //     })
-  //     .catch((error) => console.log(error));
-  // };
-
   if (loading) {
     return <div>Loading...</div>;
   }
-
-  // return (
-  //   <Container>
-  //     <Row>
-  //       <Col>
-  //         <Card>
-  //           <Card.Body className="text-center">
-  //             {/* <Card.Title>{post.title}</Card.Title> */}
-  //             <Card.Text>
-  //               <img
-  //                 src="http://via.placeholder.com/640x360"
-  //                 alt="post_image"
-  //                 className="m-auto"
-  //               />
-  //             </Card.Text>
-  //           </Card.Body>
-  //         </Card>
-  //       </Col>
-  //     </Row>
-  //     <Row>
-  //       <Col>
-  //         <Card>
-  //           <Card.Header>Comments</Card.Header>
-  //           <ListGroup variant="flush">
-  //             {console.log([post.comment])}
-  //             {post.comment &&
-  //               post.comment.map((comment) => (
-  //                 <ListGroup.Item
-  //                   key={comment.comment_id}
-  //                   style={{ display: "flex" }}
-  //                 >
-  //                   <div style={{ flex: 1 }}>
-  //                     <img
-  //                       src="https://icon-library.com/images/guest-icon-png/guest-icon-png-29.jpg"
-  //                       style={{
-  //                         height: "4rem",
-  //                         border: "1px solid black",
-  //                         borderRadius: "50%",
-  //                       }}
-  //                     />
-  //                   </div>
-  //                   <div style={{ flex: 10 }}>
-  //                     <b>{comment.user}</b>
-  //                     <p>{comment.comment_text}</p>
-  //                   </div>
-  //                 </ListGroup.Item>
-  //               ))}
-  //           </ListGroup>
-  //         </Card>
-  //       </Col>
-  //     </Row>
-  //     <Row>
-  //       <Col>
-  //         <Form onSubmit={handleSubmit(onSubmit)}>
-  //           <Form.Group controlId="comment">
-  //             <Form.Label>Leave a comment</Form.Label>
-  //             <Form.Control
-  //               type="text"
-  //               placeholder="Enter your comment"
-  //               {...register("comment")}
-  //             />
-  //           </Form.Group>
-  //           <Button variant="outline-primary" type="submit">
-  //             Submit
-  //           </Button>
-  //         </Form>
-  //       </Col>
-  //     </Row>
-  //   </Container>
-  // );
 
   return (
     <>
@@ -223,19 +138,6 @@ const DetailPost = () => {
                     }}
                   />
                 </div>
-
-                {/* Ini bagian like, share */}
-                {/* <div
-                  style={{
-                    display: "flex",
-                    height: "3rem",
-                    alignItems: "center",
-                  }}
-                >
-                  <div>💖</div>
-                  <div>💬</div>
-                  <div>🔗</div>
-                </div> */}
               </div>
             </div>
           </div>
@@ -303,6 +205,12 @@ const DetailPost = () => {
                             (1000 * 60 * 60)
                         ) + "h ago"}
                   </div>
+                  <FontAwesomeIcon
+                    className="ms-auto me-2 fs-3"
+                    icon={faCircleXmark}
+                    onClick={() => navigate(-1)}
+                    style={{ cursor: "pointer" }}
+                  />
                 </div>
 
                 {/* Ini description post */}
@@ -388,27 +296,36 @@ const DetailPost = () => {
                   style={{ fontSize: "1.5rem" }}
                 >
                   <div className="col-auto p-0" style={{ fontSize: "1.5rem" }}>
-                    <button onClick={() => {
-                      if (like) {
-                        axios.delete(`http://localhost:3000/like/`,{data: {post_id: post_id, user_id: cookies.user_id}})
-                          .then((response) => {
-                            console.log(response.data);
-                            setLike(false);
-                          })
-                          .catch((error) => console.log(error));
-                      } else {
-                        axios.post("http://localhost:3000/like", {
-                          user_id: cookies.user_id,
-                          post_id: post_id,
-                        })
-                          .then((response) => {
-                            console.log(response.data);
-                            setLike(true);
-                          })
-                          .catch((error) => console.log(error));
-                      }
-                      navigate(0)
-                    }}>
+                    <button
+                      onClick={() => {
+                        if (like) {
+                          axios
+                            .delete(`http://localhost:3000/like/`, {
+                              data: {
+                                post_id: post_id,
+                                user_id: cookies.user_id,
+                              },
+                            })
+                            .then((response) => {
+                              console.log(response.data);
+                              setLike(false);
+                            })
+                            .catch((error) => console.log(error));
+                        } else {
+                          axios
+                            .post("http://localhost:3000/like", {
+                              user_id: cookies.user_id,
+                              post_id: post_id,
+                            })
+                            .then((response) => {
+                              console.log(response.data);
+                              setLike(true);
+                            })
+                            .catch((error) => console.log(error));
+                        }
+                        navigate(0);
+                      }}
+                    >
                       {like ? (
                         <FontAwesomeIcon
                           icon={solidHeart}
@@ -432,6 +349,7 @@ const DetailPost = () => {
                 </div>
 
                 <div className="text-start" style={{ fontSize: "1rem" }}>
+                  {console.log(post)}
                   <b>{post.jumlah_like} likes </b>
                 </div>
               </div>
