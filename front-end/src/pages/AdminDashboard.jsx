@@ -10,6 +10,12 @@ function AdminDashboard() {
   const navigate = useNavigate();
   const [cookie, setCookie, removeCookie] = useCookies(["user_id"]);
 
+  useEffect(() => {
+    if(cookie.user_id != -1){
+      navigate("/")
+    }
+  }, [])
+
   return (
     <>
       <div
