@@ -140,12 +140,16 @@ const editProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   const { user_id } = req.body;
+  const { store_id } = req.params;
   const { product_id } = req.params;
 
   try {
     // Validate seller permission
     const user = await models.User.findByPk(user_id);
     const product = await models.Product.findByPk(product_id);
+    const store = await models.Store.findByPk(store_id);
+
+    console.log(store);
 
     if (!user || user.role !== "seller") {
       return res
@@ -153,7 +157,7 @@ const deleteProduct = async (req, res) => {
         .send("You don't have permission to delete this product");
     }
 
-    if (!product || product.store_id !== user.user_id) {
+    if (!product || store.user_id !== user.user_id) {
       return res
         .status(403)
         .send("You don't have permission to delete this product");
@@ -246,7 +250,7 @@ const getDetailStore = async (req, res) => {
     const storeData = await models.Store.findOne({
       where: { store_id: store_id },
       include: [
-        { model: models.User, attributes: ["name"] },
+        { model: models.User, attributes: ["name", "user_id"] },
         { model: models.Product }, // Menambahkan relasi untuk mendapatkan produk
       ],
     });
@@ -254,6 +258,8 @@ const getDetailStore = async (req, res) => {
     if (!storeData) {
       return res.status(404).json({ message: "Toko tidak ditemukan" });
     }
+
+    console.log(storeData);
 
     const products = storeData.Products.map((product) => ({
       product_id: product.product_id,
@@ -269,6 +275,7 @@ const getDetailStore = async (req, res) => {
       store_name: storeData.store_name,
       store_description: storeData.store_description,
       owner: storeData.User.name,
+      owner_id: storeData.User.user_id,
       products: products, // Menambahkan data produk
     };
 
