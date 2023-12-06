@@ -46,11 +46,14 @@ const addProduct = async (req, res) => {
     user_id,
     store_id,
     product_name,
+    product_description,
     price,
     quantity,
     rating,
     category_id,
   } = req.body;
+
+  console.log(req.body);
 
   try {
     // Validate seller role
@@ -79,6 +82,7 @@ const addProduct = async (req, res) => {
     const product = await models.Product.create({
       product_id: nextProductId,
       product_name,
+      product_description,
       price,
       quantity,
       store_id,
@@ -338,5 +342,5 @@ module.exports = {
   searchProduct,
   getProductDetail,
   getProductPic,
-  getStorePic
+  getStorePic,
 };

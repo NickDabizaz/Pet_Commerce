@@ -39,6 +39,7 @@ export default function FormAddProduct() {
 
   const onSubmit = async ({
     product_name,
+    product_description,
     price,
     quantity,
     rating,
@@ -57,6 +58,7 @@ export default function FormAddProduct() {
         formData.append("user_id", user_id);
         formData.append("store_id", store_id);
         formData.append("product_name", product_name);
+        formData.append("product_description", product_description);
         formData.append("price", price);
         formData.append("quantity", quantity);
         formData.append("rating", rating);
@@ -71,19 +73,7 @@ export default function FormAddProduct() {
             },
           }
         );
-        // const response = await axios.post(
-        //   "http://localhost:3000/sellers/add-product/product",
-        //   {
-        //     file: selectedFile,
-        //     user_id,
-        //     product_name,
-        //     price,
-        //     quantity,
-        //     rating,
-        //     category_id,
-        //     store_id,
-        //   }
-        // );
+
         console.log({ response });
 
         setLoading(false);
@@ -180,9 +170,60 @@ export default function FormAddProduct() {
                   placeholder="Product name"
                   {...register("product_name", {
                     required: "Product name is required",
-                    maxLength: 72,
+                    maxLength: {
+                      value: 72,
+                      message: "Product name must not exceed 72 characters",
+                    },
                   })}
                 />
+                {/* Error product name */}
+                {errors.product_name && (
+                  <p
+                    style={{
+                      marginTop: "0rem",
+                      marginLeft: "2rem",
+                      color: "red",
+                    }}
+                  >
+                    {errors.product_name.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Product description */}
+              <div>
+                <label
+                  style={{
+                    marginLeft: "2rem",
+                    fontWeight: 700,
+                    marginBottom: "1rem",
+                    marginTop: "1rem",
+                  }}
+                >
+                  Product Description
+                </label>
+                <input
+                  className="form-control"
+                  style={{ marginLeft: "2rem", width: "62rem" }}
+                  type="text"
+                  placeholder="Product description"
+                  {...register("product_description", {
+                    required: "Product description is required",
+                  })}
+                />
+
+                {/* Error product description */}
+                {errors.product_description && (
+                  <p
+                    style={{
+                      marginTop: "0rem",
+                      marginLeft: "2rem",
+                      color: "red",
+                    }}
+                  >
+                    {errors.product_description.message}
+                  </p>
+                )}
               </div>
 
               {/* Price */}
@@ -192,7 +233,7 @@ export default function FormAddProduct() {
                     marginLeft: "2rem",
                     fontWeight: 700,
                     marginBottom: "1rem",
-                    marginTop: "3rem",
+                    marginTop: "1rem",
                   }}
                 >
                   Price
@@ -204,6 +245,19 @@ export default function FormAddProduct() {
                   placeholder="Price"
                   {...register("price", { required: "Price is required" })}
                 />
+
+                {/* Error price */}
+                {errors.price && (
+                  <p
+                    style={{
+                      marginTop: "0rem",
+                      marginLeft: "2rem",
+                      color: "red",
+                    }}
+                  >
+                    {errors.price.message}
+                  </p>
+                )}
               </div>
 
               {/* Quantity */}
@@ -213,7 +267,7 @@ export default function FormAddProduct() {
                     marginLeft: "2rem",
                     fontWeight: 700,
                     marginBottom: "1rem",
-                    marginTop: "3rem",
+                    marginTop: "1rem",
                   }}
                 >
                   Quantity
@@ -227,6 +281,19 @@ export default function FormAddProduct() {
                     required: "Quantity is required",
                   })}
                 />
+
+                {/* Error quantity */}
+                {errors.quantity && (
+                  <p
+                    style={{
+                      marginTop: "0rem",
+                      marginLeft: "2rem",
+                      color: "red",
+                    }}
+                  >
+                    {errors.quantity.message}
+                  </p>
+                )}
               </div>
 
               {/* Category */}
@@ -236,7 +303,7 @@ export default function FormAddProduct() {
                     marginLeft: "2rem",
                     fontWeight: 700,
                     marginBottom: "1rem",
-                    marginTop: "3rem",
+                    marginTop: "1rem",
                   }}
                 >
                   Category
@@ -292,36 +359,6 @@ export default function FormAddProduct() {
                 Back To Store
               </b>
             </p>
-
-            {/* Error product name */}
-            {errors.product_name && (
-              <p
-                className="text-center"
-                style={{ marginTop: "1rem", color: "red" }}
-              >
-                {errors.product_name.message}
-              </p>
-            )}
-
-            {/* Error price */}
-            {errors.price && (
-              <p
-                className="text-center"
-                style={{ marginTop: "1rem", color: "red" }}
-              >
-                {errors.price.message}
-              </p>
-            )}
-
-            {/* Error quantity */}
-            {errors.quantity && (
-              <p
-                className="text-center"
-                style={{ marginTop: "1rem", color: "red" }}
-              >
-                {errors.quantity.message}
-              </p>
-            )}
           </div>
         </div>
       </div>

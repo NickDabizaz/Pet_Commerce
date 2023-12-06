@@ -81,12 +81,15 @@ function StoreDetail() {
             <div className="m-3">
               <h3 className="text-xl mb-2">{product.product_name}</h3>
               <p className="text-danger mt-4" style={{ fontSize: "1.2rem" }}>
-                <span style={{ fontSize: "0.9rem" }}>Rp</span>
-                {product.price}
+                <span className="me-1" style={{ fontSize: "0.9rem" }}>
+                  Rp
+                </span>
+                {product.price.toLocaleString("id-ID", {
+                  maximumFractionDigits: 2,
+                })}
               </p>
               <p style={{ display: "flex" }}>
                 <div>
-                  {printRating(product.rating)}{" "}
                   <span style={{ fontSize: "0.75rem" }}>10RB+ sold</span>
                 </div>
               </p>
@@ -105,20 +108,6 @@ function StoreDetail() {
       </div>
     </div>
   );
-}
-
-function printRating(number) {
-  let temp = "";
-
-  for (let index = 0; index < number; index++) {
-    temp += "★";
-  }
-
-  for (let index = 0; temp.length < 5; index++) {
-    temp += "☆";
-  }
-
-  return temp;
 }
 
 export default StoreDetail;

@@ -23,7 +23,10 @@ function HomePage() {
           [productId]: response.data.totalQty,
         }));
       } catch (error) {
-        console.error(`Error fetching totalQty for product ${productId}:`, error);
+        console.error(
+          `Error fetching totalQty for product ${productId}:`,
+          error
+        );
       }
     };
 
@@ -64,7 +67,7 @@ function HomePage() {
             {products.map((product) => (
               <div
                 key={product.product_id}
-                className="bg-white border border-gray-300"
+                className="bg-white border border-gray-300 prod-card"
                 onClick={() => {
                   navigate(`/products/${product.product_id}`);
                 }}
@@ -78,20 +81,24 @@ function HomePage() {
                 </div>
                 <div className="m-3">
                   <h3 className="text-xl mb-2">{product.product_name}</h3>
-                  <p className="text-danger mt-4" style={{ fontSize: "1.2rem" }}>
-                    <span style={{ fontSize: "0.9rem" }}>Rp</span>
-                    {product.price}
+                  <p
+                    className="text-danger mt-4"
+                    style={{ fontSize: "1.2rem" }}
+                  >
+                    <span className="me-1" style={{ fontSize: "0.9rem" }}>
+                      Rp
+                    </span>
+                    {product.price.toLocaleString("id-ID", {
+                      maximumFractionDigits: 2,
+                    })}
                   </p>
                   <p style={{ display: "flex" }}>
                     <div style={{ flex: 1 }}>
-                      {printRating(product.rating)}{" "}
                       <span style={{ fontSize: "0.75rem" }}>
                         {totalQtyMap[product.product_id] || 0} sold
                       </span>
                     </div>
-                    <div className="text-end">
-                      {/* Your button code */}
-                    </div>
+                    <div className="text-end">{/* Your button code */}</div>
                   </p>
                 </div>
               </div>
@@ -101,20 +108,6 @@ function HomePage() {
       </div>
     </>
   );
-}
-
-function printRating(number) {
-  let temp = "";
-
-  for (let index = 0; index < number; index++) {
-    temp += "★";
-  }
-
-  for (let index = 0; temp.length < 5; index++) {
-    temp += "☆";
-  }
-
-  return temp;
 }
 
 export default HomePage;
