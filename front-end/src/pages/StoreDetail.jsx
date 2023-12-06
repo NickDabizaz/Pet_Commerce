@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { MainLayout } from "../Components";
+import trash from "../assets/trash.png";
 
 function StoreDetail() {
   const navigate = useNavigate();
@@ -98,7 +99,9 @@ function StoreDetail() {
                 </p>
               </div>
               <div className="text-end" style={{ flex: 1 }}>
-                <button className="btn btn-danger">Delete</button>
+                <button className="btn btn-danger h-full w-8 fs-3 p-0">
+                  <img className="w-8 h-8" src={trash} alt="delete-item" />
+                </button>
               </div>
             </div>
           ))}
