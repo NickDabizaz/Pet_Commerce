@@ -2,13 +2,71 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { MainLayout } from "../Components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import trash from "../assets/trash.png";
+import { useCookies } from "react-cookie";
 
 function StoreDetail() {
   const navigate = useNavigate();
   let { store_id } = useParams();
   const [storeData, setStoreData] = useState(null);
   const [storepic, setStorePic] = useState();
+  const [loading, setLoading] = useState();
+  const [cookie, setCookie] = useCookies("user_id");
+  const [products, setProducts] = useState([]);
+  const [totalQtyMap, setTotalQtyMap] = useState({}); // Add state for totalQty
+
+  useEffect(() => {
+    // Function to fetch totalQty for a product
+    const fetchTotalQty = async (productId) => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/order/count/${productId}`
+        );
+        setTotalQtyMap((prevTotalQtyMap) => ({
+          ...prevTotalQtyMap,
+          [productId]: response.data.totalQty,
+        }));
+      } catch (error) {
+        console.error(
+          `Error fetching totalQty for product ${productId}:`,
+          error
+        );
+      }
+    };
+
+    // Function to fetch products and their totalQty
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/sellers/store/${store_id}`
+        );
+        setProducts(response.data.products);
+
+        // Fetch totalQty for each product
+        response.data.products.forEach((product) => {
+          fetchTotalQty(product.product_id);
+        });
+
+        axios
+          .get(`http://localhost:3000/sellers/store/pic/${store_id}`)
+          .then((res) => {
+            setStorePic(res.data);
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+
+        setLoading(false); // Set loading to false when data is fetched
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false); // Set loading to false in case of an error
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     axios
@@ -21,20 +79,25 @@ function StoreDetail() {
       });
   }, [store_id]);
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3000/sellers/store/pic/${store_id}`)
-      .then((res) => {
-        setStorePic(res.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
-
   if (!storeData) {
     return <div className="text-center mt-4">Loading...</div>;
   }
+
+  const handleDeleteItem = async (product_id) => {
+    try {
+      await axios.delete(
+        `http://localhost:3000/sellers/${store_id}/delete-product/${product_id}`,
+        {
+          data: {
+            user_id: cookie.user_id,
+          },
+        }
+      );
+      navigate(0);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -43,10 +106,15 @@ function StoreDetail() {
         <div
           className="btn p-0"
           style={{ fontSize: "2rem" }}
-          onClick={() => navigate(-1)}
+          onClick={() => {
+            storeData.owner_id == cookie.user_id && navigate("/profile");
+            storeData.owner_id != cookie.user_id && navigate(-1);
+          }}
         >
           ⬅️
         </div>
+        {console.log(storeData.owner_id)}
+        {console.log(cookie.user_id)}
         <div className="text-center">
           <img
             src={
@@ -71,7 +139,7 @@ function StoreDetail() {
 
         <h3 className="text-xl font-bold mb-2">Products:</h3>
         <ul>
-          {console.log(storeData)}
+          {/* {console.log(storeData)} */}
           {storeData.products.map((product) => (
             <div
               key={product.product_id}
@@ -94,13 +162,41 @@ function StoreDetail() {
                 </p>
                 <p style={{ display: "flex" }}>
                   <div>
-                    <span style={{ fontSize: "0.75rem" }}>10RB+ sold</span>
+                    <span style={{ fontSize: "0.75rem" }}>
+                      {totalQtyMap[product.product_id] || 0} sold
+                    </span>
                   </div>
                 </p>
               </div>
-              <div className="text-end" style={{ flex: 1 }}>
-                <button className="btn btn-danger h-full w-8 fs-3 p-0">
-                  <img className="w-8 h-8" src={trash} alt="delete-item" />
+              <div
+                className="text-center mt-auto"
+                style={{
+                  flex: 1,
+                  display: `${
+                    storeData.owner_id === cookie.user_id ? "" : "none"
+                  }`,
+                }}
+              >
+                <button
+                  className="btn btn-danger h-8 w-8 fs-3 p-0"
+                  style={{ alignContent: "center" }}
+                  onClick={() => handleDeleteItem(product.product_id)}
+                >
+                  <FontAwesomeIcon
+                    icon={faTrashCan}
+                    style={{
+                      fontSize: "1rem",
+                      marginTop: "0.5rem",
+                      marginBottom: "1rem",
+                      color: "",
+                    }}
+                  />
+                  {/* <img
+                    className="w-6 h-6 mx-auto invert"
+                    src={trash}
+                    alt="delete-item"
+                    onClick={() => handleDeleteItem(product.product_id)}
+                  /> */}
                 </button>
               </div>
             </div>
