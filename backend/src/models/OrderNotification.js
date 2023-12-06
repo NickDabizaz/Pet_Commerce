@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       message: DataTypes.TEXT
     },
     {
-      paranoid: true
+      paranoid: true,
+      tableName: 'ordernotifications'
     });
   
     OrderNotification.associate = (models) => {

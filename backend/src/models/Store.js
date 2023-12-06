@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       store_description: DataTypes.TEXT
     },
     {
-      paranoid: true
+      paranoid: true,
+      tableName: 'stores'
     });
   
     Store.associate = (models) => {

@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      paranoid: true
+      paranoid: true,
+      tableName: 'postshares'
     });
   
     PostShare.associate = (models) => {

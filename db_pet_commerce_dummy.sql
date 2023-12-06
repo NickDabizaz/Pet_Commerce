@@ -1,11 +1,11 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Dec 06, 2023 at 02:36 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+
+
+
+
+
+
+
+
 
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -18,15 +18,15 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Database: `db_pet_commerce`
---
 
--- --------------------------------------------------------
 
---
--- Table structure for table `categories`
---
+
+
+
+
+
+
+
 
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
@@ -38,9 +38,9 @@ CREATE TABLE IF NOT EXISTS `categories` (
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `categories`
---
+
+
+
 
 INSERT INTO `categories` (`category_id`, `category_name`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
 (1, 'Food', '2023-10-31 21:46:14', '2023-10-31 21:46:14', NULL),
@@ -51,11 +51,11 @@ INSERT INTO `categories` (`category_id`, `category_name`, `createdAt`, `updatedA
 (6, 'Medicine and Vitamins', '2023-10-31 21:46:14', '2023-10-31 21:46:14', NULL),
 (7, 'Clothing', '2023-10-31 21:46:14', '2023-10-31 21:46:14', NULL);
 
--- --------------------------------------------------------
 
---
--- Table structure for table `comments`
---
+
+
+
+
 
 DROP TABLE IF EXISTS `comments`;
 CREATE TABLE IF NOT EXISTS `comments` (
@@ -72,11 +72,11 @@ CREATE TABLE IF NOT EXISTS `comments` (
   KEY `post_id` (`post_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `orderdetails`
---
+
+
+
+
 
 DROP TABLE IF EXISTS `orderdetails`;
 CREATE TABLE IF NOT EXISTS `orderdetails` (
@@ -93,18 +93,18 @@ CREATE TABLE IF NOT EXISTS `orderdetails` (
   KEY `order_id` (`order_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `orderdetails`
---
+
+
+
 
 INSERT INTO `orderdetails` (`detail_id`, `qty`, `subtotal`, `createdAt`, `updatedAt`, `deletedAt`, `product_id`, `order_id`) VALUES
 (1, 5, 150000, '2023-12-05 18:08:54', '2023-12-05 18:08:54', NULL, NULL, 5);
 
--- --------------------------------------------------------
 
---
--- Table structure for table `ordernotifications`
---
+
+
+
+
 
 DROP TABLE IF EXISTS `ordernotifications`;
 CREATE TABLE IF NOT EXISTS `ordernotifications` (
@@ -119,11 +119,11 @@ CREATE TABLE IF NOT EXISTS `ordernotifications` (
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `orders`
---
+
+
+
+
 
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
@@ -138,18 +138,18 @@ CREATE TABLE IF NOT EXISTS `orders` (
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `orders`
---
+
+
+
 
 INSERT INTO `orders` (`order_id`, `order_date`, `total_price`, `createdAt`, `updatedAt`, `deletedAt`, `user_id`) VALUES
 (5, '2023-12-05 18:08:53', 150000, '2023-12-05 18:08:53', '2023-12-05 18:08:53', NULL, 3);
 
--- --------------------------------------------------------
 
---
--- Table structure for table `postlikes`
---
+
+
+
+
 
 DROP TABLE IF EXISTS `postlikes`;
 CREATE TABLE IF NOT EXISTS `postlikes` (
@@ -164,9 +164,9 @@ CREATE TABLE IF NOT EXISTS `postlikes` (
   KEY `post_id` (`post_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `postlikes`
---
+
+
+
 
 INSERT INTO `postlikes` (`like_id`, `user_id`, `post_id`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
 (3, 1, 1, '2023-12-05 15:08:26', '2023-12-05 15:08:34', '2023-12-05 15:08:34'),
@@ -181,11 +181,11 @@ INSERT INTO `postlikes` (`like_id`, `user_id`, `post_id`, `createdAt`, `updatedA
 (12, 1, 1, '2023-12-05 16:52:21', '2023-12-05 16:54:31', '2023-12-05 16:54:31'),
 (13, 1, 1, '2023-12-05 17:07:11', '2023-12-05 17:07:11', NULL);
 
--- --------------------------------------------------------
 
---
--- Table structure for table `posts`
---
+
+
+
+
 
 DROP TABLE IF EXISTS `posts`;
 CREATE TABLE IF NOT EXISTS `posts` (
@@ -199,9 +199,9 @@ CREATE TABLE IF NOT EXISTS `posts` (
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `posts`
---
+
+
+
 
 INSERT INTO `posts` (`post_id`, `title`, `user_id`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
 (1, 'AING MAUNGG!!', 3, '2023-12-04 07:19:51', '2023-12-04 07:19:51', NULL),
@@ -211,11 +211,11 @@ INSERT INTO `posts` (`post_id`, `title`, `user_id`, `createdAt`, `updatedAt`, `d
 (5, 'ihihi', 1, '2023-12-04 15:47:19', '2023-12-04 15:47:19', NULL),
 (6, 'Laper bang, hiks :(', 1, '2023-12-05 15:52:11', '2023-12-05 15:52:11', NULL);
 
--- --------------------------------------------------------
 
---
--- Table structure for table `postshares`
---
+
+
+
+
 
 DROP TABLE IF EXISTS `postshares`;
 CREATE TABLE IF NOT EXISTS `postshares` (
@@ -231,11 +231,11 @@ CREATE TABLE IF NOT EXISTS `postshares` (
   KEY `post_id` (`post_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `products`
---
+
+
+
+
 
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE IF NOT EXISTS `products` (
@@ -255,9 +255,9 @@ CREATE TABLE IF NOT EXISTS `products` (
   KEY `store_id` (`store_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `products`
---
+
+
+
 
 INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `price`, `rating`, `category_id`, `store_id`, `quantity`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
 (1, 'Happy Dog Makanan Anjing Basah Sensible Pure Africa Ostrich 400gr', 'Makanan%20anjing%20basah%20Happy%20Dog%20Sensible%20Pure%20Africa%20Ostrich%20untuk%20anjing%20dewasa.%0A%0AIdeal%20bagi%20para%20pecinta%20daging%2C%20Happy%20Dog%20Sensible%20Pure%20Africa%20terbuat%20100%25%20dari%20daging%20eksklusif%20burung%20unta%20yang%20kaya%20nutrisi%20dan%20ramah%20pencernaan.%20Dilengkapi%20vitamin%20E%20untuk%20meningkatkan%20daya%20tahan%20tubuh.%0A%0A-%20Kadar%20protein%2011.8%25%20dan%20lemak%205.2%25.%0A-%20100%25%20terbuat%20dari%20daging%20burung%20unta.%0A-%20Resep%20grain%20free%20(bebas%20biji-bijian)%20dan%20tanpa%20soya%20dan%20gula.%0A-%20Mengandung%20vitamin%20untuk%20kesehatan%20tubuh%20yang%20optimal.%0A-%20Cocok%20untuk%20pencernaan%20sensitif.%0A-%20Tanpa%20pewarna%20buatan%2C%20penguat%20rasa%2C%20maupun%20pengawet.%0A%0AKomposisi%3A%20Daging%20dan%20produk%20turunan%20hewani%20(70%25%20daging%20otot%20burung%20unta%2C%20jeroan%20burung%20unta)**%2C%20mineral%3B%20*)%20dikarenakan%20keterbatasan%20dalam%20proses%20pembuatan%2C%20pakan%20ini%20masih%20mungkin%20mengandung%20protein%20lain.%0A%0ANilai%20gizi%3A%20Protein%20kasar%2011.8%25%2C%20lemak%20kasar%205.2%25%2C%20abu%20kasar%202.0%25%2C%20serat%20kasar%200.5%25%2C%20kadar%20air%2079.8%25%2C%20Vitamin%20A%20(3a672a)%203000%20IU%2C%20Vitamin%20D3%20(3a671)%20300%20IU%2C%20Vitamin%20E%20(semua%20rac-alpha-tocopheryl%20acetate%203a700)%2012%20mg%2C%20Vitamin%20B1%20(thiamine%20mononitrate%203a821)%202.5%20mg.%0A%0AApakah%20itu%20mixed%20feeding%3F%0AMixed%20feeding%20atau%20mixed%20diet%20yaitu%20mencampur%20makanan%20kering%20dengan%20makanan%20basah.%20Tujuannya%20agar%20mendapatkan%20manfaat%20dari%20keduanya%20sehingga%20mendukung%20kesehatan%20tubuh%20yang%20optimal.%0A%0AApa%20saja%20manfaat%20mixed%20feeding%3F%0A-%20Menambah%20selera%20makan%20anjing%20agar%20makannya%20lahap.%0A-%20Menjaga%20gigi%20dan%20gusi%20tetap%20sehat.%0A-%20Membantu%20mencukupi%20kebutuhan%20minum%20anjing%20dan%20menjaga%20tetap%20terhidrasi.%0A-%20Menjaga%20kesehatan%20ginjal%20dan%20saluran%20kemih.%0A-%20Aroma%20dan%20tekstur%20makanan%20yang%20lezat%20dan%20disukai%20anjing.%0A%0AHarap%20diperhatikan%3A%0A-%20Berikan%20makanan%20pada%20suhu%20ruangan.%0A-%20Air%20minum%20segar%20sebaiknya%20tersedia%20setiap%20saat.%0A-%20Simpan%20di%20tempat%20yang%20sejuk%2C%20kering%20dan%20gelap.%0A-%20Simpan%20di%20lemari%20es%20setelah%20dibuka.%0A%0AMade%20with%20love%20in%20Germany.', 59500, 0, 1, 1, 99, '2023-12-06 12:53:41', '2023-12-06 12:53:41', NULL),
@@ -272,11 +272,11 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 (10, 'Kostum Kucing Anjing Model Wig Rambut Singa - Kostum Wig Singa - L', 'Wig%20Rambut%20Singa%0A%0AUkuran%20Lingkar%20kepala%0AS%20%3A%2028%20cm%0AM%20%3A%2032%20cm%0AL%20%3A%2038%20cm%0A%0AKostum%20untuk%20anjing%20dan%20kucing%20ini%20berbentuk%20wig%20%2F%20rambut%20singa.%20Jika%20di%20pakaikan%20ke%20kucing%20dan%20anjing%20kesayangan%20anda%2C%20maka%20kucing%20dan%20anjing%20peliharaan%20anda%20akan%20kelihatan%20sangat%20lucu%20dan%20gemas.%20Karena%20imut%20imut%20berkepala%20singa.%0A%0AKelebihan%3A%0A%F0%9F%90%BE%20Bahan%20kain%20wol%20dan%20100%25%20kain%20polyster.%0A%F0%9F%90%BE%20Bahan%20luar%20dalam%20sangat%20halus%20seperti%20bahan%20bulu%20boneka.%0A%F0%9F%90%BE%20Jahitan%20Rapi%20%26%20Kuat%2C%20ukuran%20bisa%20disesuaikan.%0A%F0%9F%90%BE%20Tidak%20Kaku%20%2C%20Tidak%20Tipis%20dan%20Tidak%20Luntur.%0A%0AAbout%20Pawsitive%20Vibes%20%F0%9F%90%BE%0A%E2%80%A2100%25%20Original%20product%0A%E2%80%A2FREE%20packaging%20bubble%20dan%20kardus%20untuk%20produk%20yg%20riskan%2Fgampang%20rusak.%0A%E2%80%A2Jam%20Operasional%2008%3A00-15%3A00.%20Order%20diluar%20jam%20operasional%20akan%20dikirim%20ketika%20beroperasi%20kembali.', 49900, 0, 7, 2, 10, '2023-12-06 13:31:24', '2023-12-06 13:31:24', NULL),
 (11, 'Paws Hotel Eye Mask - Pet Dog Clothes - Eye Mask only', 'Paws%20Hotel%20Eye%20Mask%0A%0A-%20Eye%20Mask%20only%0A%0ANotes%3A%0A1.%20Due%20to%20the%20different%20monitor%20and%20light%20effect%2C%20the%20actual%20color%20of%20the%20item%20might%20be%20slightly%20different%20from%20the%20color%20showed%20on%20the%20pictures.%20Thank%20you!', 70000, 0, 7, 2, 10, '2023-12-06 13:32:38', '2023-12-06 13:32:38', NULL);
 
--- --------------------------------------------------------
 
---
--- Table structure for table `reviews`
---
+
+
+
+
 
 DROP TABLE IF EXISTS `reviews`;
 CREATE TABLE IF NOT EXISTS `reviews` (
@@ -293,11 +293,11 @@ CREATE TABLE IF NOT EXISTS `reviews` (
   KEY `product_id` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `shoppingcarts`
---
+
+
+
+
 
 DROP TABLE IF EXISTS `shoppingcarts`;
 CREATE TABLE IF NOT EXISTS `shoppingcarts` (
@@ -313,9 +313,9 @@ CREATE TABLE IF NOT EXISTS `shoppingcarts` (
   KEY `product_id` (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `shoppingcarts`
---
+
+
+
 
 INSERT INTO `shoppingcarts` (`cart_id`, `qty`, `createdAt`, `updatedAt`, `deletedAt`, `user_id`, `product_id`) VALUES
 (1, 4, '2023-11-14 17:46:44', '2023-11-16 01:32:19', NULL, 1, NULL),
@@ -331,11 +331,11 @@ INSERT INTO `shoppingcarts` (`cart_id`, `qty`, `createdAt`, `updatedAt`, `delete
 (11, 1, '2023-11-23 02:15:22', '2023-11-23 02:15:22', NULL, 1, NULL),
 (12, 5, '2023-12-05 18:08:29', '2023-12-05 18:08:29', '2023-12-05 18:08:54', 3, NULL);
 
--- --------------------------------------------------------
 
---
--- Table structure for table `stores`
---
+
+
+
+
 
 DROP TABLE IF EXISTS `stores`;
 CREATE TABLE IF NOT EXISTS `stores` (
@@ -350,19 +350,19 @@ CREATE TABLE IF NOT EXISTS `stores` (
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `stores`
---
+
+
+
 
 INSERT INTO `stores` (`store_id`, `store_name`, `store_description`, `createdAt`, `updatedAt`, `deletedAt`, `user_id`) VALUES
 (1, 'Jaedung Pet Store', 'jual semua kebutuhan peliharaan anda', '2023-12-06 12:53:24', '2023-12-06 12:53:24', NULL, 1),
 (2, 'Daebak Pet Store', 'jual semua kebutuhan peliharaan dengan harga miring', '2023-12-06 13:26:36', '2023-12-06 13:26:36', NULL, 3);
 
--- --------------------------------------------------------
 
---
--- Table structure for table `users`
---
+
+
+
+
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
@@ -380,94 +380,77 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `users`
---
+
+
+
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `address`, `phone_number`, `token`, `role`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
 (1, 'John Doe', 'john@example.com', 'password123', 'Jl. depan belok kiri', '081987654321', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJpYXQiOjE3MDE4Mzc5NTQsImV4cCI6MTcwMTkyNDM1NH0.1rshcLdMKOON4wruRwB4QoiTmEJEVEGxnN-MxHbRC1I', 'seller', '2023-02-01 10:00:00', '2023-12-06 04:45:54', NULL),
 (2, 'Jane Doe', 'jane@example.com', 'password456', 'Jl. kaki aja', '081651237459', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImphbmVAZXhhbXBsZS5jb20iLCJpYXQiOjE3MDE3OTc1MDYsImV4cCI6MTcwMTg4MzkwNn0.l5o70KnmCiwZ3XjjqLu3fK53kg7SXh69YBuGOOZlLik', 'customer', '2023-02-02 11:00:00', '2023-12-05 17:31:46', NULL),
 (3, 'Daebak', 'daebak62@gmail.com', 'daebak62', 'Jl. kebenaran', '081234567891', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhZWJhazYyQGdtYWlsLmNvbSIsImlhdCI6MTcwMTg2ODk5MywiZXhwIjoxNzAxOTU1MzkzfQ.E3u1NQjv-HCmnKx2RGguADsRMsDZyIZPentHez4NvCA', 'seller', '2023-12-04 05:51:05', '2023-12-06 13:23:13', NULL);
 
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `comments`
---
 ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `comments_fk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `comments_fk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `orderdetails`
---
 ALTER TABLE `orderdetails`
-  ADD CONSTRAINT `orderdetails_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `orderdetails_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `orderdetails_fk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `orderdetails_fk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
---
--- Constraints for table `ordernotifications`
---
+
+
+
 ALTER TABLE `ordernotifications`
-  ADD CONSTRAINT `ordernotifications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `ordernotifications_fk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
---
--- Constraints for table `orders`
---
+
+
+
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `orders_fk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
---
--- Constraints for table `postlikes`
---
+
+
+
 ALTER TABLE `postlikes`
-  ADD CONSTRAINT `postlikes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `postlikes_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `postlikes_fk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `postlikes_fk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `posts`
---
+
+
+
 ALTER TABLE `posts`
-  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `posts_fk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `postshares`
---
+
+
+
 ALTER TABLE `postshares`
-  ADD CONSTRAINT `postshares_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `postshares_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `postshares_fk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `postshares_fk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `products`
---
+
+
+
 ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`store_id`) REFERENCES `stores` (`store_id`) ON DELETE NO ACTION ON UPDATE CASCADE;
+  ADD CONSTRAINT `products_fk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `products_fk_2` FOREIGN KEY (`store_id`) REFERENCES `stores` (`store_id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
---
--- Constraints for table `reviews`
---
+
+
+
 ALTER TABLE `reviews`
-  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `reviews_fk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `reviews_fk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
---
--- Constraints for table `shoppingcarts`
---
+
 ALTER TABLE `shoppingcarts`
-  ADD CONSTRAINT `shoppingcarts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `shoppingcarts_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `shoppingcarts_fk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `shoppingcarts_fk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
---
--- Constraints for table `stores`
---
+
 ALTER TABLE `stores`
-  ADD CONSTRAINT `stores_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `storefk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      paranoid: true
+      paranoid: true,
+      tableName: 'comments'
     });
   
     Comment.associate = (models) => {

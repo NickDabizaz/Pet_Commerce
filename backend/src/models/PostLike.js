@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      paranoid: true
+      paranoid: true,
+      tableName: 'postlikes'
     });
   
     PostLike.associate = (models) => {

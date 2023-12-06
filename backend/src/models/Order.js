@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       total_price: DataTypes.INTEGER
     },
     {
-      paranoid: true
+      paranoid: true,
+      tableName: 'orders'
     });
   
     Order.associate = (models) => {

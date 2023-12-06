@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
       category_name: DataTypes.STRING(255)
     },
     {
-      paranoid: true
+      paranoid: true,
+      tableName: 'categories'
     });
   
     Category.associate = (models) => {

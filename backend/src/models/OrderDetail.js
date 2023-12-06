@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
       subtotal: DataTypes.INTEGER
     }, 
     {
-      paranoid: true
+      paranoid: true,
+      tableName: 'orderdetails'
     });
   
     OrderDetail.associate = (models) => {

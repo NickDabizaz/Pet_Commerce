@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       user_id : DataTypes.INTEGER
     },
     {
-      paranoid: true  
+      paranoid: true ,
+      tableName: 'posts' 
     });
   
     Post.associate = (models) => {

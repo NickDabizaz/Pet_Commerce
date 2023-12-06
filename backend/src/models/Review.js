@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       comment: DataTypes.TEXT
     },
     {
-      paranoid: true
+      paranoid: true,
+      tableName: 'reviews'
     });
   
     Review.associate = (models) => {
