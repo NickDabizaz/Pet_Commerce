@@ -43,7 +43,7 @@ function AdminDashboard() {
       <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>
         <NavLink to="/admin" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Home</NavLink>
         <NavLink to="/admin/manage-users" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Users Management</NavLink>
-        <NavLink to="/admin/manage-community" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Community Management</NavLink>
+        <NavLink to="/admin/manage-community" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Posts Management</NavLink>
       </div>
 
       <div className="container-fluid" style={{ backgroundColor: "#F3F0F0", height: "88vh" }}>
@@ -150,7 +150,7 @@ function ManageUser() {
       <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>
         <NavLink to="/admin" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Home</NavLink>
         <NavLink to="/admin/manage-users" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Users Management</NavLink>
-        <NavLink to="/admin/manage-community" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Community Management</NavLink>
+        <NavLink to="/admin/manage-community" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Posts Management</NavLink>
       </div>
       <div className="container-fluid" style={{ backgroundColor: "#61A0AF", height: "88vh" }}>
         <div className="container-fluid pt-2 overflow-y-auto" style={{ backgroundColor: "#FFFFFF", width: "90%", height: "88vh", overflow: "hidden" }}>
@@ -255,7 +255,7 @@ function ManageCommunity() {
       <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>
         <NavLink to="/admin" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Home</NavLink>
         <NavLink to="/admin/manage-users" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Users Management</NavLink>
-        <NavLink to="/admin/manage-community" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Community Management</NavLink>
+        <NavLink to="/admin/manage-community" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Posts Management</NavLink>
       </div>
       <div className="container-fluid" style={{ backgroundColor: "#61A0AF", height: "88vh" }}>
         <div className="container-fluid pt-2 overflow-y-auto" style={{ backgroundColor: "#FFFFFF", width: "90%", height: "88vh", overflow: "hidden" }}>
