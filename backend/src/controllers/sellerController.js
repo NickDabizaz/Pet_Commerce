@@ -220,6 +220,7 @@ const getAllProducts = async (req, res) => {
       return {
         product_id: product.product_id,
         product_name: product.product_name,
+        product_description: product.product_description,
         product_img: lokasinya,
         price: product.price,
         rating: product.rating,
@@ -316,6 +317,7 @@ const getProductDetail = async (req, res) => {
     const productDetail = {
       product_id: product.product_id,
       product_name: product.product_name,
+      product_description: product.product_description,
       price: product.price,
       rating: product.rating,
       category_id: product.category_id,

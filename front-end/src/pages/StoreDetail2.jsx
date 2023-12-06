@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { MainLayout } from "../Components";
 
-function StoreDetail() {
+function StoreDetail2() {
   const navigate = useNavigate();
   let { store_id } = useParams();
+  const history = useHistory();
   const [storeData, setStoreData] = useState(null);
   const [storepic, setStorePic] = useState();
 
@@ -42,7 +44,13 @@ function StoreDetail() {
         <div
           className="btn p-0"
           style={{ fontSize: "2rem" }}
-          onClick={() => navigate(-1)}
+          onClick={() => {
+            history.length > 1
+              ? history.goBack() === `store/${store_id}/form-add-product`
+                ? navigate("/profile")
+                : navigate(-1)
+              : navigate("/profile");
+          }}
         >
           ⬅️
         </div>
@@ -114,4 +122,4 @@ function StoreDetail() {
   );
 }
 
-export default StoreDetail;
+export default StoreDetail2;

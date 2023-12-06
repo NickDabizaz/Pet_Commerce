@@ -58,7 +58,10 @@ export default function FormAddProduct() {
         formData.append("user_id", user_id);
         formData.append("store_id", store_id);
         formData.append("product_name", product_name);
-        formData.append("product_description", product_description);
+        formData.append(
+          "product_description",
+          encodeURIComponent(product_description)
+        );
         formData.append("price", price);
         formData.append("quantity", quantity);
         formData.append("rating", rating);
@@ -73,12 +76,11 @@ export default function FormAddProduct() {
             },
           }
         );
-
         console.log({ response });
-
         setLoading(false);
         navigate(`/store/${store_id}`);
       }
+      setLoading(false);
     } catch (error) {
       setLoading(false);
       console.error(error);
@@ -202,10 +204,15 @@ export default function FormAddProduct() {
                 >
                   Product Description
                 </label>
-                <input
-                  className="form-control"
-                  style={{ marginLeft: "2rem", width: "62rem" }}
-                  type="text"
+                <textarea
+                  className="form-control p-2"
+                  style={{
+                    resize: "none",
+                    overflow: "auto",
+                    width: "62rem",
+                    marginLeft: "2rem",
+                  }}
+                  rows={3}
                   placeholder="Product description"
                   {...register("product_description", {
                     required: "Product description is required",

@@ -63,7 +63,7 @@ function HomePage() {
             <p>Loading...</p>
           </div>
         ) : (
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-4 gap-4 mb-4">
             {products.map((product) => (
               <div
                 key={product.product_id}

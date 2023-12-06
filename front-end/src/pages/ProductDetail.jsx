@@ -3,6 +3,8 @@ import { MainLayout } from "../Components";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Modal, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 
@@ -16,30 +18,20 @@ function ProductDetail() {
   const [productId, setProductId] = useState(-1);
   const { product_id } = useParams();
   const navigate = useNavigate();
-  //   const history = useHistory();
-
-  const [mainImage, setMainImage] = useState(
-    "https://media.istockphoto.com/id/1285797164/id/vektor/nomor-1-alfabet-font-yang-digambar-dengan-tangan-ilustrasi-vektor-angka-arab-nomor-1-simbol.jpg?s=1024x1024&w=is&k=20&c=30McNvyv9lKDktHm8qURZbmoqZYHVaMRH6nZbhAqzTo="
-  );
-  const imageList = [
-    "https://media.istockphoto.com/id/1285797164/id/vektor/nomor-1-alfabet-font-yang-digambar-dengan-tangan-ilustrasi-vektor-angka-arab-nomor-1-simbol.jpg?s=1024x1024&w=is&k=20&c=30McNvyv9lKDktHm8qURZbmoqZYHVaMRH6nZbhAqzTo=",
-    "https://media.istockphoto.com/id/1285797170/id/vektor/nomor-2-alfabet-font-yang-digambar-dengan-tangan-ilustrasi-vektor-angka-arab-nomor-2-simbol.jpg?s=1024x1024&w=is&k=20&c=g_zyzhLuUFXoRsZ6aK2rBvgdBisg9A5WIjBgiXUlDHs=",
-    "https://media.istockphoto.com/id/1248289132/id/vektor/digit-3-alfabet-grafiti-dengan-garis-semprot-dan-penyemprotan-berlebih-ilustrasi-vektor.jpg?s=1024x1024&w=is&k=20&c=dEwjZep0dgeHFcTgXOHQ3Raq72_Zh7UAdfSzjcIIK4M=",
-    "https://media.istockphoto.com/id/1248289027/id/vektor/digit-4-alfabet-grafiti-dengan-garis-semprot-dan-penyemprotan-berlebih-ilustrasi-vektor.jpg?s=1024x1024&w=is&k=20&c=HJVOieiNvOp74YX8e282OqLElU7oKOubBWsyIwTob20=",
-  ];
-
-  const handleImageHover = (image) => {
-    setMainImage(image);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/sellers/product/${product_id}`);
+        const response = await axios.get(
+          `http://localhost:3000/sellers/product/${product_id}`
+        );
         console.log({ response: response.data });
         setProduct(response.data);
+        console.log(response);
 
-        const storeResponse = await axios.get(`http://localhost:3000/sellers/store/${response.data.store_id}`);
+        const storeResponse = await axios.get(
+          `http://localhost:3000/sellers/store/${response.data.store_id}`
+        );
         console.log({ storeResponse: storeResponse.data });
 
         setStore({
@@ -56,8 +48,6 @@ function ProductDetail() {
 
     fetchData();
   }, [product_id]);
-
-
 
   const handleCloseModal = () => {
     setQuantity(1);
@@ -105,68 +95,74 @@ function ProductDetail() {
         {loading == true && "loading..."}
         {loading == false && (
           <>
-            <div className="cursor-pointer" onClick={() => navigate(-1)}>⬅️</div>
-            <div className="row">
-              <div className="col-2"></div>
-              <div className="col-3 " style={{ height: "" }}>
-                <img src={mainImage} alt="Main" style={{ height: "20rem" }} />
-                {/* <img
-                src="http://via.placeholder.com/640x360"
-                style={{ width: "100%" }}
-              /> */}
+            <div className="row h-80">
+              <div className="col-2 h-80">
                 <div
-                  className="d-flex flex-row"
-                  style={{ overflowX: "scroll" }}
+                  className="cursor-pointer ms-auto w-fit"
+                  style={{
+                    fontSize: "2rem",
+                  }}
+                  onClick={() => navigate(-1)}
                 >
-                  {imageList.map((image, index) => (
-                    <img
-                      key={index}
-                      src={image}
-                      alt={`Thumbnail ${index + 1}`}
-                      className="mr-2"
-                      onMouseOver={() => handleImageHover(image)}
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        objectFit: "cover",
-                      }}
-                    />
-                  ))}
+                  <FontAwesomeIcon
+                    icon={faCircleArrowLeft}
+                    style={{ color: "#6CD4FF" }}
+                  />
                 </div>
               </div>
-              <div className="col-5 " style={{ height: "" }}>
-                <div style={{ height: "20rem" }}>
-                  <div style={{ fontSize: "2rem" }}>{product.product_name}</div>
-                  <div>
-                    <u>{product.rating}</u> {printRating(product.rating)}
+              <div className="col-auto h-80 border border-dark p-0">
+                <img
+                  className="mx-auto"
+                  src={`http://localhost:3000/sellers/product/pic/${product.product_id}`}
+                  alt={`${product.name}`}
+                  style={{
+                    height: "19.9rem",
+                    width: "19.9rem",
+                    objectFit: "contain",
+                  }}
+                />
+              </div>
+              <div className="col-5 h-80" style={{ height: "" }}>
+                <div className="h-80">
+                  <div className="h-64">
+                    <div style={{ fontSize: "2rem" }}>
+                      {product.product_name}
+                    </div>
+
+                    <div
+                      className="mt-3"
+                      style={{ fontSize: "1.5rem", color: "red" }}
+                    >
+                      <span className="me-1" style={{ fontSize: "0.9rem" }}>
+                        Rp
+                      </span>
+                      {product.price.toLocaleString("id-ID", {
+                        maximumFractionDigits: 2,
+                      })}
+                    </div>
                   </div>
-                  <div
-                    className="mt-5"
-                    style={{ fontSize: "1.5rem", color: "red" }}
-                  >
-                    Rp {product.price}
+                  <div className="h-12" style={{ marginTop: "1rem" }}>
+                    <button
+                      className=" h-12 btn btn-warning"
+                      onClick={() => {
+                        !cookie.user_id && navigate("/login");
+                        //   cookie.user_id && navigate(`/products/${product.product_id}`);
+                        cookie.user_id && handleShowModal(product.product_id);
+                      }}
+                    >
+                      Add to Cart
+                    </button>
                   </div>
-                </div>
-                <div className="mt-5 ">
-                  <button
-                    className="btn btn-warning"
-                    onClick={() => {
-                      !cookie.user_id && navigate("/login");
-                      //   cookie.user_id && navigate(`/products/${product.product_id}`);
-                      cookie.user_id && handleShowModal(product.product_id);
-                    }}
-                  >
-                    Add to Cart
-                  </button>
                 </div>
               </div>
               <div className="col-2"></div>
             </div>
             <div className="mt-5 row" style={{ height: "auto" }}>
               <div className="col-2"></div>
-              <div className="col-8 p-3 border border-dark" onClick={() => navigate(`/store/${store.store_id}`)}>
+              <div className="col-8 p-3 border border-dark">
                 <div className="row">
-                  <div className="col-2 ms-3 p-0 me-3"
+                  <div
+                    className="col-2 ms-3 p-0 me-3"
                     style={{
                       objectFit: "cover",
                       border: "1px solid black",
@@ -177,22 +173,47 @@ function ProductDetail() {
                         "url(https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg)",
                       backgroundRepeat: "repeat",
                       backgroundSize: "cover",
+                      cursor: "pointer",
                     }}
+                    onClick={() => navigate(`/store/${store.store_id}`)}
                   >
                     <img
                       src={`http://localhost:3000/sellers/store/pic/${store.store_id}`}
-                      style={{ borderRadius: "50%", height: "8rem", width: "8rem", maxWidth: "150%", marginLeft: "-20"}}
+                      style={{
+                        borderRadius: "50%",
+                        height: "8rem",
+                        width: "8rem",
+                        maxWidth: "150%",
+                        marginLeft: "-20",
+                      }}
                     />
                   </div>
-                  <div className="col-10 p-3 fs-3">{store.name}</div>
+                  <div className="col-10 p-3">
+                    <div
+                      className="fs-3"
+                      onClick={() => navigate(`/store/${store.store_id}`)}
+                      style={{ cursor: "pointer", width: "fit-content" }}
+                    >
+                      {store.name}
+                    </div>
+                    <div
+                      onClick={() => navigate(`/store/${store.store_id}`)}
+                      style={{ cursor: "pointer", width: "fit-content" }}
+                    >
+                      {store.description}
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="col-2"></div>
             </div>
             <div className="mt-5 row" style={{ height: "auto" }}>
               <div className="col-2"></div>
-              <div className="col-8 p-3 border border-dark">
-                {store.description}
+              <div
+                className="col-8 p-3 border border-dark"
+                style={{ whiteSpace: "pre-line" }}
+              >
+                {decodeURIComponent(product.product_description)}
               </div>
               <div className="col-2"></div>
             </div>
