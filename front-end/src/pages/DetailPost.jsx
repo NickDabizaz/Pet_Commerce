@@ -73,6 +73,8 @@ const DetailPost = () => {
     fetchData();
   }, [post_id]);
 
+  !cookies.user_id && navigate("/login");
+
   if (loading) {
     return <div>Loading...</div>;
   }

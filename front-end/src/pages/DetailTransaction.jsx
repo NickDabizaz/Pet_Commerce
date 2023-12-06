@@ -38,13 +38,28 @@ function DetailTransaction() {
             <li key={product.detail_id} className="mb-4 border-b pb-2">
               <p>Product ID: {product.product_id}</p>
               <p>Product Name: {product.product_name}</p>
-              <p>Price: {product.price}</p>
+              <p>
+                Price: Rp{" "}
+                {product.price.toLocaleString("id-ID", {
+                  maximumFractionDigits: 2,
+                })}
+              </p>
               <p>Quantity: {product.qty}</p>
-              <p>Subtotal: {product.subtotal}</p>
+              <p>
+                Subtotal: Rp{" "}
+                {product.subtotal.toLocaleString("id-ID", {
+                  maximumFractionDigits: 2,
+                })}
+              </p>
             </li>
           ))}
         </ul>
-        <p className="mt-4 text-xl font-semibold">Total: {orderDetails.total}</p>
+        <p className="mt-4 text-xl font-semibold">
+          Total: Rp{" "}
+          {orderDetails.total.toLocaleString("id-ID", {
+            maximumFractionDigits: 2,
+          })}
+        </p>
       </div>
     </div>
   );
