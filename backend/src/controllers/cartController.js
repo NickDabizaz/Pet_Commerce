@@ -4,6 +4,10 @@ exports.addToCart = async (req, res) => {
   try {
     const { user_id, product_id, qty } = req.body;
 
+    console.log(user_id);
+    console.log(product_id);
+    console.log(qty);
+
     if (!user_id) {
       return res.status(400).json({ message: "User ID is required" });
     }
@@ -72,6 +76,7 @@ exports.getCart = async (req, res) => {
     let total = 0;
     const cartItems = carts.map((cart) => {
       const { cart_id, qty, Product } = cart;
+      console.log(cart);
       const { product_name, price, product_id } = Product;
       const subtotal = qty * price;
       total += subtotal;
@@ -95,32 +100,33 @@ exports.getCart = async (req, res) => {
   }
 };
 
-exports.updateCart = async (req, res) => {
+exports.getOneCart = async (req, res) => {
   try {
-    const { user_id } = req.params;
-    const { product_id, qty } = req.body;
+    const { user_id, product_id } = req.params;
+    console.log({user_id});
+    console.log({product_id});
 
-    if (!user_id || !product_id || !qty) {
-      return res.status(400).json({ message: "Invalid input" });
-    }
-
-    const cart = await ShoppingCart.findOne({
-      where: { user_id, product_id },
+    const carts = await ShoppingCart.findOne({
+      where: { user_id, product_id, deletedAt: null }
     });
 
-    if (!cart) {
-      return res.status(404).json({ message: "Cart not found" });
+    if(!carts){
+      return res.status(200).json(
+        {
+          available: false,
+        }
+      )
     }
 
-    if (qty === 0) {
-      await cart.destroy();
-      return res.status(200).json({ message: "Product removed from cart" });
+    if (carts) {
+      return res.status(200).json(
+        {
+          available: true,
+          qty: carts.qty
+        }
+      )
+        
     }
-
-    cart.qty = qty;
-    await cart.save();
-
-    res.status(200).json(cart);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });
@@ -132,22 +138,23 @@ exports.updateCart = async (req, res) => {
     const { user_id } = req.params;
     const { product_id, qty } = req.body;
 
-    // Find the cart to edit
+    if (!user_id || !product_id || !qty) {
+      return res.status(400).json({ message: "Invalid input" });
+    }
+
     const cart = await ShoppingCart.findOne({
-      where: { user_id, product_id },
+      where: { user_id, product_id, deletedAt: null },
     });
 
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
 
-    // If qty is 0, delete the product from the cart
     if (qty === 0) {
       await cart.destroy();
       return res.status(200).json({ message: "Product removed from cart" });
     }
 
-    // Update the cart
     cart.qty = qty;
     await cart.save();
 

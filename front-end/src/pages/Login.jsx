@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { set, useForm } from "react-hook-form";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -41,6 +41,10 @@ const Login = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (cookies.user_id) navigate("/")
+  }, [])
 
   return (
     <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>

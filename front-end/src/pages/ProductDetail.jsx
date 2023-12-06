@@ -64,28 +64,63 @@ function ProductDetail() {
       product_id: productId,
       qty: quantity,
     };
-    console.log({ data });
+    // console.log( data );
+
     axios
-      .post("http://localhost:3000/cart", data)
+      .get(`http://localhost:3000/cart/${data.user_id}/${data.product_id}`)
       .then((response) => {
         console.log(response.data);
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil ditambahkan ke keranjang",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        handleCloseModal();
+        if (response.data.available == true) {
+            axios
+            .put(`http://localhost:3000/cart/${cookie.user_id}`, {
+              product_id: data.product_id,
+              qty: response.data.qty + data.qty,
+            }).then((response) => {
+              console.log(response.data);
+              Swal.fire({
+                icon: "success",
+                title: "Berhasil ditambahkan ke keranjang",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              handleCloseModal();
+            })
+            .catch((error) => {
+              console.error("Error fetching data:", error);
+              Swal.fire({
+                icon: "error",
+                title: "Gagal menambahkan ke keranjang",
+                text: "Terjadi kesalahan saat menambahkan ke keranjang",
+              });
+            });            
+        }
+        else {
+          axios
+            .post("http://localhost:3000/cart", data)
+            .then((response) => {
+              console.log(response.data);
+              Swal.fire({
+                icon: "success",
+                title: "Berhasil ditambahkan ke keranjang",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              handleCloseModal();
+            })
+            .catch((error) => {
+              console.error("Error fetching data:", error);
+              Swal.fire({
+                icon: "error",
+                title: "Gagal menambahkan ke keranjang",
+                text: "Terjadi kesalahan saat menambahkan ke keranjang",
+              });
+            });
+          setQuantity(1);
+        }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Gagal menambahkan ke keranjang",
-          text: "Terjadi kesalahan saat menambahkan ke keranjang",
-        });
       });
-    setQuantity(1);
   };
 
   return (

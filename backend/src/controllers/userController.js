@@ -3,9 +3,11 @@ const models = require("../models");
 const Joi = require("joi");
 const { Store } = require("../models");
 const User = require("../models/User");
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
-const generateToken = (user) => {
-  return jwt.sign({ id: user.id, email: user.email }, "PETCOMMERCE", {
+const generateToken = (user_id, user_email) => {
+  return jwt.sign({ id: user_id, email: user_email }, "PETCOMMERCE", {
     expiresIn: "1d",
   });
 };
@@ -31,6 +33,9 @@ const register = async (req, res) => {
   const { name, email, password, address, phone_number, role } = req.body;
 
   try {
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
     const latestUser = await models.User.findOne({
       where: {
         deletedAt: null,
@@ -45,15 +50,17 @@ const register = async (req, res) => {
       nextId = latestUser.user_id + 1;
     }
 
-    // Create new user
+    const token = generateToken(nextId, email);
+
+    // Create new user with hashed password
     const user = await models.User.create({
       user_id: nextId,
       name,
       email,
-      password,
+      password: hashedPassword,
       address,
       phone_number,
-      token: null,
+      token: token,
       role,
     });
 
@@ -81,25 +88,32 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Find user by email and password
+    // Find user by email
     const user = await models.User.findOne({
-      where: { email, password },
+      where: { email },
     });
 
     // If user exists
     if (user) {
-      // Generate and save token
-      const token = generateToken(user);
-      user.token = token;
-      await user.save();
+      // Compare hashed password
+      const passwordMatch = await bcrypt.compare(password, user.password);
 
-      // Return token, message and role
-      res.json({
-        user_id: user.user_id,
-        token,
-        message: "Login successful",
-        role: user.role,
-      });
+      if (passwordMatch) {
+        // Generate and save token
+        const token = generateToken(user.user_id, user.email);
+        user.token = token;
+        await user.save();
+
+        // Return token, message, and role
+        res.json({
+          user_id: user.user_id,
+          token,
+          message: "Login successful",
+          role: user.role,
+        });
+      } else {
+        res.status(401).send("Invalid email or password");
+      }
     } else {
       res.status(401).send("Invalid email or password");
     }
@@ -109,8 +123,9 @@ const login = async (req, res) => {
   }
 };
 
-const profilpic = async(req, res) => {
-  return res.status(201).json({msg:"profile picture berhasil di upload"})
+
+const profilpic = async (req, res) => {
+  return res.status(201).json({ msg: "profile picture berhasil di upload" })
 }
 
 const getProfilpic = (req, res) => {
@@ -176,7 +191,7 @@ const getUser = async (req, res) => {
   }
 };
 
-const getAllUser = async (req,res) => {
+const getAllUser = async (req, res) => {
   try {
     const users = await User.findAll()
     res.status(200).json(users);

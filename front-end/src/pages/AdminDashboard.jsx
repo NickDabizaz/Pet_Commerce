@@ -10,6 +10,12 @@ function AdminDashboard() {
   const navigate = useNavigate();
   const [cookie, setCookie, removeCookie] = useCookies(["user_id"]);
 
+  useEffect(() => {
+    if(cookie.user_id != -1){
+      navigate("/")
+    }
+  }, [])
+
   return (
     <>
       <div
@@ -43,7 +49,7 @@ function AdminDashboard() {
       <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>
         <NavLink to="/admin" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Home</NavLink>
         <NavLink to="/admin/manage-users" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Users Management</NavLink>
-        <NavLink to="/admin/manage-community" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Community Management</NavLink>
+        <NavLink to="/admin/manage-community" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Posts Management</NavLink>
       </div>
 
       <div className="container-fluid" style={{ backgroundColor: "#F3F0F0", height: "88vh" }}>
@@ -150,10 +156,10 @@ function ManageUser() {
       <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>
         <NavLink to="/admin" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Home</NavLink>
         <NavLink to="/admin/manage-users" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Users Management</NavLink>
-        <NavLink to="/admin/manage-community" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Community Management</NavLink>
+        <NavLink to="/admin/manage-community" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Posts Management</NavLink>
       </div>
       <div className="container-fluid" style={{ backgroundColor: "#61A0AF", height: "88vh" }}>
-        <div className="container-fluid pt-2" style={{ backgroundColor: "#FFFFFF", width: "90%", height: "88vh", overflow: "hidden", overflowY: "scroll" }}>
+        <div className="container-fluid pt-2 overflow-y-auto" style={{ backgroundColor: "#FFFFFF", width: "90%", height: "88vh", overflow: "hidden" }}>
           <table className="table" style={{ margin: "0 auto" }}>
             <thead className="text-center" style={{ verticalAlign: "middle" }}>
               <tr style={{ fontSize: "14pt" }}>
@@ -187,8 +193,41 @@ function ManageUser() {
 }
 
 function ManageCommunity() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState(null);
   const navigate = useNavigate();
   const [cookie, setCookie, removeCookie] = useCookies(["user_id"]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/admin/posts")
+      .then((response) => {
+        setPosts(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+        setLoading(false);
+        setMessage("Error fetching posts. Please try again later.");
+      });
+  }, []);
+
+  const handleDeletePost = (id) => {
+    axios
+      .delete(`http://localhost:3000/admin/posts/${id}`)
+      .then((response) => {
+        // Jika pengguna berhasil dihapus, perbarui daftar pengguna
+        setPosts((prevPosts) =>
+          prevPosts.filter((post) => post.post_id !== id)
+        );
+        setMessage("Post deleted successfully.");
+      })
+      .catch((error) => {
+        console.error(`Error deleting post with ID ${id}:`, error);
+        setMessage("Error deleting post. Please try again later.");
+      });
+  };
   return (
     <>
       <div
@@ -222,9 +261,36 @@ function ManageCommunity() {
       <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>
         <NavLink to="/admin" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Home</NavLink>
         <NavLink to="/admin/manage-users" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Users Management</NavLink>
-        <NavLink to="/admin/manage-community" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Community Management</NavLink>
+        <NavLink to="/admin/manage-community" style={{ color: "white", fontFamily: "Literata", fontWeight: 700, fontSize: "15pt", marginLeft: "3%" }}>Posts Management</NavLink>
       </div>
-      <div>hai</div>
+      <div className="container-fluid" style={{ backgroundColor: "#61A0AF", height: "88vh" }}>
+        <div className="container-fluid pt-2 overflow-y-auto" style={{ backgroundColor: "#FFFFFF", width: "90%", height: "88vh", overflow: "hidden" }}>
+          <table className="table" style={{ margin: "0 auto" }}>
+            <thead className="text-center" style={{ verticalAlign: "middle" }}>
+              <tr style={{ fontSize: "14pt" }}>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody className="text-center" style={{ verticalAlign: "middle" }}>
+              {posts.map((post) => (
+                <tr key={post.post_id}>
+                  <td>{post.post_id}</td>
+                  <td>{post.title}</td>
+                  <td>
+                    <button className="btn btn-info"
+                      style={{ backgroundColor: "#C46E85", borderColor: "#C46E85", color: "white", fontFamily: "Literata", fontWeight: 700 }}
+                      onClick={() => handleDeletePost(post.post_id)}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </>
   );
 }

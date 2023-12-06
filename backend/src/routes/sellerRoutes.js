@@ -4,7 +4,11 @@ const sellerController = require("../controllers/sellerController");
 const upload = require("../utils/multerConfig");
 
 // Route for seller to create a new store
-router.post("/create-store/:type", upload.single("file"), sellerController.createStore);
+router.post(
+  "/create-store/:type",
+  upload.single("file"),
+  sellerController.createStore
+);
 
 // get detail store
 router.get("/store/:store_id", sellerController.getDetailStore);
@@ -13,7 +17,11 @@ router.get("/store/:store_id", sellerController.getDetailStore);
 router.get("/store/pic/:store_id", sellerController.getStorePic);
 
 // Route for seller to add product to store
-router.post("/add-product/:type", upload.single("file"), sellerController.addProduct);
+router.post(
+  "/add-product/:type",
+  upload.single("file"),
+  sellerController.addProduct
+);
 
 // get product picture
 router.get("/product/pic/:product_id", sellerController.getProductPic);
@@ -22,7 +30,10 @@ router.get("/product/pic/:product_id", sellerController.getProductPic);
 router.put("/edit-product/:product_id", sellerController.editProduct);
 
 // Route for seller to delete product in store
-router.delete("/delete-product/:product_id", sellerController.deleteProduct);
+router.delete(
+  "/:store_id/delete-product/:product_id",
+  sellerController.deleteProduct
+);
 
 // Route for seller to view all products in store
 router.get("/view-products/:user_id", sellerController.viewProducts);

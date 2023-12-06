@@ -131,6 +131,21 @@ function CreateStore() {
                   </p>
                 )}
               </form>
+              <p
+              className="text-center"
+              style={{ marginTop: "2rem", marginBottom: "2rem" }}
+            >
+              Change Of Mind?{" "}
+              <b
+                className="cursor-pointer"
+                style={{ color: "#D39C39" }}
+                onClick={() => {
+                  navigate(`/profile`);
+                }}
+              >
+                Back To Profile
+              </b>
+            </p>
             </div>
           </div>
         </div>
