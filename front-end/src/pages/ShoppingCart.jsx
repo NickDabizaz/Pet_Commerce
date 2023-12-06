@@ -4,12 +4,15 @@ import { useCookies } from "react-cookie";
 import { Card, Button } from "react-bootstrap";
 import { MainLayout } from "../Components";
 import trash from "../assets/trash.png";
+import { useNavigate } from "react-router-dom";
 
 const ShoppingCart = () => {
   const [cartData, setCartData] = useState({ cartItems: [], total: 0 });
   const [isLoading, setIsLoading] = useState(false);
   const [cookies] = useCookies(["user_id"]);
   const [token, setToken] = useState("");
+
+  const navigate = useNavigate();
 
   console.log({ cartData: cartData.cartItems });
 
@@ -45,7 +48,9 @@ const ShoppingCart = () => {
   const deleteOneItem = async (productId) => {
     try {
       console.log({ productId });
-      await axios.delete(`http://localhost:3000/cart/${productId}/${cookies.user_id}`);
+      await axios.delete(
+        `http://localhost:3000/cart/${productId}/${cookies.user_id}`
+      );
       fetchCart();
     } catch (error) {
       console.log(error);
@@ -143,7 +148,7 @@ const ShoppingCart = () => {
   }
 
   return (
-    <div style={{ backgroundColor: "#F3F0F0", height: "1000px" }}>
+    <div style={{ backgroundColor: "#F3F0F0", height: "auto" }}>
       <MainLayout />
       <p
         className="text-center"
@@ -157,12 +162,12 @@ const ShoppingCart = () => {
         My Cart
       </p>
       <div
-        className="overflow-y-auto"
+        className="overflow-y-auto overflow-x-hidden"
         style={{
           width: "90%",
           marginLeft: "5%",
           marginTop: "1%",
-          height: "650px",
+          height: "25rem",
           marginBottom: "20px",
         }}
       >
@@ -237,7 +242,10 @@ const ShoppingCart = () => {
                       marginRight: 25,
                       marginLeft: "auto",
                     }}
-                    onClick={() => deleteOneItem(item.product_id)}
+                    onClick={() => {
+                      deleteOneItem(item.product_id);
+                      navigate(0);
+                    }}
                   />
                   <div
                     className="d-flex"
