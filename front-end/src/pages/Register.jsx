@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import { useCookies } from "react-cookie";
 
 const Register = () => {
   const [cookie, setCookie] = useCookies("user_id");
+  
   const {
     register,
     handleSubmit,
@@ -26,10 +27,10 @@ const Register = () => {
       const responseData = response.data;
       console.log(responseData);
 
-      const user = await axios.get("http://localhost:3000/users");
+      // const user = await axios.get("http://localhost:3000/users");
 
-      setCookie("user_id");
-      navigate("/homepage"); // Navigasi ke halaman muka setelah registrasi berhasil
+      setCookie("user_id", responseData.user_id);
+      navigate("/"); // Navigasi ke halaman muka setelah registrasi berhasil
     } catch (error) {
       if (error.response) {
         // Request berhasil dikirim tetapi server merespons dengan status yang tidak dalam kisaran 2xx
@@ -40,8 +41,13 @@ const Register = () => {
       }
     }
   };
+  
+  useEffect(() => {
+    if (cookie.user_id) navigate("/")
+  }, [])
 
   return (
+    
     <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>
       <div className="pt-20 pb-20">
         <div
