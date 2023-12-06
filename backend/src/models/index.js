@@ -1,7 +1,7 @@
 const { Sequelize } = require("sequelize");
 const config = require("../config/config.json");
 
-const sequelize = new Sequelize(config.development);
+const sequelize = new Sequelize(config.production);
 
 const User = require("./User.js")(sequelize, Sequelize);
 const Category = require("./Category.js")(sequelize, Sequelize);
