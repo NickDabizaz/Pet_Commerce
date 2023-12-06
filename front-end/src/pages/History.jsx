@@ -56,7 +56,10 @@ function History() {
                 <p className="text-sm">
                   Order Date: {new Date(item.order_date).toLocaleDateString()}
                   <br />
-                  Total Price: {item.total_price}
+                  Total Price: Rp{" "}
+                  {item.total_price.toLocaleString("id-ID", {
+                    maximumFractionDigits: 2,
+                  })}
                 </p>
                 <div className="flex justify-end mt-4">
                   <Link
