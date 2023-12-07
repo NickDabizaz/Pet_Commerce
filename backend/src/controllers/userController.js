@@ -1,8 +1,7 @@
 const jwt = require("jsonwebtoken");
 const models = require("../models");
 const Joi = require("joi");
-const { Store } = require("../models");
-const User = require("../models/User");
+const { Store , User} = require("../models");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
