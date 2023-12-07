@@ -93,6 +93,11 @@ function ManageUser() {
   const [message, setMessage] = useState(null);
   const navigate = useNavigate();
   const [cookie, setCookie, removeCookie] = useCookies(["user_id"]);
+  const [isloading, SetLoading] = useState(true)
+  const [total, setTotal] = useState(-1)
+  const [date, setDate] = useState(0)
+  // let total
+  // let date
 
   useEffect(() => {
     axios
@@ -107,6 +112,16 @@ function ManageUser() {
         setMessage("Error fetching users. Please try again later.");
       });
   }, []);
+
+  // useEffect(() => {
+  //   axios.get(`http://localhost:3000/order/Jumlah_transaksi/${user_id}`)
+  //   .then((response) =>{
+  //     console.log(response);
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error fetching transaksi:", error);
+  //   })
+  // }, [])
 
   const handleDeleteUser = (id) => {
     axios
@@ -123,6 +138,33 @@ function ManageUser() {
         setMessage("Error deleting user. Please try again later.");
       });
   };
+
+  // const Jumlah_transaksi = (user_id) => {
+  //   axios.get(`http://localhost:3000/order/Jumlah_transaksi/${user_id}`)
+  //   .then((response) =>{
+  //     console.log(response.data.jumlah_transaksi);
+  //     setTotal(response.data.jumlah_transaksi)
+  //     setLoading(false)
+  //     return (response.data.jumlah_transaksi)
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error fetching transaksi:", error);
+  //   })
+  // }
+
+  // const last_date = (user_id) => {
+  //   axios.get(`http://localhost:3000/order/Transaksi_terakhir/${user_id}`)
+  //   .then((response) =>{
+  //     console.log(response.data.result.order_date);
+  //     setDate(response.data.result.order_date)
+  //     setLoading(false)
+  //     return (response)
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error fetching transaksi:", error);
+  //   })
+  // }
+
   return (
     <>
       <div
@@ -166,24 +208,37 @@ function ManageUser() {
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Jumlah Transaksi</th>
+                <th>Transaksi Terakhir</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody className="text-center" style={{ verticalAlign: "middle" }}>
-              {users.map((user) => (
-                <tr key={user.user_id}>
-                  <td>{user.user_id}</td>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>
-                    <button className="btn btn-info"
-                      style={{ backgroundColor: "#C46E85", borderColor: "#C46E85", color: "white", fontFamily: "Literata", fontWeight: 700 }}
-                      onClick={() => handleDeleteUser(user.user_id)}>
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {users.map( (user) => {
+                Jumlah_transaksi(user.user_id)
+                last_date(user.user_id)
+                console.log({total});
+                console.log({date});
+                // if(!isloading){
+                  return(
+                    <tr key={user.user_id}>
+                      <td>{user.user_id}</td>
+                      <td>{user.name}</td>
+                      <td>{user.email}</td>
+                      <td>{total}</td>
+                      <td>{date}</td>
+                      <td>
+                        <button className="btn btn-info"
+                          style={{ backgroundColor: "#C46E85", borderColor: "#C46E85", color: "white", fontFamily: "Literata", fontWeight: 700 }}
+                          onClick={() => handleDeleteUser(user.user_id)}>
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                } 
+                // }
+              )}
             </tbody>
           </table>
         </div>

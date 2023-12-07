@@ -12,7 +12,6 @@ router.post(
 
 // get detail store
 router.get("/store/:store_id", sellerController.getDetailStore);
-
 // get store picture
 router.get("/store/pic/:store_id", sellerController.getStorePic);
 

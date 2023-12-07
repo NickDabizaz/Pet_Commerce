@@ -135,6 +135,12 @@ function StoreDetail() {
           <h2 className="text-2xl font-bold mb-2">{storeData.store_name}</h2>
           <p className="mb-4">{storeData.store_description}</p>
           <p className="mb-2">Owner: {storeData.owner}</p>
+          <button
+            onClick={() => navigate(`/store/report/${store_id}`)}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Lihat Report
+          </button>
         </div>
 
         <h3 className="text-xl font-bold mb-2">Products:</h3>

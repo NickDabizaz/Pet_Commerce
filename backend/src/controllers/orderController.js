@@ -1,6 +1,7 @@
 // Importing Dependencies
 const { Order, OrderDetail, Sequelize, Product } = require("../models");
 const Op = Sequelize.Op;
+const db = require("../models");
 
 // Create a new order
 const createNewOrder = async (req, res) => {
@@ -150,6 +151,108 @@ const getCountProductId = async (req, res) => {
     .catch((error) => res.status(500).send({ error: error.message }));
 };
 
+const getJumlahTrasaksi = async (req, res) => {
+  const { user_id } = req.params;
+  try {
+    const result = await Order.findAll({
+      where: {
+        user_id,
+      },
+    });
+
+    console.log(result.length);
+
+    if (result.length > 0) {
+      return res.status(200).json({ jumlah_transaksi: result.length });
+    } else {
+      return res.status(200).json({ jumlah_transaksi: 0 });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getLast = async (req, res) => {
+  const { user_id } = req.params;
+  try {
+    const result = await Order.findOne({
+      where: {
+        user_id,
+      },
+      order: [["order_date", "DESC"]],
+    });
+
+    console.log({ result });
+
+    return res.status(200).json({ result });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+const reportByProduct = async (req, res) => {
+  try {
+    const storeId = req.params.store_id;
+
+    const storeTransactions = await db.OrderDetail.findAll({
+      attributes: [
+        'order_id',
+        [db.Sequelize.fn('COUNT', 'order_id'), 'orderCount'], // Count occurrences of each order_id
+      ],
+      include: [
+        {
+          model: db.Product,
+          include: [
+            {
+              model: db.Category,
+            },
+            {
+              model: db.Store,
+              where: { store_id: storeId }, // Filter berdasarkan store_id
+            },
+          ],
+        },
+      ],
+      group: ['order_id'], // Group by order_id to get unique values and count occurrences
+    });
+
+    res.status(200).json({ totalTransaction :  storeTransactions.length, data: storeTransactions});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+};
+async function getTotalTransactionProduct(req, res, next) {
+  const { product_id } = req.params;
+
+  try {
+    const product = await Product.findByPk(product_id, {
+      include: [
+        {
+          model: OrderDetail,
+          attributes: [
+            [db.sequelize.fn('sum', db.sequelize.col('qty')), 'total_quantity'],
+          ],
+          raw: true,
+        },
+      ],
+    });
+
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    // Extracting the total quantity directly from the OrderDetails array
+    const totalQuantity = product.OrderDetails?.total_quantity || 0;
+
+    return res.json({ productName : product.product_name, totalQuantity : product.OrderDetails[0] });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+
+
 // Exporting the functions
 module.exports = {
   getOrderById,
@@ -157,4 +260,8 @@ module.exports = {
   getOrderDetailsById,
   addProductToOrder,
   getCountProductId,
+  getJumlahTrasaksi,
+  getLast,
+  reportByProduct,
+  getTotalTransactionProduct
 };

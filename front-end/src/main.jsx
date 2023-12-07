@@ -24,6 +24,7 @@ import FAQ from "./pages/FAQ.jsx";
 import History from "./pages/History.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import DetailTransaction from "./pages/DetailTransaction.jsx";
+import { StoreReport } from "./pages/StoreReport.jsx";
 
 const router = createBrowserRouter([
   {
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
           {
             path: ":store_id/form-add-product",
             element: <FormAddProduct />,
+          },
+          {
+            path: "report/:store_id",
+            element: <StoreReport />,
           },
         ],
       },
