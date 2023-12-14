@@ -215,8 +215,8 @@ function ManageUser() {
             </thead>
             <tbody className="text-center" style={{ verticalAlign: "middle" }}>
               {users.map( (user) => {
-                Jumlah_transaksi(user.user_id)
-                last_date(user.user_id)
+                // Jumlah_transaksi(user.user_id)
+                // last_date(user.user_id)
                 console.log({total});
                 console.log({date});
                 // if(!isloading){
@@ -339,6 +339,14 @@ function ManageCommunity() {
                       onClick={() => handleDeletePost(post.post_id)}>
                       Delete
                     </button>
+                  </td>
+                  <td>
+                    <NavLink to={`/admin/manage-community/${post.post_id}`}>
+                      <button className="btn btn-info"
+                        style={{ backgroundColor: "#C46E85", borderColor: "#C46E85", color: "white", fontFamily: "Literata", fontWeight: 700, marginLeft: "2%" }}>
+                        View
+                      </button>
+                    </NavLink>
                   </td>
                 </tr>
               ))}

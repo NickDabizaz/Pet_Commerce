@@ -25,6 +25,9 @@ import History from "./pages/History.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import DetailTransaction from "./pages/DetailTransaction.jsx";
 import { StoreReport } from "./pages/StoreReport.jsx";
+import ManageStore from "./pages/ManageStore.jsx";
+import ManageDetailStore from "./pages/ManageDetailStore.jsx";
+import ManageDetailCommunity from "./pages/ManageDetailCommunity.jsx";
 
 const router = createBrowserRouter([
   {
@@ -52,7 +55,20 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <AdminDashboard /> },
           { path: "/admin/manage-users", element: <ManageUser /> },
-          { path: "/admin/manage-community", element: <ManageCommunity /> },
+          {
+            path: "/admin/manage-community",
+            children: [
+              { index: true, element: <ManageCommunity /> },
+              { path: ":post_id", element: <ManageDetailCommunity /> },
+            ],
+          },
+          {
+            path: "/admin/manage-store",
+            children: [
+              { index: true, element: <ManageStore /> },
+              { path: ":store_id", element: <ManageDetailStore /> },
+            ],
+          },
         ],
       },
       {

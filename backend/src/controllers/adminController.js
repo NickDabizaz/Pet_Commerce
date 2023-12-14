@@ -1,11 +1,11 @@
-const models = require('../models');
+const { User, Post, Store, Product, Order, OrderDetail, sequelize, PostLike, Comment } = require('../models');
 
 const viewAllUsers = async (req, res) => {
 
   try {
 
     // Get all users
-    const users = await models.User.findAll();
+    const users = await User.findAll();
 
     // Return users
     res.json(users);
@@ -22,7 +22,7 @@ const viewAllPosts = async (req, res) => {
   try {
 
     // Get all posts
-    const posts = await models.Post.findAll();
+    const posts = await Post.findAll();
 
     // Return posts
     res.json(posts);
@@ -38,7 +38,7 @@ const deleteUserPost = async (req, res) => {
   const { post_id } = req.params;
 
   try {
-    const post = await models.Post.findByPk(post_id);
+    const post = await Post.findByPk(post_id);
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
@@ -58,7 +58,7 @@ const deleteUser = async (req, res) => {
   try {
 
     // Find target user
-    const user = await models.User.findByPk(user_id);
+    const user = await User.findByPk(user_id);
 
     if (!user) {
       return res.status(404).send("User not found");
@@ -77,9 +77,187 @@ const deleteUser = async (req, res) => {
 
 };
 
+const viewAllStores = async (req, res) => {
+  try {
+    const stores = await Store.findAll({
+      attributes: ['store_id', 'store_name', 'store_description'],
+      include: [
+        {
+          model: User,
+          attributes: ['user_id', 'name'],
+        },
+      ],
+    });
+
+    // Transformasi hasil query sesuai dengan kebutuhan
+    const transformedStores = stores.map(store => ({
+      store_id: store.store_id,
+      store_name: store.store_name,
+      store_description: store.store_description,
+      owner: store.User ? store.User.name : null,
+    }));
+
+    res.status(200).json(transformedStores);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+const viewStoreDetail = async (req, res) => {
+  const { store_id } = req.params;
+
+  try {
+    const store = await Store.findOne({
+      where: { store_id },
+      attributes: ['store_id', 'store_name', 'store_description'],
+      include: [
+        {
+          model: Product,
+          attributes: ['product_id', 'product_name', 'quantity', 'price'],
+          include: [
+            {
+              model: OrderDetail,
+              attributes: ['detail_id', 'order_id', 'qty', 'subtotal'],
+              include: [
+                {
+                  model: Order,
+                  attributes: ['order_date'],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+
+    if (!store) {
+      return res.status(404).json({ error: 'Store not found' });
+    }
+
+    // Transformasi hasil query sesuai dengan kebutuhan
+    const transformedStore = {
+      store_id: store.store_id,
+      store_name: store.store_name,
+      store_description: store.store_description,
+      products: store.Products.map(product => ({
+        product_id: product.product_id,
+        product_name: product.product_name,
+        quantity: product.quantity,
+        price: product.price,
+        order_details: product.OrderDetails.map(orderDetail => ({
+          detail_id: orderDetail.detail_id,
+          order_id: orderDetail.order_id,
+          qty: orderDetail.qty,
+          subtotal: orderDetail.subtotal,
+          order_date: orderDetail.Order ? orderDetail.Order.order_date : null,
+        })),
+      })),
+    };
+
+    res.status(200).json(transformedStore);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+const viewPostDetails = async (req, res) => {
+  const { post_id } = req.params;
+
+  try {
+    const post = await Post.findOne({
+      where: { post_id },
+      attributes: ['post_id', 'title'],
+      include: [
+        {
+          model: PostLike,
+          attributes: ['like_id'],
+          include: [
+            {
+              model: User,
+              attributes: ['user_id', 'name'],
+            },
+          ],
+        },
+        {
+          model: Comment,
+          attributes: ['comment_id', 'comment_text'],
+          include: [
+            {
+              model: User,
+              attributes: ['user_id', 'name'],
+            },
+          ],
+        },
+      ],
+    });
+
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    // Transformasi hasil query sesuai dengan kebutuhan
+    const transformedPost = {
+      post_id: post.post_id,
+      title: post.title,
+      likes: post.PostLikes.map(like => ({
+        like_id: like.like_id,
+        user: {
+          user_id: like.User.user_id,
+          name: like.User.name,
+        },
+      })),
+      comments: post.Comments.map(comment => ({
+        comment_id: comment.comment_id,
+        comment_text: comment.comment_text,
+        user: {
+          user_id: comment.User.user_id,
+          name: comment.User.name,
+        },
+      })),
+    };
+
+    res.status(200).json(transformedPost);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+const deleteComment = async (req, res) => {
+  const { comment_id } = req.params;
+
+  try {
+    // Cek apakah komentar dengan ID tersebut ada
+    const comment = await Comment.findByPk(comment_id);
+    if (!comment) {
+      return res.status(404).json({ error: 'Comment not found' });
+    }
+
+    // Hapus komentar
+    await Comment.destroy({
+      where: { comment_id },
+    });
+
+    res.status(200).json({ message: 'Comment deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
 module.exports = {
   viewAllUsers,
   viewAllPosts,
   deleteUserPost,
-  deleteUser
+  deleteUser,
+  viewAllStores,
+  viewStoreDetail,
+  viewPostDetails,
+  deleteComment
 };
+
