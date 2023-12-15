@@ -122,6 +122,18 @@ function AdminDashboard() {
         >
           Store Management
         </NavLink>
+        <NavLink
+          to="/admin/manage-transaction"
+          style={{
+            color: "white",
+            fontFamily: "Literata",
+            fontWeight: 700,
+            fontSize: "15pt",
+            marginLeft: "3%",
+          }}
+        >
+          User Transaction Reports
+        </NavLink>
       </div>
 
       <div
@@ -415,24 +427,43 @@ function ManageUser() {
         >
           Store Management
         </NavLink>
-      </div>
-      {
-        !loading &&
-        <div
-          className="container-fluid"
-          style={{ backgroundColor: "#F3F0F0", height: "88vh" }}
+        <NavLink
+          to="/admin/manage-transaction"
+          style={{
+            color: "white",
+            fontFamily: "Literata",
+            fontWeight: 700,
+            fontSize: "15pt",
+            marginLeft: "3%",
+          }}
         >
-          <div
-            className="container-fluid pt-2 overflow-y-auto"
-            style={{
-              backgroundColor: "#FFFFFF",
-              width: "90%",
-              height: "88vh",
-              overflow: "hidden",
-            }}
-          >
+          User Transaction Reports
+        </NavLink>
+      </div>
+
+      <div
+        className="container-fluid"
+        style={{ backgroundColor: "#F3F0F0", height: "88vh" }}
+      >
+        <div
+          className="container-fluid pt-2 overflow-y-auto"
+          style={{
+            backgroundColor: "#FFFFFF",
+            width: "90%",
+            height: "88vh",
+            overflow: "hidden",
+          }}
+        >
+          {loading ? (
+            <div className="flex justify-center items-center h-16">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+          ) : (
             <table className="table" style={{ margin: "0 auto" }}>
-              <thead className="text-center" style={{ verticalAlign: "middle" }}>
+              <thead
+                className="text-center"
+                style={{ verticalAlign: "middle" }}
+              >
                 <tr style={{ fontSize: "14pt" }}>
                   <th>ID</th>
                   <th>Name</th>
@@ -442,7 +473,10 @@ function ManageUser() {
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody className="text-center" style={{ verticalAlign: "middle" }}>
+              <tbody
+                className="text-center"
+                style={{ verticalAlign: "middle" }}
+              >
                 {users.map(
                   (user) => {
                     return (
@@ -474,9 +508,9 @@ function ManageUser() {
                 )}
               </tbody>
             </table>
-          </div>
+          )}
         </div>
-      }
+      </div>
     </>
   );
 }
@@ -623,6 +657,18 @@ function ManageCommunity() {
         >
           Store Management
         </NavLink>
+        <NavLink
+          to="/admin/manage-transaction"
+          style={{
+            color: "white",
+            fontFamily: "Literata",
+            fontWeight: 700,
+            fontSize: "15pt",
+            marginLeft: "3%",
+          }}
+        >
+          User Transaction Reports
+        </NavLink>
       </div>
       <div
         className="container-fluid"
@@ -637,22 +683,49 @@ function ManageCommunity() {
             overflow: "hidden",
           }}
         >
-          <table className="table" style={{ margin: "0 auto" }}>
-            <thead className="text-center" style={{ verticalAlign: "middle" }}>
-              <tr style={{ fontSize: "14pt" }}>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Detail</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody className="text-center" style={{ verticalAlign: "middle" }}>
-              {posts.map((post) => (
-                <tr key={post.post_id}>
-                  <td>{post.post_id}</td>
-                  <td>{post.title}</td>
-                  <td>
-                    <NavLink to={`/admin/manage-community/${post.post_id}`}>
+          {loading ? (
+            <div className="flex justify-center items-center h-16">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+          ) : (
+            <table className="table" style={{ margin: "0 auto" }}>
+              <thead
+                className="text-center"
+                style={{ verticalAlign: "middle" }}
+              >
+                <tr style={{ fontSize: "14pt" }}>
+                  <th>ID</th>
+                  <th>Title</th>
+                  <th>Detail</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody
+                className="text-center"
+                style={{ verticalAlign: "middle" }}
+              >
+                {posts.map((post) => (
+                  <tr key={post.post_id}>
+                    <td>{post.post_id}</td>
+                    <td>{post.title}</td>
+                    <td>
+                      <NavLink to={`/admin/manage-community/${post.post_id}`}>
+                        <button
+                          className="btn btn-info"
+                          style={{
+                            backgroundColor: "#C46E85",
+                            borderColor: "#C46E85",
+                            color: "white",
+                            fontFamily: "Literata",
+                            fontWeight: 700,
+                            marginLeft: "2%",
+                          }}
+                        >
+                          View
+                        </button>
+                      </NavLink>
+                    </td>
+                    <td>
                       <button
                         className="btn btn-info"
                         style={{
@@ -661,32 +734,17 @@ function ManageCommunity() {
                           color: "white",
                           fontFamily: "Literata",
                           fontWeight: 700,
-                          marginLeft: "2%",
                         }}
+                        onClick={() => handleDeletePost(post.post_id)}
                       >
-                        View
+                        Delete
                       </button>
-                    </NavLink>
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-info"
-                      style={{
-                        backgroundColor: "#C46E85",
-                        borderColor: "#C46E85",
-                        color: "white",
-                        fontFamily: "Literata",
-                        fontWeight: 700,
-                      }}
-                      onClick={() => handleDeletePost(post.post_id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </>

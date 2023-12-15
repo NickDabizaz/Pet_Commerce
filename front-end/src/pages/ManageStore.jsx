@@ -7,6 +7,7 @@ import { NavLink, useNavigate, useParams } from "react-router-dom";
 const ManageStore = () => {
   const [cookie, setCookie, removeCookie] = useCookies(["user_id"]);
   const [stores, setStores] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,8 +16,10 @@ const ManageStore = () => {
       try {
         const response = await axios.get("http://localhost:3000/admin/store/");
         setStores(response.data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setLoading(false);
       }
     };
 
@@ -133,6 +136,18 @@ const ManageStore = () => {
         >
           Store Management
         </NavLink>
+        <NavLink
+          to="/admin/manage-transaction"
+          style={{
+            color: "white",
+            fontFamily: "Literata",
+            fontWeight: 700,
+            fontSize: "15pt",
+            marginLeft: "3%",
+          }}
+        >
+          User Transaction Reports
+        </NavLink>
       </div>
       <div
         className="container-fluid"
@@ -148,6 +163,11 @@ const ManageStore = () => {
           }}
         >
           <div className="container mx-auto">
+            {loading ? (
+              <div className="flex justify-center items-center h-16">
+                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+              </div>
+            ) : (
             <table className="table" style={{ margin: "0 auto" }}>
               <thead
                 className="text-center"
@@ -189,7 +209,7 @@ const ManageStore = () => {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table>)}
           </div>
         </div>
       </div>

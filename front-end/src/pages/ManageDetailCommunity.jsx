@@ -147,6 +147,18 @@ const ManageDetailCommunity = () => {
         >
           Store Management
         </NavLink>
+        <NavLink
+          to="/admin/manage-transaction"
+          style={{
+            color: "white",
+            fontFamily: "Literata",
+            fontWeight: 700,
+            fontSize: "15pt",
+            marginLeft: "3%",
+          }}
+        >
+          User Transaction Reports
+        </NavLink>
       </div>
       <div
         className="container-fluid"
