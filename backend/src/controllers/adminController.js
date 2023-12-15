@@ -40,7 +40,14 @@ const viewAllUsers = async (req, res) => {
             name: item.dataValues.name,
             email: item.dataValues.email,
             jumlah_transaksi: getJumlahTrasaksi.length,
-            transaksi_terakhir: getLast.dataValues.order_date
+            transaksi_terakhir: new Intl.DateTimeFormat('en-US', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+            }).format(getLast.dataValues.order_date)
           };
 
         } else {
