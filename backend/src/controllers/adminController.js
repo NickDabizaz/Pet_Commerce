@@ -1,5 +1,7 @@
 const { User, Post, Store, Product, Order, OrderDetail, sequelize, PostLike, Comment } = require('../models');
 
+
+
 const viewAllUsers = async (req, res) => {
 
   try {
@@ -7,8 +9,68 @@ const viewAllUsers = async (req, res) => {
     // Get all users
     const users = await User.findAll();
 
-    // Return users
-    res.json(users);
+    // console.log(users.dataValues);
+
+    const tempArrayLengkap = await Promise.all(
+      users.map(async (item) => {
+
+        console.log(item.dataValues.user_id);
+
+        const getJumlahTrasaksi = await Order.findAll({
+          where: {
+            user_id: item.dataValues.user_id,
+          },
+        });
+
+        console.log(getJumlahTrasaksi.length);
+
+        const getLast = await Order.findOne({
+          where: {
+            user_id: item.dataValues.user_id,
+          },
+          order: [["order_date", "DESC"]],
+        });
+
+        console.log(getLast);
+
+        if (getJumlahTrasaksi.length > 0 && getLast) {
+
+          return {
+            user_id: item.dataValues.user_id,
+            name: item.dataValues.name,
+            email: item.dataValues.email,
+            jumlah_transaksi: getJumlahTrasaksi.length,
+            transaksi_terakhir: new Intl.DateTimeFormat('en-US', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+            }).format(getLast.dataValues.order_date)
+          };
+
+        } else {
+
+          return {
+            user_id: item.dataValues.user_id,
+            name: item.dataValues.name,
+            email: item.dataValues.email,
+            jumlah_transaksi: 0,
+            transaksi_terakhir: "-"
+          };
+
+        }
+
+      })
+    )
+
+    const sortedResults = tempArrayLengkap.sort(
+      (a, b) => a.user_id - b.user_id
+    );
+
+    res.status(200).json(sortedResults);
+
 
   } catch (error) {
     console.error(error);
