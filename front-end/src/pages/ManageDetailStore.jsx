@@ -210,13 +210,16 @@ const ManageDetailStore = () => {
                     className="mb-4 p-4 border border-primary rounded-lg"
                     key={product.product_id}
                   >
-                    <h3 className="text-2xl text-center font-semibold mb-4">
+                    <div className="mx-auto mb-3" style={{width: "300px", height: "auto"}}>
+                      <img src={`http://localhost:3000/sellers/product/pic/${product.product_id}`} style={{ maxWidth: "300px" }} />
+                    </div>
+                    <h3 className="text-2xl text-center font-semibold mb-5">
                       {product.product_name}
                     </h3>
-                    <p className="mb-2">
+                    <p className="mb-2 ms-3">
                       <b>Quantity :</b> {product.quantity}
                     </p>
-                    <p className="mb-2">
+                    <p className="mb-2 ms-3">
                       <b>Price :</b>{" "}Rp{" "}
                       {product.price.toLocaleString("id-ID", {
                         maximumFractionDigits: 2,
