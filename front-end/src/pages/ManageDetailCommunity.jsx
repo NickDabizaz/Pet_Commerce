@@ -230,7 +230,7 @@ const ManageDetailCommunity = () => {
                     <div style={{ width: "100%" }}>
                       <h3 className="text-xl text-right font-semibold mb-2">
                         {`Last Comment Activity : ${postData.comments[postData.comments.length - 1]
-                            .comment_time
+                          .comment_time
                           }`}
                       </h3>
                     </div>
@@ -240,20 +240,26 @@ const ManageDetailCommunity = () => {
                       key={comment.comment_id}
                       className="mb-4 p-4 border border-primary rounded-lg"
                     >
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="font-semibold">
-                          {comment.user.name}
-                        </span>
-                        <button
-                          onClick={() =>
-                            handleDeleteComment(comment.comment_id)
-                          }
-                          className="text-red-500"
-                        >
-                          Delete
-                        </button>
+                      <div className="row">
+                        <div className="col-11">
+                          <span className="font-semibold mb-2">
+                            {comment.user.name}
+                          </span>
+                          <p>{comment.comment_text}</p>
+                        </div>
+                        <div className="col-1 mt-1">
+                          <button
+                            onClick={() =>
+                              handleDeleteComment(comment.comment_id)
+                            }
+                            className="text-white-500 btn btn-danger"
+                          >
+                            Delete
+                          </button>
+                        </div>
+
                       </div>
-                      <p>{comment.comment_text}</p>
+
                     </div>
                   ))}
                 </div>
