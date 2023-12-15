@@ -257,6 +257,63 @@ const deleteComment = async (req, res) => {
   }
 };
 
+const viewAllTransactions = async (req, res) => {
+  try {
+    const transactions = await Order.findAll({
+      attributes: ['order_id', 'order_date', 'total_price'],
+      include: [
+        {
+          model: User,
+          attributes: ['name'],
+        },
+        {
+          model: OrderDetail,
+          attributes: [
+            [sequelize.fn('SUM', sequelize.col('qty')), 'total_quantity'],
+          ],
+          include: [
+            {
+              model: Product,
+              attributes: [],
+            },
+          ],
+        },
+      ],
+      group: ['Order.order_id', 'User.user_id'],
+    });
+
+    res.json(transactions);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+
+const viewTransactionDetails = async (req, res) => {
+  const { order_id } = req.params;
+
+  try {
+    const transactionDetails = await OrderDetail.findAll({
+      where: { order_id },
+      include: [
+        {
+          model: Product,
+          attributes: ['product_id', 'product_name', 'price'],
+        },
+      ],
+    });
+
+    if (transactionDetails.length === 0) {
+      return res.status(404).json({ message: 'Transaction not found' });
+    }
+
+    res.json(transactionDetails);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+};
 
 module.exports = {
   viewAllUsers,
@@ -266,6 +323,8 @@ module.exports = {
   viewAllStores,
   viewStoreDetail,
   viewPostDetails,
-  deleteComment
+  deleteComment,
+  viewAllTransactions,
+  viewTransactionDetails,
 };
 

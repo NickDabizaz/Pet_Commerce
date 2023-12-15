@@ -14,4 +14,8 @@ router.delete('/comment/:comment_id', adminController.deleteComment);
 router.get('/store', adminController.viewAllStores);
 router.get('/store/:store_id', adminController.viewStoreDetail);
 
+router.get('/transactions', adminController.viewAllTransactions);
+router.get('/transactions/:order_id/details', adminController.viewTransactionDetails);
+
+
 module.exports = router;

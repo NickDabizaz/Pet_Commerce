@@ -28,6 +28,8 @@ import { StoreReport } from "./pages/StoreReport.jsx";
 import ManageStore from "./pages/ManageStore.jsx";
 import ManageDetailStore from "./pages/ManageDetailStore.jsx";
 import ManageDetailCommunity from "./pages/ManageDetailCommunity.jsx";
+import ManageTransaction from "./pages/ManageTransaction.jsx";
+import ManageTransactionDetail from "./pages/ManageTransactionDetail.jsx";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +69,13 @@ const router = createBrowserRouter([
             children: [
               { index: true, element: <ManageStore /> },
               { path: ":store_id", element: <ManageDetailStore /> },
+            ],
+          },
+          {
+            path: "/admin/manage-transaction",
+            children: [
+              { index: true, element: <ManageTransaction /> },
+              { path: ":order_id", element: <ManageTransactionDetail /> },
             ],
           },
         ],
