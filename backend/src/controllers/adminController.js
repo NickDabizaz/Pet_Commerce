@@ -184,7 +184,7 @@ const viewPostDetails = async (req, res) => {
         },
         {
           model: Comment,
-          attributes: ['comment_id', 'comment_text'],
+          attributes: ['comment_id', 'comment_text', 'comment_time'],
           include: [
             {
               model: User,
@@ -213,6 +213,14 @@ const viewPostDetails = async (req, res) => {
       comments: post.Comments.map(comment => ({
         comment_id: comment.comment_id,
         comment_text: comment.comment_text,
+        comment_time: new Intl.DateTimeFormat('en-US', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+        }).format(comment.comment_time),
         user: {
           user_id: comment.User.user_id,
           name: comment.User.name,
