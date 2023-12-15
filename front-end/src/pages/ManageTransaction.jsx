@@ -163,46 +163,59 @@ const ManageTransaction = () => {
             overflow: "hidden",
           }}
         >
-          <div className="container mx-auto mt-8">
+          <div className="container mx-auto">
             {loading ? (
               <div className="flex justify-center items-center h-16">
                 <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
               </div>
             ) : (
-              <table className="min-w-full bg-white border border-gray-300">
-                <thead>
-                  <tr>
-                    <th className="border px-4 py-2">Order ID</th>
-                    <th className="border px-4 py-2">Order Date</th>
-                    <th className="border px-4 py-2">Total Price</th>
-                    <th className="border px-4 py-2">User</th>
-                    <th className="border px-4 py-2">Total Quantity</th>
-                    <th className="border px-4 py-2">Actions</th>
+              <table className="table" style={{ margin: "0 auto" }}>
+                <thead
+                  className="text-center"
+                  style={{ verticalAlign: "middle" }}
+                >
+                  <tr style={{ fontSize: "14pt" }}>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                    <th>Total Price</th>
+                    <th>User</th>
+                    <th>Total Quantity</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody
+                  className="text-center"
+                  style={{ verticalAlign: "middle" }}
+                >
                   {transactions.map((transaction) => (
                     <tr key={transaction.order_id}>
-                      <td className="border px-4 py-2">
+                      <td>
                         {transaction.order_id}
                       </td>
-                      <td className="border px-4 py-2">
+                      <td>
                         {transaction.order_date}
                       </td>
-                      <td className="border px-4 py-2">
+                      <td>
                         {transaction.total_price}
                       </td>
-                      <td className="border px-4 py-2">
+                      <td>
                         {transaction.User.name}
                       </td>
-                      <td className="border px-4 py-2">
+                      <td>
                         {transaction.OrderDetails.length > 0
                           ? transaction.OrderDetails[0].total_quantity
                           : "N/A"}
                       </td>
-                      <td className="border px-4 py-2">
+                      <td>
                         <button
-                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                          className="btn btn-info"
+                          style={{
+                            backgroundColor: "#C46E85",
+                            borderColor: "#C46E85",
+                            color: "white",
+                            fontFamily: "Literata",
+                            fontWeight: 700,
+                          }}
                           onClick={() =>
                             handleViewDetails(transaction.order_id)
                           }

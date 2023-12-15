@@ -159,6 +159,15 @@ const ManageDetailStore = () => {
         style={{ backgroundColor: "#F3F0F0", height: "88vh" }}
       >
         <div
+          className="btn p-0"
+          style={{ fontSize: "2rem" }}
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          ⬅️
+        </div>
+        <div
           className="container-fluid pt-2 overflow-y-auto"
           style={{
             backgroundColor: "#FFFFFF",

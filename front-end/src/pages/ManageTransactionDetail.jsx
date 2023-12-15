@@ -149,6 +149,15 @@ const ManageTransactionDetail = () => {
         style={{ backgroundColor: "#F3F0F0", height: "88vh" }}
       >
         <div
+          className="btn p-0"
+          style={{ fontSize: "2rem" }}
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          ⬅️
+        </div>
+        <div
           className="container-fluid pt-2 overflow-y-auto"
           style={{
             backgroundColor: "#FFFFFF",
@@ -158,18 +167,24 @@ const ManageTransactionDetail = () => {
           }}
         >
           <div className="container mx-auto my-8">
-            <h1 className="text-2xl font-bold mb-4">
+            <h1 className="text-3xl font-bold mb-5 text-center">
               Transaction Details for Order ID {order_id}
             </h1>
 
             {transactionDetails.map((detail) => (
-              <div key={detail.detail_id} className="border p-4 mb-4">
-                <h2 className="text-xl font-bold mb-2">
-                  {detail.Product.product_name}
-                </h2>
-                <p>Quantity: {detail.qty}</p>
-                <p>Subtotal: {detail.subtotal}</p>
-                <p>Created At: {detail.createdAt}</p>
+              <div key={detail.detail_id} className="mb-4 p-4 border border-primary rounded-lg">
+                <div className="row">
+                  <div className="col-2 me-4"><img src={`http://localhost:3000/sellers/product/pic/${detail.Product.product_id}`} style={{maxWidth: "250px"}}/></div>
+                  <div className="col-9 py-5">
+                    <h2 className="text-2xl font-bold mb-2">
+                      {detail.Product.product_name}
+                    </h2>
+                    <p className="text-2xl">Quantity: {detail.qty}</p>
+                    <p className="text-2xl">Subtotal: Rp{" "} {detail.subtotal}</p>
+                    <p className="text-2xl">Created At: {detail.createdAt}</p>
+                  </div>
+                </div>
+
               </div>
             ))}
           </div>
