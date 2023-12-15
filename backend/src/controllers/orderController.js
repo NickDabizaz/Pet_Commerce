@@ -151,44 +151,6 @@ const getCountProductId = async (req, res) => {
     .catch((error) => res.status(500).send({ error: error.message }));
 };
 
-const getJumlahTrasaksi = async (req, res) => {
-  const { user_id } = req.params;
-  try {
-    const result = await Order.findAll({
-      where: {
-        user_id,
-      },
-    });
-
-    console.log(result.length);
-
-    if (result.length > 0) {
-      return res.status(200).json({ jumlah_transaksi: result.length });
-    } else {
-      return res.status(200).json({ jumlah_transaksi: 0 });
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-const getLast = async (req, res) => {
-  const { user_id } = req.params;
-  try {
-    const result = await Order.findOne({
-      where: {
-        user_id,
-      },
-      order: [["order_date", "DESC"]],
-    });
-
-    console.log({ result });
-
-    return res.status(200).json({ result });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
 const reportByProduct = async (req, res) => {
   try {
     const storeId = req.params.store_id;
@@ -260,8 +222,6 @@ module.exports = {
   getOrderDetailsById,
   addProductToOrder,
   getCountProductId,
-  getJumlahTrasaksi,
-  getLast,
   reportByProduct,
   getTotalTransactionProduct
 };
