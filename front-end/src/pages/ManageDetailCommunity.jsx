@@ -47,6 +47,7 @@ const ManageDetailCommunity = () => {
         className="container-fluid"
         style={{ display: "flex", backgroundColor: "#6CD4FF" }}
       >
+
         <img
           src={logo}
           className="cursor-pointer"
@@ -180,6 +181,15 @@ const ManageDetailCommunity = () => {
               </div>
             ) : (
               <div>
+                <div
+                  className="btn p-0"
+                  style={{ fontSize: "2rem" }}
+                  onClick={() => {
+                    navigate(-1);
+                  }}
+                >
+                  ⬅️
+                </div>
                 <h2 className="text-3xl font-semibold mb-4 text-center">
                   {postData.title}
                 </h2>
@@ -219,10 +229,9 @@ const ManageDetailCommunity = () => {
                     </div>
                     <div style={{ width: "100%" }}>
                       <h3 className="text-xl text-right font-semibold mb-2">
-                        {`Last Comment Activity : ${
-                          postData.comments[postData.comments.length - 1]
+                        {`Last Comment Activity : ${postData.comments[postData.comments.length - 1]
                             .comment_time
-                        }`}
+                          }`}
                       </h3>
                     </div>
                   </div>
