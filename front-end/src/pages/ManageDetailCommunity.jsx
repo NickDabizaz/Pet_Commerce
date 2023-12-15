@@ -39,7 +39,7 @@ const ManageDetailCommunity = () => {
     }
   };
 
-  console.log(postData)
+  console.log(postData);
 
   return (
     <>
@@ -161,16 +161,28 @@ const ManageDetailCommunity = () => {
             overflow: "hidden",
           }}
         >
-          <div className="container mx-auto mt-8">
+          <div className="container mx-auto mt-2">
             {loading ? (
               <div className="flex justify-center items-center h-16">
                 <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
               </div>
             ) : (
               <div>
-                <h2 className="text-2xl font-semibold mb-2 text-center">
+                <h2 className="text-2xl font-semibold mb-4 text-center">
                   {postData.title}
                 </h2>
+
+                <img
+                  className="max-w-full max-w-full bg-black object-contain mx-auto mb-4 bg-opacity-75"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    maxHeight: "12rem",
+                    maxWidth: "12rem",
+                    opacity: "10",
+                  }}
+                  src={`http://localhost:3000/post/pic/${postData.post_id}`}
+                />
 
                 <div className="mb-8">
                   <h3 className="text-xl font-semibold mb-2">{`List of Likes - ${postData.likes.length}`}</h3>
@@ -195,7 +207,10 @@ const ManageDetailCommunity = () => {
                     </div>
                     <div style={{ width: "100%" }}>
                       <h3 className="text-xl text-right font-semibold mb-2">
-                        {`Last Comment Activity : ${postData.comments[postData.comments.length - 1].comment_time}`}
+                        {`Last Comment Activity : ${
+                          postData.comments[postData.comments.length - 1]
+                            .comment_time
+                        }`}
                       </h3>
                     </div>
                   </div>
