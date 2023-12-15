@@ -4,8 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { MainLayout } from "../Components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 import trash from "../assets/trash.png";
 import { useCookies } from "react-cookie";
+import { Button, Modal } from "react-bootstrap";
 
 function StoreDetail() {
   const navigate = useNavigate();
@@ -16,6 +18,63 @@ function StoreDetail() {
   const [cookie, setCookie] = useCookies("user_id");
   const [products, setProducts] = useState([]);
   const [totalQtyMap, setTotalQtyMap] = useState({}); // Add state for totalQty
+  const [showModal, setShowModal] = useState(false);
+  const [productId, setProductId] = useState(-1);
+  const [productName, setProductName] = useState(null)
+  const [productDescription, setProductDescription] = useState(null)
+  const [productQuantity, setProductQuantity] = useState(null)
+  const [productPrice, setProductPrice] = useState(null)
+  const [productRating, setProductRating] = useState(null)
+  const [productCategory, setProductCategory] = useState(null)
+  const [categories, setCategories] = useState([]);
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+  const handleShowModal = async (product_id) => {
+    setProductId(product_id);
+
+    const response = await axios.get(
+      `http://localhost:3000/sellers/product/${product_id}`
+    );
+
+    const response1 = await axios.get("http://localhost:3000/categories");
+    setCategories(response1.data);
+
+    setProductName(response.data.product_name)
+    setProductDescription(response.data.product_description)
+    setProductPrice(response.data.price)
+    setProductRating(response.data.rating)
+    setProductQuantity(response.data.quantity)
+    setProductCategory(response.data.category_id)
+
+    setShowModal(true);
+  };
+
+  const handleProductNameChange = (e) => {
+    setProductName(e.target.value)
+    console.log(productName);
+  }
+
+  const handleProductDescriptionChange = (e) => {
+    setProductDescription(e.target.value)
+    console.log(encodeURIComponent(productDescription));
+  }
+
+  const handleProductPriceChange = (e) => {
+    setProductPrice(e.target.value)
+    console.log(productPrice);
+  }
+
+  const handleProductQuantityChange = (e) => {
+    setProductQuantity(e.target.value)
+    console.log(productQuantity);
+  }
+
+  const handleProductCategoryChange = (e) => {
+    setProductCategory(e.target.value)
+    console.log(productCategory);
+  }
 
   useEffect(() => {
     // Function to fetch totalQty for a product
@@ -97,7 +156,29 @@ function StoreDetail() {
     } catch (error) {
       console.log(error);
     }
-  };
+  }
+
+  const handleEditItem = async (product_id) => {
+    {console.log(cookie.user_id)}
+    try {
+      await axios.put(
+        `http://localhost:3000/sellers/${store_id}/edit-product/${product_id}`,
+        {
+          data: {
+            user_id: cookie.user_id,
+            product_name: productName,
+            price: productPrice,
+            quantity: productQuantity,
+            rating: productRating,
+            category_id: productCategory
+          },
+        }
+      );
+      navigate(0);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <>
@@ -113,8 +194,6 @@ function StoreDetail() {
         >
           ⬅️
         </div>
-        {console.log(storeData.owner_id)}
-        {console.log(cookie.user_id)}
         <div className="text-center">
           <img
             src={
@@ -175,14 +254,27 @@ function StoreDetail() {
                 </p>
               </div>
               <div
-                className="text-center mt-auto"
+                className="text-center ms-auto mt-auto bg-dark"
                 style={{
                   flex: 1,
-                  display: `${
-                    storeData.owner_id === cookie.user_id ? "" : "none"
-                  }`,
+                  maxWidth: "2rem",
+                  display: `${storeData.owner_id === cookie.user_id ? "" : "none"
+                    }`,
                 }}
               >
+                <button
+                  className="btn btn-success h-8 w-8 fs-3 p-0"
+                  style={{ alignContent: "center" }}
+                  onClick={() => handleShowModal(product.product_id)}
+                >
+                  <FontAwesomeIcon
+                    icon={faPen}
+                    style={{
+                      fontSize: "1rem",
+                      marginTop: "0.5rem",
+                      marginBottom: "1rem",
+                      color: "",
+                    }} /></button>
                 <button
                   className="btn btn-danger h-8 w-8 fs-3 p-0"
                   style={{ alignContent: "center" }}
@@ -215,6 +307,101 @@ function StoreDetail() {
           Add new Product
         </div>
       </div>
+
+
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        style={{ backgroundColor: "transparent" }}
+      >
+        <Modal.Header closeButton style={{ color: "#000" }}>
+          <Modal.Title>Edit Product</Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ color: "#000" }}>
+          <div className="mb-3">
+            <label htmlFor="name" className="form-label">
+              Name
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="name"
+              min="1"
+              value={productName}
+              onChange={handleProductNameChange}
+            />
+
+            <label htmlFor="description" className="form-label">
+              Description
+            </label>
+            <textarea
+              className="form-control"
+              id="description"
+              rows={3}
+              value={decodeURIComponent(productDescription)}
+              onChange={handleProductDescriptionChange}
+            />
+
+            <label htmlFor="quantity" className="form-label">
+              Quantity
+            </label>
+            <input
+              type="number"
+              className="form-control"
+              id="name"
+              min="1"
+              value={productQuantity}
+              onChange={handleProductQuantityChange}
+            />
+
+            <label htmlFor="price" className="form-label">
+              Price
+            </label>
+            <input
+              type="number"
+              className="form-control"
+              id="name"
+              min="1"
+              value={productPrice}
+              onChange={handleProductPriceChange}
+            />
+            
+            <label htmlFor="quantity" className="form-label">
+              Category
+            </label>
+            <select
+              className="form-select"
+              value={productCategory}
+              onChange={handleProductCategoryChange}
+            >
+              {categories.map((category) => (
+                <option
+                  key={category.category_id}
+                  value={category.category_id}
+                >
+                  {category.category_name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="outline-danger"
+            className="no-hover"
+            onClick={handleCloseModal}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="outline-warning"
+            className="no-hover"
+            onClick={() => handleEditItem(productId)}
+          >
+            Save change
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

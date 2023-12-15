@@ -213,6 +213,7 @@ const ShoppingCart = () => {
                   >
                     {item.product_name}
                   </p>
+                  <p>Sisa Stock:  {item.quantity}</p>
                   <p
                     style={{
                       fontFamily: "Literata",
@@ -222,7 +223,9 @@ const ShoppingCart = () => {
                       marginTop: "3%",
                     }}
                   >
-                    Rp {item.subtotal}
+                    Rp {item.subtotal.toLocaleString("id-ID", {
+                      maximumFractionDigits: 2,
+                    })}
                   </p>
                 </div>
                 <div
@@ -330,7 +333,9 @@ const ShoppingCart = () => {
                 fontWeight: 600,
               }}
             >
-              Rp {cartData.total}
+              Rp {cartData.total.toLocaleString("id-ID", {
+                      maximumFractionDigits: 2,
+                    })}
             </p>
           </div>
           <button
