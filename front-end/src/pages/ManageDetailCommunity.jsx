@@ -47,7 +47,6 @@ const ManageDetailCommunity = () => {
         className="container-fluid"
         style={{ display: "flex", backgroundColor: "#6CD4FF" }}
       >
-
         <img
           src={logo}
           className="cursor-pointer"
@@ -229,25 +228,47 @@ const ManageDetailCommunity = () => {
                     </div>
                     <div style={{ width: "100%" }}>
                       <h3 className="text-xl text-right font-semibold mb-2">
-                        {`Last Comment Activity : ${postData.comments[postData.comments.length - 1]
-                          .comment_time
-                          }`}
+                        {`Latest Comment : ${new Date(
+                          postData.comments[
+                            postData.comments.length - 1
+                          ].comment_time
+                        ).toLocaleString("en-GB", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          second: "2-digit",
+                        })}`}
                       </h3>
                     </div>
                   </div>
                   {postData.comments.map((comment) => (
                     <div
                       key={comment.comment_id}
-                      className="mb-4 p-4 border border-primary rounded-lg"
+                      className="mb-4 p-3 px-4 border border-primary rounded-lg"
                     >
                       <div className="row">
                         <div className="col-11">
-                          <span className="font-semibold mb-2">
-                            {comment.user.name}
+                          <span className="mb-2">
+                            <b>{comment.user.name}</b>
                           </span>
                           <p>{comment.comment_text}</p>
+                          <p>
+                            {new Date(comment.comment_time).toLocaleString(
+                              "en-GB",
+                              {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                second: "2-digit",
+                              }
+                            )}
+                          </p>
                         </div>
-                        <div className="col-1 mt-1">
+                        <div className="col-1 my-auto">
                           <button
                             onClick={() =>
                               handleDeleteComment(comment.comment_id)
@@ -257,9 +278,7 @@ const ManageDetailCommunity = () => {
                             Delete
                           </button>
                         </div>
-
                       </div>
-
                     </div>
                   ))}
                 </div>

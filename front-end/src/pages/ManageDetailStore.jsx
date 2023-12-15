@@ -210,8 +210,14 @@ const ManageDetailStore = () => {
                     className="mb-4 p-4 border border-primary rounded-lg"
                     key={product.product_id}
                   >
-                    <div className="mx-auto mb-3" style={{width: "300px", height: "auto"}}>
-                      <img src={`http://localhost:3000/sellers/product/pic/${product.product_id}`} style={{ maxWidth: "300px" }} />
+                    <div
+                      className="mx-auto mb-3"
+                      style={{ width: "300px", height: "auto" }}
+                    >
+                      <img
+                        src={`http://localhost:3000/sellers/product/pic/${product.product_id}`}
+                        style={{ maxWidth: "300px" }}
+                      />
                     </div>
                     <h3 className="text-2xl text-center font-semibold mb-5">
                       {product.product_name}
@@ -220,7 +226,7 @@ const ManageDetailStore = () => {
                       <b>Quantity :</b> {product.quantity}
                     </p>
                     <p className="mb-2 ms-3">
-                      <b>Price :</b>{" "}Rp{" "}
+                      <b>Price :</b> Rp{" "}
                       {product.price.toLocaleString("id-ID", {
                         maximumFractionDigits: 2,
                       })}
@@ -251,7 +257,16 @@ const ManageDetailStore = () => {
                                 })}
                               </p>
                               <p>
-                                <b>Order Date :</b> {orderDetail.order_date}
+                                <b>Order Date :</b>{" "}
+                                {new Date(
+                                  orderDetail.order_date
+                                ).toLocaleString("en-GB", {
+                                  day: "2-digit",
+                                  month: "2-digit",
+                                  year: "numeric",
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                })}
                               </p>
                             </li>
                           ))}

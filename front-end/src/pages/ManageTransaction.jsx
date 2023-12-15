@@ -189,18 +189,27 @@ const ManageTransaction = () => {
                 >
                   {transactions.map((transaction) => (
                     <tr key={transaction.order_id}>
+                      <td>{transaction.order_id}</td>
                       <td>
-                        {transaction.order_id}
+                        {new Date(transaction.order_date).toLocaleString(
+                          "en-GB",
+                          {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          }
+                        )}
                       </td>
+                      {/* <td>{transaction.order_date}</td> */}
                       <td>
-                        {transaction.order_date}
+                        Rp.{" "}
+                        {transaction.total_price.toLocaleString("id-ID", {
+                          maximumFractionDigits: 2,
+                        })}
                       </td>
-                      <td>
-                        {transaction.total_price}
-                      </td>
-                      <td>
-                        {transaction.User.name}
-                      </td>
+                      <td>{transaction.User.name}</td>
                       <td>
                         {transaction.OrderDetails.length > 0
                           ? transaction.OrderDetails[0].total_quantity
