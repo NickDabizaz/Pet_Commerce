@@ -134,39 +134,64 @@ const ManageStore = () => {
           Store Management
         </NavLink>
       </div>
-      <div className="container mx-auto mt-8">
-        <h2 className="text-2xl font-semibold mb-4">Manage Stores</h2>
-        <table className="min-w-full bg-white border border-gray-300">
-          <thead>
-            <tr>
-              <th className="py-2 px-4 border-b">Store ID</th>
-              <th className="py-2 px-4 border-b">Store Name</th>
-              <th className="py-2 px-4 border-b">Store Description</th>
-              <th className="py-2 px-4 border-b">Owner</th>
-              <th className="py-2 px-4 border-b">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {stores.map((store) => (
-              <tr key={store.store_id}>
-                <td className="py-2 px-4 border-b">{store.store_id}</td>
-                <td className="py-2 px-4 border-b">{store.store_name}</td>
-                <td className="py-2 px-4 border-b">
-                  {store.store_description}
-                </td>
-                <td className="py-2 px-4 border-b">{store.owner}</td>
-                <td className="py-2 px-4 border-b">
-                  <button
-                    onClick={() => handleViewDetail(store.store_id)}
-                    className="bg-blue-500 text-white px-2 py-1 rounded"
-                  >
-                    View Details
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div
+        className="container-fluid"
+        style={{ backgroundColor: "#F3F0F0", height: "88vh" }}
+      >
+        <div
+          className="container-fluid pt-2 overflow-y-auto"
+          style={{
+            backgroundColor: "#FFFFFF",
+            width: "90%",
+            height: "88vh",
+            overflow: "hidden",
+          }}
+        >
+          <div className="container mx-auto">
+            <table className="table" style={{ margin: "0 auto" }}>
+              <thead
+                className="text-center"
+                style={{ verticalAlign: "middle" }}
+              >
+                <tr style={{ fontSize: "14pt" }}>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Owner</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody
+                className="text-center"
+                style={{ verticalAlign: "middle" }}
+              >
+                {stores.map((store) => (
+                  <tr key={store.store_id}>
+                    <td>{store.store_id}</td>
+                    <td>{store.store_name}</td>
+                    <td>{store.store_description}</td>
+                    <td>{store.owner}</td>
+                    <td>
+                      <button
+                        className="btn btn-info"
+                        style={{
+                          backgroundColor: "#C46E85",
+                          borderColor: "#C46E85",
+                          color: "white",
+                          fontFamily: "Literata",
+                          fontWeight: 700,
+                        }}
+                        onClick={() => handleViewDetail(store.store_id)}
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </>
   );

@@ -168,7 +168,7 @@ const ManageDetailCommunity = () => {
               </div>
             ) : (
               <div>
-                <h2 className="text-2xl font-semibold mb-4 text-center">
+                <h2 className="text-3xl font-semibold mb-4 text-center">
                   {postData.title}
                 </h2>
 

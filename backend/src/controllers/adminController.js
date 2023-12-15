@@ -213,7 +213,14 @@ const viewStoreDetail = async (req, res) => {
           order_id: orderDetail.order_id,
           qty: orderDetail.qty,
           subtotal: orderDetail.subtotal,
-          order_date: orderDetail.Order ? orderDetail.Order.order_date : null,
+          order_date: orderDetail.Order ? new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+          }).format(orderDetail.Order.order_date) : null,
         })),
       })),
     };
