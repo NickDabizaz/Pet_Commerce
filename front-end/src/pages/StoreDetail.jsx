@@ -20,12 +20,12 @@ function StoreDetail() {
   const [totalQtyMap, setTotalQtyMap] = useState({}); // Add state for totalQty
   const [showModal, setShowModal] = useState(false);
   const [productId, setProductId] = useState(-1);
-  const [productName, setProductName] = useState(null)
-  const [productDescription, setProductDescription] = useState(null)
-  const [productQuantity, setProductQuantity] = useState(null)
-  const [productPrice, setProductPrice] = useState(null)
-  const [productRating, setProductRating] = useState(null)
-  const [productCategory, setProductCategory] = useState(null)
+  const [productName, setProductName] = useState(null);
+  const [productDescription, setProductDescription] = useState(null);
+  const [productQuantity, setProductQuantity] = useState(null);
+  const [productPrice, setProductPrice] = useState(null);
+  const [productRating, setProductRating] = useState(null);
+  const [productCategory, setProductCategory] = useState(null);
   const [categories, setCategories] = useState([]);
 
   const handleCloseModal = () => {
@@ -38,43 +38,45 @@ function StoreDetail() {
       `https://petcommerce-backend.onrender.com/sellers/product/${product_id}`
     );
 
-    const response1 = await axios.get("https://petcommerce-backend.onrender.com/categories");
+    const response1 = await axios.get(
+      "https://petcommerce-backend.onrender.com/categories"
+    );
     setCategories(response1.data);
 
-    setProductName(response.data.product_name)
-    setProductDescription(response.data.product_description)
-    setProductPrice(response.data.price)
-    setProductRating(response.data.rating)
-    setProductQuantity(response.data.quantity)
-    setProductCategory(response.data.category_id)
+    setProductName(response.data.product_name);
+    setProductDescription(response.data.product_description);
+    setProductPrice(response.data.price);
+    setProductRating(response.data.rating);
+    setProductQuantity(response.data.quantity);
+    setProductCategory(response.data.category_id);
 
     setShowModal(true);
   };
 
   const handleProductNameChange = (e) => {
-    setProductName(e.target.value)
+    setProductName(e.target.value);
     console.log(productName);
-  }
+  };
 
   const handleProductDescriptionChange = (e) => {
-    setProductDescription(e.target.value)
+    setProductDescription(e.target.value);
     console.log(encodeURIComponent(productDescription));
-  }
+  };
 
   const handleProductPriceChange = (e) => {
-    setProductPrice(e.target.value)
+    setProductPrice(e.target.value);
     console.log(productPrice);
-  }
+  };
 
   const handleProductQuantityChange = (e) => {
-    setProductQuantity(e.target.value)
+    setProductQuantity(e.target.value);
     console.log(productQuantity);
-  }
+  };
 
   const handleProductCategoryChange = (e) => {
-    setProductCategory(e.target.value)
+    setProductCategory(e.target.value);
     console.log(productCategory);
-  }
+  };
 
   useEffect(() => {
     // Function to fetch totalQty for a product
@@ -109,7 +111,9 @@ function StoreDetail() {
         });
 
         axios
-          .get(`https://petcommerce-backend.onrender.com/sellers/store/pic/${store_id}`)
+          .get(
+            `https://petcommerce-backend.onrender.com/sellers/store/pic/${store_id}`
+          )
           .then((res) => {
             setStorePic(res.data);
           })
@@ -156,10 +160,12 @@ function StoreDetail() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const handleEditItem = async (product_id) => {
-    {console.log(cookie.user_id)}
+    {
+      console.log(cookie.user_id);
+    }
     try {
       await axios.put(
         `https://petcommerce-backend.onrender.com/sellers/${store_id}/edit-product/${product_id}`,
@@ -170,7 +176,7 @@ function StoreDetail() {
             price: productPrice,
             quantity: productQuantity,
             rating: productRating,
-            category_id: productCategory
+            category_id: productCategory,
           },
         }
       );
@@ -178,7 +184,7 @@ function StoreDetail() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <>
@@ -254,12 +260,13 @@ function StoreDetail() {
                 </p>
               </div>
               <div
-                className="text-center ms-auto mt-auto bg-dark"
+                className="text-center ms-auto mt-auto"
                 style={{
                   flex: 1,
                   maxWidth: "2rem",
-                  display: `${storeData.owner_id === cookie.user_id ? "" : "none"
-                    }`,
+                  display: `${
+                    storeData.owner_id === cookie.user_id ? "" : "none"
+                  }`,
                 }}
               >
                 <button
@@ -274,7 +281,9 @@ function StoreDetail() {
                       marginTop: "0.5rem",
                       marginBottom: "1rem",
                       color: "",
-                    }} /></button>
+                    }}
+                  />
+                </button>
                 <button
                   className="btn btn-danger h-8 w-8 fs-3 p-0"
                   style={{ alignContent: "center" }}
@@ -307,7 +316,6 @@ function StoreDetail() {
           Add new Product
         </div>
       </div>
-
 
       <Modal
         show={showModal}
@@ -365,7 +373,7 @@ function StoreDetail() {
               value={productPrice}
               onChange={handleProductPriceChange}
             />
-            
+
             <label htmlFor="quantity" className="form-label">
               Category
             </label>
@@ -375,10 +383,7 @@ function StoreDetail() {
               onChange={handleProductCategoryChange}
             >
               {categories.map((category) => (
-                <option
-                  key={category.category_id}
-                  value={category.category_id}
-                >
+                <option key={category.category_id} value={category.category_id}>
                   {category.category_name}
                 </option>
               ))}
