@@ -35,10 +35,13 @@ const ShoppingCart = () => {
       if (qty < 1) {
         qty = 1; // Jika qty kurang dari 1, set qty menjadi 1
       }
-      await axios.put(`https://petcommerce-backend.onrender.com/cart/${cookies.user_id}`, {
-        product_id: productId,
-        qty,
-      });
+      await axios.put(
+        `https://petcommerce-backend.onrender.com/cart/${cookies.user_id}`,
+        {
+          product_id: productId,
+          qty,
+        }
+      );
       fetchCart();
     } catch (error) {
       console.log(error);
@@ -94,12 +97,31 @@ const ShoppingCart = () => {
       try {
         await Promise.all(
           cartData.cartItems.map(async (cart) => {
-            console.log({ cart });
+            console.log(cart);
             await axios.post(
               `https://petcommerce-backend.onrender.com/order/add/${cookies.user_id}`,
               {
                 product_id: cart.product_id,
                 qty: cart.qty,
+              }
+            );
+
+            let curProduct = await axios.get(
+              `https://petcommerce-backend.onrender.com/sellers/product/${cart.product_id}`
+            );
+            console.log(curProduct);
+
+            await axios.put(
+              `https://petcommerce-backend.onrender.com/sellers/${curProduct.data.store_id}/edit-product/${cart.product_id}`,
+              {
+                data: {
+                  user_id: cookies.user_id,
+                  product_name: curProduct.data.product_name,
+                  price: curProduct.data.price,
+                  quantity: curProduct.data.quantity - cart.qty,
+                  rating: curProduct.rating,
+                  category_id: curProduct.productCategory,
+                },
               }
             );
           })
@@ -108,7 +130,9 @@ const ShoppingCart = () => {
         console.error("Terjadi kesalahan:", error);
       }
 
-      await axios.delete(`https://petcommerce-backend.onrender.com/cart/${cookies.user_id}`);
+      await axios.delete(
+        `https://petcommerce-backend.onrender.com/cart/${cookies.user_id}`
+      );
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
     }
@@ -213,7 +237,7 @@ const ShoppingCart = () => {
                   >
                     {item.product_name}
                   </p>
-                  <p>Sisa Stock:  {item.quantity}</p>
+                  <p>Sisa Stock: {item.quantity}</p>
                   <p
                     style={{
                       fontFamily: "Literata",
@@ -223,7 +247,8 @@ const ShoppingCart = () => {
                       marginTop: "3%",
                     }}
                   >
-                    Rp {item.subtotal.toLocaleString("id-ID", {
+                    Rp{" "}
+                    {item.subtotal.toLocaleString("id-ID", {
                       maximumFractionDigits: 2,
                     })}
                   </p>
@@ -333,9 +358,10 @@ const ShoppingCart = () => {
                 fontWeight: 600,
               }}
             >
-              Rp {cartData.total.toLocaleString("id-ID", {
-                      maximumFractionDigits: 2,
-                    })}
+              Rp{" "}
+              {cartData.total.toLocaleString("id-ID", {
+                maximumFractionDigits: 2,
+              })}
             </p>
           </div>
           <button
