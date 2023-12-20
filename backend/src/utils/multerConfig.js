@@ -4,9 +4,6 @@ const path = require("path");
 const models = require("../models");
 
 const upload = multer({
-  limits: {
-    fileSize: 1 * 1024 * 1024, // 1 MB in bytes
-  },
   storage: multer.diskStorage({
     destination: async (req, file, callback) => {
       let type = req.params.type;
