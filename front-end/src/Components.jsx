@@ -43,7 +43,7 @@ export function MainLayout() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/users/pic/${cookie.user_id}`)
+      .get(`https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}`)
       .then((res) => {
         setProfPic(res.data);
       })
@@ -164,7 +164,7 @@ export function MainLayout() {
                   <a className="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img
                       className="mx-auto"
-                      src={profpic ? `http://localhost:3000/users/pic/${cookie.user_id}` : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"}
+                      src={profpic ? `https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}` : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"}
                       style={{
                         height: "3rem",
                         width: "3rem",

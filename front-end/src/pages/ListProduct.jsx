@@ -6,7 +6,7 @@ function ListProduct() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/sellers/get-all-products')
+    axios.get('https://petcommerce-backend.onrender.com/sellers/get-all-products')
       .then(response => {
         setProducts(response.data);
       })

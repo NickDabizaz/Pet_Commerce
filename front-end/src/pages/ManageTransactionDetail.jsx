@@ -15,7 +15,7 @@ const ManageTransactionDetail = () => {
     const fetchTransactionDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/admin/transactions/${order_id}/details`
+          `https://petcommerce-backend.onrender.com/admin/transactions/${order_id}/details`
         );
         setTransactionDetails(response.data);
       } catch (error) {
@@ -204,7 +204,7 @@ const ManageTransactionDetail = () => {
                       <div className="row">
                         <div className="col-2 me-4">
                           <img
-                            src={`http://localhost:3000/sellers/product/pic/${detail.Product.product_id}`}
+                            src={`https://petcommerce-backend.onrender.com/sellers/product/pic/${detail.Product.product_id}`}
                             style={{ maxWidth: "200px" }}
                           />
                         </div>

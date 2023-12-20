@@ -35,10 +35,10 @@ function StoreDetail() {
     setProductId(product_id);
 
     const response = await axios.get(
-      `http://localhost:3000/sellers/product/${product_id}`
+      `https://petcommerce-backend.onrender.com/sellers/product/${product_id}`
     );
 
-    const response1 = await axios.get("http://localhost:3000/categories");
+    const response1 = await axios.get("https://petcommerce-backend.onrender.com/categories");
     setCategories(response1.data);
 
     setProductName(response.data.product_name)
@@ -81,7 +81,7 @@ function StoreDetail() {
     const fetchTotalQty = async (productId) => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/order/count/${productId}`
+          `https://petcommerce-backend.onrender.com/order/count/${productId}`
         );
         setTotalQtyMap((prevTotalQtyMap) => ({
           ...prevTotalQtyMap,
@@ -99,7 +99,7 @@ function StoreDetail() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/sellers/store/${store_id}`
+          `https://petcommerce-backend.onrender.com/sellers/store/${store_id}`
         );
         setProducts(response.data.products);
 
@@ -109,7 +109,7 @@ function StoreDetail() {
         });
 
         axios
-          .get(`http://localhost:3000/sellers/store/pic/${store_id}`)
+          .get(`https://petcommerce-backend.onrender.com/sellers/store/pic/${store_id}`)
           .then((res) => {
             setStorePic(res.data);
           })
@@ -129,7 +129,7 @@ function StoreDetail() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/sellers/store/${store_id}`)
+      .get(`https://petcommerce-backend.onrender.com/sellers/store/${store_id}`)
       .then((response) => {
         setStoreData(response.data);
       })
@@ -145,7 +145,7 @@ function StoreDetail() {
   const handleDeleteItem = async (product_id) => {
     try {
       await axios.delete(
-        `http://localhost:3000/sellers/${store_id}/delete-product/${product_id}`,
+        `https://petcommerce-backend.onrender.com/sellers/${store_id}/delete-product/${product_id}`,
         {
           data: {
             user_id: cookie.user_id,
@@ -162,7 +162,7 @@ function StoreDetail() {
     {console.log(cookie.user_id)}
     try {
       await axios.put(
-        `http://localhost:3000/sellers/${store_id}/edit-product/${product_id}`,
+        `https://petcommerce-backend.onrender.com/sellers/${store_id}/edit-product/${product_id}`,
         {
           data: {
             user_id: cookie.user_id,
@@ -198,7 +198,7 @@ function StoreDetail() {
           <img
             src={
               storepic
-                ? `http://localhost:3000/sellers/store/pic/${store_id}`
+                ? `https://petcommerce-backend.onrender.com/sellers/store/pic/${store_id}`
                 : "https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg"
             }
             alt="pp-store"
@@ -232,7 +232,7 @@ function StoreDetail() {
               style={{ display: "flex" }}
             >
               <img
-                src={`http://localhost:3000/sellers/product/pic/${product.product_id}`}
+                src={`https://petcommerce-backend.onrender.com/sellers/product/pic/${product.product_id}`}
                 style={{ width: "10rem" }}
               ></img>
               <div className="m-3">

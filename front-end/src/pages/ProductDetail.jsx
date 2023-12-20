@@ -23,14 +23,14 @@ function ProductDetail() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/sellers/product/${product_id}`
+          `https://petcommerce-backend.onrender.com/sellers/product/${product_id}`
         );
         console.log({ response: response.data });
         setProduct(response.data);
         console.log(response);
 
         const storeResponse = await axios.get(
-          `http://localhost:3000/sellers/store/${response.data.store_id}`
+          `https://petcommerce-backend.onrender.com/sellers/store/${response.data.store_id}`
         );
         console.log({ storeResponse: storeResponse.data });
 
@@ -67,12 +67,12 @@ function ProductDetail() {
     // console.log( data );
 
     axios
-      .get(`http://localhost:3000/cart/${data.user_id}/${data.product_id}`)
+      .get(`https://petcommerce-backend.onrender.com/cart/${data.user_id}/${data.product_id}`)
       .then((response) => {
         console.log(response.data);
         if (response.data.available == true) {
             axios
-            .put(`http://localhost:3000/cart/${cookie.user_id}`, {
+            .put(`https://petcommerce-backend.onrender.com/cart/${cookie.user_id}`, {
               product_id: data.product_id,
               qty: response.data.qty + data.qty,
             }).then((response) => {
@@ -96,7 +96,7 @@ function ProductDetail() {
         }
         else {
           axios
-            .post("http://localhost:3000/cart", data)
+            .post("https://petcommerce-backend.onrender.com/cart", data)
             .then((response) => {
               console.log(response.data);
               Swal.fire({
@@ -148,7 +148,7 @@ function ProductDetail() {
               <div className="col-auto h-80 border border-dark p-0">
                 <img
                   className="mx-auto"
-                  src={`http://localhost:3000/sellers/product/pic/${product.product_id}`}
+                  src={`https://petcommerce-backend.onrender.com/sellers/product/pic/${product.product_id}`}
                   alt={`${product.name}`}
                   style={{
                     height: "19.9rem",
@@ -213,7 +213,7 @@ function ProductDetail() {
                     onClick={() => navigate(`/store/${store.store_id}`)}
                   >
                     <img
-                      src={`http://localhost:3000/sellers/store/pic/${store.store_id}`}
+                      src={`https://petcommerce-backend.onrender.com/sellers/store/pic/${store.store_id}`}
                       style={{
                         borderRadius: "50%",
                         height: "8rem",

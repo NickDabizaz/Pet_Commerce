@@ -17,8 +17,8 @@ export const StoreReport = () => {
     const fetchData = async () => {
       try {
         const [storeResponse, reportResponse] = await Promise.all([
-          axios.get(`http://localhost:3000/sellers/store/${store_id}`),
-          axios.get(`http://localhost:3000/order/report/${store_id}`),
+          axios.get(`https://petcommerce-backend.onrender.com/sellers/store/${store_id}`),
+          axios.get(`https://petcommerce-backend.onrender.com/order/report/${store_id}`),
         ]);
 
         setStoreData(storeResponse.data);
@@ -31,7 +31,7 @@ export const StoreReport = () => {
           const productsWithQuantity = await Promise.all(
             storeResponse.data.products.map(async (product) => {
               const productReportResponse = await axios.get(
-                `http://localhost:3000/order/report/product/${product.product_id}`
+                `https://petcommerce-backend.onrender.com/order/report/product/${product.product_id}`
               );
               return {
                 ...product,

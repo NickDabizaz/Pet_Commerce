@@ -14,7 +14,7 @@ const ManageStore = () => {
     // Fetch data from the endpoint using axios
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/admin/store/");
+        const response = await axios.get("https://petcommerce-backend.onrender.com/admin/store/");
         setStores(response.data);
         setLoading(false);
       } catch (error) {

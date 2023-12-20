@@ -293,7 +293,7 @@ function ManageUser() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/admin/users")
+      .get("https://petcommerce-backend.onrender.com/admin/users")
       .then((response) => {
         setUsers(response.data);
         setLoading(false);
@@ -307,7 +307,7 @@ function ManageUser() {
 
   const handleDeleteUser = (id) => {
     axios
-      .delete(`http://localhost:3000/admin/users/${id}`)
+      .delete(`https://petcommerce-backend.onrender.com/admin/users/${id}`)
       .then((response) => {
         // Jika pengguna berhasil dihapus, perbarui daftar pengguna
         setUsers((prevUsers) =>
@@ -524,7 +524,7 @@ function ManageCommunity() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/admin/posts")
+      .get("https://petcommerce-backend.onrender.com/admin/posts")
       .then((response) => {
         setPosts(response.data);
         setLoading(false);
@@ -538,7 +538,7 @@ function ManageCommunity() {
 
   const handleDeletePost = (id) => {
     axios
-      .delete(`http://localhost:3000/admin/posts/${id}`)
+      .delete(`https://petcommerce-backend.onrender.com/admin/posts/${id}`)
       .then((response) => {
         // Jika pengguna berhasil dihapus, perbarui daftar pengguna
         setPosts((prevPosts) =>

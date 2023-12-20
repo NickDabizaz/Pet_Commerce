@@ -13,7 +13,7 @@ function History() {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`http://localhost:3000/users/${cookies.user_id}`)
+      .get(`https://petcommerce-backend.onrender.com/users/${cookies.user_id}`)
       .then((res) => {
         setUserData(res.data);
         setIsLoading(false);
@@ -27,7 +27,7 @@ function History() {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`http://localhost:3000/order/${cookies.user_id}`)
+      .get(`https://petcommerce-backend.onrender.com/order/${cookies.user_id}`)
       .then((res) => {
         setData(res.data);
         setIsLoading(false);

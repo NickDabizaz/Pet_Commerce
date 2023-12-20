@@ -34,7 +34,7 @@ function Search() {
 
   const fetchData = () => {
     axios
-      .get(`http://localhost:3000/sellers/products?q=${queryParam}`)
+      .get(`https://petcommerce-backend.onrender.com/sellers/products?q=${queryParam}`)
       .then((res) => {
         setResponse(res.data);
       })
@@ -45,7 +45,7 @@ function Search() {
 
   const fetchCategories = () => {
     axios
-      .get(`http://localhost:3000/categories`)
+      .get(`https://petcommerce-backend.onrender.com/categories`)
       .then((res) => {
         setCategories(res.data);
       })
@@ -130,7 +130,7 @@ function Search() {
                 }}
               >
                 <img
-                  src={`http://localhost:3000/sellers/product/pic/${product.product_id}`}
+                  src={`https://petcommerce-backend.onrender.com/sellers/product/pic/${product.product_id}`}
                   alt={product.product_name}
                   className="h-72 max-h-72 m-auto w-full object-contain"
                 ></img>

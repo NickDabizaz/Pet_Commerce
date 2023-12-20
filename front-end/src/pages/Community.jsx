@@ -30,7 +30,7 @@ function Community() {
           response.map(async (post) => {
             try {
               const response = await axios.get(
-                `http://localhost:3000/like/user/${cookie.user_id}/${post.post_id}`
+                `https://petcommerce-backend.onrender.com/like/user/${cookie.user_id}/${post.post_id}`
               );
 
               // Jika respons adalah boolean langsung, gunakan nilainya
@@ -72,7 +72,7 @@ function Community() {
       // Jika post telah dilike, lakukan unlike
 
       axios
-        .delete(`http://localhost:3000/like/`, {
+        .delete(`https://petcommerce-backend.onrender.com/like/`, {
           data: { post_id: post_id, user_id: cookie.user_id },
         })
         .then((response) => {
@@ -94,7 +94,7 @@ function Community() {
     } else {
       // Jika post belum dilike, lakukan like
       axios
-        .post(`http://localhost:3000/like/`, {
+        .post(`https://petcommerce-backend.onrender.com/like/`, {
           post_id: post_id,
           user_id: cookie.user_id,
         })
@@ -136,7 +136,7 @@ function Community() {
       }
 
       const response = await axios.post(
-        "http://localhost:3000/post/post",
+        "https://petcommerce-backend.onrender.com/post/post",
         formData,
         {
           headers: {
@@ -157,7 +157,7 @@ function Community() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/post/")
+      .get("https://petcommerce-backend.onrender.com/post/")
       .then((res) => {
         setResponse(res.data);
         setLoading(false);
@@ -169,7 +169,7 @@ function Community() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/users/pic/${cookie.user_id}`)
+      .get(`https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}`)
       .then((res) => {
         setProfPic(res.data);
       })
@@ -192,7 +192,7 @@ function Community() {
               <img
                 src={
                   profpic
-                    ? `http://localhost:3000/users/pic/${cookie.user_id}`
+                    ? `https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}`
                     : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
                 }
                 style={{
@@ -368,7 +368,7 @@ function Community() {
                         style={{
                           minHeight: "29.8rem",
                           alignItems: "center",
-                          backgroundImage: `url(http://localhost:3000/post/pic/${post.post_id})`,
+                          backgroundImage: `url(https://petcommerce-backend.onrender.com/post/pic/${post.post_id})`,
                           backgroundRepeat: "repeat",
                           backgroundSize: "cover",
                         }}
@@ -383,7 +383,7 @@ function Community() {
                             position: "absolute",
                             opacity: "10",
                           }}
-                          src={`http://localhost:3000/post/pic/${post.post_id}`}
+                          src={`https://petcommerce-backend.onrender.com/post/pic/${post.post_id}`}
                           alt={post.post_name}
                         />
                       </div>

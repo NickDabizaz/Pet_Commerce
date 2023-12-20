@@ -15,7 +15,7 @@ const ManageDetailCommunity = () => {
     const fetchPostDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/admin/posts/${post_id}/details`
+          `https://petcommerce-backend.onrender.com/admin/posts/${post_id}/details`
         );
         setPostData(response.data);
         setLoading(false);
@@ -31,7 +31,7 @@ const ManageDetailCommunity = () => {
   const handleDeleteComment = async (commentId) => {
     try {
       // Mengirim request DELETE ke server
-      await axios.delete(`http://localhost:3000/admin/comment/${commentId}`);
+      await axios.delete(`https://petcommerce-backend.onrender.com/admin/comment/${commentId}`);
       navigate(0);
     } catch (error) {
       // Tangani error jika terjadi
@@ -202,7 +202,7 @@ const ManageDetailCommunity = () => {
                     maxWidth: "12rem",
                     opacity: "10",
                   }}
-                  src={`http://localhost:3000/post/pic/${postData.post_id}`}
+                  src={`https://petcommerce-backend.onrender.com/post/pic/${postData.post_id}`}
                 />
 
                 <div className="mb-8">

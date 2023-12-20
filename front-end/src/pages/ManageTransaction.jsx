@@ -14,7 +14,7 @@ const ManageTransaction = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/admin/transactions"
+          "https://petcommerce-backend.onrender.com/admin/transactions"
         );
         setTransactions(response.data);
       } catch (error) {

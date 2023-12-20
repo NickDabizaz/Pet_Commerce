@@ -16,7 +16,7 @@ function Profile() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/users/${cookie.user_id}`)
+      .get(`https://petcommerce-backend.onrender.com/users/${cookie.user_id}`)
       .then((res) => {
         setResponse(res.data);
       })
@@ -25,7 +25,7 @@ function Profile() {
       });
 
     axios
-      .get(`http://localhost:3000/users/store/${cookie.user_id}`)
+      .get(`https://petcommerce-backend.onrender.com/users/store/${cookie.user_id}`)
       .then((res) => {
         setToko(res.data);
       })
@@ -41,7 +41,7 @@ function Profile() {
         formData.append("file", selectedFile);
       }
       const response = await axios.post(
-        `http://localhost:3000/users/profilpic/${cookie.user_id}`,
+        `https://petcommerce-backend.onrender.com/users/profilpic/${cookie.user_id}`,
         formData,
         {
           headers: {
@@ -56,7 +56,7 @@ function Profile() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/users/pic/${cookie.user_id}`)
+      .get(`https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}`)
       .then((res) => {
         setProfPic(res.data);
       })
@@ -158,7 +158,7 @@ function Profile() {
                   className="mx-auto"
                   src={
                     profpic
-                      ? `http://localhost:3000/users/pic/${cookie.user_id}`
+                      ? `https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}`
                       : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
                   }
                   style={{
@@ -229,7 +229,7 @@ function Profile() {
                     }}
                   >
                     <img
-                      src={`http://localhost:3000/sellers/store/pic/${toko.store_id}`}
+                      src={`https://petcommerce-backend.onrender.com/sellers/store/pic/${toko.store_id}`}
                       style={{ borderRadius: "50%", height: "8rem", width: "8rem", maxWidth: "100%", marginLeft: "-20"}}
                     />
                   </div>
