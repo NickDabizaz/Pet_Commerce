@@ -153,36 +153,29 @@ const getCountProductId = async (req, res) => {
 
 const reportByProduct = async (req, res) => {
   try {
-    const storeId = req.params.store_id;
+    const { store_id } = req.params;
 
-    const storeTransactions = await db.OrderDetail.findAll({
-      attributes: [
-        'order_id',
-        [db.Sequelize.fn('COUNT', 'order_id'), 'orderCount'], // Count occurrences of each order_id
-      ],
-      include: [
-        {
-          model: db.Product,
-          include: [
-            {
-              model: db.Category,
-            },
-            {
-              model: db.Store,
-              where: { store_id: storeId }, // Filter berdasarkan store_id
-            },
-          ],
-        },
-      ],
-      group: ['order_id'], // Group by order_id to get unique values and count occurrences
+    const products = await db.Product.findAll({
+      where: { store_id: store_id }, // Filter products by store_id
+      attributes: ['product_id'], // Only include product_id in the response
     });
 
-    res.status(200).json({ totalTransaction :  storeTransactions.length, data: storeTransactions});
+    const productIds = products.map((product) => product.product_id);
+
+    const orderDetails = await db.OrderDetail.findAll({
+      where: { product_id: productIds },
+      attributes: ['order_id'],
+    });
+
+    const uniqueOrderIds = [...new Set(orderDetails.map((orderDetail) => orderDetail.order_id))];
+
+    res.status(200).json({ data: uniqueOrderIds.length });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 };
+
 async function getTotalTransactionProduct(req, res, next) {
   const { product_id } = req.params;
 

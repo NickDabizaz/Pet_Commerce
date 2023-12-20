@@ -84,7 +84,7 @@ export const StoreReport = () => {
                 {reportData ? (
                   <>
                     <h2 className="text-xl font-bold mb-2">
-                      Total Transaction: {reportData.totalTransaction}
+                      Total Transaction: {reportData.data}
                     </h2>
                     {storeData.products && storeData.products.length > 0 ? (
                       <table className="w-full border-collapse border border-gray-400 mt-4">
