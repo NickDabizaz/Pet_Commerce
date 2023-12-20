@@ -68,6 +68,7 @@ function Community() {
   const handleLikeToggle = (post_id) => {
     // Temukan data like yang sesuai dengan post_id
     const likeData = likes.find((like) => like.post_id === post_id).isLike;
+    console.log({ likeData });
     if (likeData) {
       // Jika post telah dilike, lakukan unlike
 
@@ -104,12 +105,12 @@ function Community() {
 
           // Perbarui state likes setelah melakukan like
           setLikes((prevLikes) => [...prevLikes, { post_id, isLike: true }]);
+          navigate(0);
         })
         .catch((error) => {
           console.error("Error liking post:", error);
         });
     }
-    navigate(0);
   };
 
   const navigate = useNavigate();
@@ -169,7 +170,9 @@ function Community() {
 
   useEffect(() => {
     axios
-      .get(`https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}`)
+      .get(
+        `https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}`
+      )
       .then((res) => {
         setProfPic(res.data);
       })
