@@ -3,6 +3,7 @@ import axios from "axios";
 import { MainLayout } from "../Components"; // Import Loader component
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
+import filter from "../assets/filter-icon.png";
 
 function HomePage() {
   const [cookie, setCookie, removeCookie] = useCookies(["user_id"]);
@@ -63,47 +64,57 @@ function HomePage() {
             <p>Loading...</p>
           </div>
         ) : (
-          <div className="grid grid-cols-4 gap-4 mb-4">
-            {products.map((product) => (
-              <div
-                key={product.product_id}
-                className="bg-white border border-gray-300 prod-card"
-                onClick={() => {
-                  navigate(`/products/${product.product_id}`);
-                }}
-              >
-                <div className="h-72 max-h-72 border-b-2">
-                  <img
-                    src={`https://petcommerce-backend.onrender.com/sellers/product/pic/${product.product_id}`}
-                    alt={product.product_name}
-                    className="h-full m-auto w-full object-contain"
-                  ></img>
-                </div>
-                <div className="m-3">
-                  <h3 className="text-xl mb-2">{product.product_name}</h3>
-                  <p
-                    className="text-danger mt-4"
-                    style={{ fontSize: "1.2rem" }}
-                  >
-                    <span className="me-1" style={{ fontSize: "0.9rem" }}>
-                      Rp
-                    </span>
-                    {product.price.toLocaleString("id-ID", {
-                      maximumFractionDigits: 2,
-                    })}
-                  </p>
-                  <p style={{ display: "flex" }}>
-                    <div style={{ flex: 1 }}>
-                      <span style={{ fontSize: "0.75rem" }}>
-                        {totalQtyMap[product.product_id] || 0} sold
+          <>
+            <span>
+              <img
+                src={filter}
+                width={"20rem"}
+                style={{ display: "initial" }}
+              />
+              Filter
+            </span>
+            <div className="grid grid-cols-4 gap-4 mb-4">
+              {products.map((product) => (
+                <div
+                  key={product.product_id}
+                  className="bg-white border border-gray-300 prod-card"
+                  onClick={() => {
+                    navigate(`/products/${product.product_id}`);
+                  }}
+                >
+                  <div className="h-72 max-h-72 border-b-2">
+                    <img
+                      src={`https://petcommerce-backend.onrender.com/sellers/product/pic/${product.product_id}`}
+                      alt={product.product_name}
+                      className="h-full m-auto w-full object-contain"
+                    ></img>
+                  </div>
+                  <div className="m-3">
+                    <h3 className="text-xl mb-2">{product.product_name}</h3>
+                    <p
+                      className="text-danger mt-4"
+                      style={{ fontSize: "1.2rem" }}
+                    >
+                      <span className="me-1" style={{ fontSize: "0.9rem" }}>
+                        Rp
                       </span>
-                    </div>
-                    <div className="text-end">{/* Your button code */}</div>
-                  </p>
+                      {product.price.toLocaleString("id-ID", {
+                        maximumFractionDigits: 2,
+                      })}
+                    </p>
+                    <p style={{ display: "flex" }}>
+                      <div style={{ flex: 1 }}>
+                        <span style={{ fontSize: "0.75rem" }}>
+                          {totalQtyMap[product.product_id] || 0} sold
+                        </span>
+                      </div>
+                      <div className="text-end">{/* Your button code */}</div>
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </>

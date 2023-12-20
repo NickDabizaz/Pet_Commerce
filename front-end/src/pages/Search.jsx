@@ -22,6 +22,7 @@ function Search() {
   const [response, setResponse] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [totalQtyMap, setTotalQtyMap] = useState({}); // Add state for totalQty
 
   useEffect(() => {
     fetchData();
@@ -32,15 +33,35 @@ function Search() {
     fetchData();
   }, [queryParam]);
 
+  const fetchTotalQty = async (productId) => {
+    try {
+      const response = await axios.get(
+        `https://petcommerce-backend.onrender.com/order/count/${productId}`
+      );
+      setTotalQtyMap((prevTotalQtyMap) => ({
+        ...prevTotalQtyMap,
+        [productId]: response.data.totalQty,
+      }));
+    } catch (error) {
+      console.error(`Error fetching totalQty for product ${productId}:`, error);
+    }
+  };
+
   const fetchData = () => {
     axios
-      .get(`https://petcommerce-backend.onrender.com/sellers/products?q=${queryParam}`)
+      .get(
+        `https://petcommerce-backend.onrender.com/sellers/products?q=${queryParam}`
+      )
       .then((res) => {
         setResponse(res.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
+
+    response.data.forEach((product) => {
+      fetchTotalQty(product.product_id);
+    });
   };
 
   const fetchCategories = () => {
@@ -56,9 +77,9 @@ function Search() {
 
   const handleCategoryChange = (categoryID) => {
     const index = selectedCategories.indexOf(categoryID);
-    console.log(index)
+    console.log(index);
     let updatedCategories = [];
-  
+
     if (index === -1) {
       // Jika kategori belum ada dalam array, tambahkan ke dalam array selectedCategories
       updatedCategories = [...selectedCategories, categoryID];
@@ -68,7 +89,7 @@ function Search() {
         (category) => category !== categoryID
       );
     }
-    
+
     // console.log(updatedCategories)
     setSelectedCategories(updatedCategories);
   };
@@ -83,7 +104,7 @@ function Search() {
       // Pastikan 'product.category' sesuai dengan properti kategori pada objek produk dari response API
     }
   });
-  
+
   // console.log(selectedCategories)
   // console.log(filteredProducts);
 
@@ -141,18 +162,17 @@ function Search() {
                     style={{ fontSize: "1.2rem" }}
                   >
                     <span style={{ fontSize: "0.9rem" }}>Rp</span>
-                    {product.price}
+                    {product.price.toLocaleString("id-ID", {
+                      maximumFractionDigits: 2,
+                    })}
                   </p>
                   <p style={{ display: "flex" }}>
                     <div style={{ flex: 1 }}>
-                      {printRating(product.rating)}{" "}
-                      <span style={{ fontSize: "0.75rem" }}>10RB+ sold</span>
+                      <span style={{ fontSize: "0.75rem" }}>
+                        {totalQtyMap[product.product_id] || 0} sold
+                      </span>
                     </div>
-                    <div className="text-end">
-                      {/* <button className="btn btn-warning">
-                        <img src={cart} width={"20rem"} />
-                      </button> */}
-                    </div>
+                    <div className="text-end">{/* Your button code */}</div>
                   </p>
                 </div>
               </div>
