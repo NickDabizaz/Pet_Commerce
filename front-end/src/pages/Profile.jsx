@@ -60,7 +60,7 @@ function Profile() {
         formData.append("file", selectedFile);
       }
       // alert(formData);
-      console.log(data);
+      console.log({data});
       const response = await axios.post(
         `https://petcommerce-backend.onrender.com/users/profilpic/${cookie.user_id}`,
         formData,
@@ -72,7 +72,12 @@ function Profile() {
       );
       const result = await axios.put(
         `https://petcommerce-backend.onrender.com/users/${cookie.user_id}`,
-        data
+        {
+          name : data.name,
+          email : data.email,
+          address: data.address,
+          phone_number: data.phone_number
+        }
       );
       console.log({ result });
       setEdit(true);
