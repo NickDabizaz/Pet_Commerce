@@ -5,6 +5,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function Profile() {
   const [cookie, setCookie, removeCookie] = useCookies("user_id");
@@ -59,8 +60,7 @@ function Profile() {
       if (selectedFile) {
         formData.append("file", selectedFile);
       }
-      // alert(formData);
-      console.log({data});
+      console.log({ data });
       const response = await axios.post(
         `https://petcommerce-backend.onrender.com/users/profilpic/${cookie.user_id}`,
         formData,
@@ -73,18 +73,24 @@ function Profile() {
       const result = await axios.put(
         `https://petcommerce-backend.onrender.com/users/${cookie.user_id}`,
         {
-          name : data.name,
-          email : data.email,
+          name: data.name,
+          email: data.email,
           address: data.address,
-          phone_number: data.phone_number
+          phone_number: data.phone_number,
         }
       );
       console.log({ result });
       setEdit(true);
+      Swal.fire({
+        icon: "success",
+        title: "Profile Updated",
+        text: "Your profile has been successfully updated.",
+      });
     } catch (error) {
       console.log(error);
     }
   };
+
 
   useEffect(() => {
     axios
