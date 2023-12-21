@@ -72,12 +72,7 @@ function Profile() {
       );
       const result = await axios.put(
         `https://petcommerce-backend.onrender.com/users/${cookie.user_id}`,
-        data,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        data
       );
       console.log({ result });
       setEdit(true);
