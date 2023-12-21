@@ -47,8 +47,8 @@ function Search() {
     }
   };
 
-  const fetchData = () => {
-    axios
+  const fetchData = async () => {
+    await axios
       .get(
         `https://petcommerce-backend.onrender.com/sellers/products?q=${queryParam}`
       )
@@ -59,9 +59,12 @@ function Search() {
         console.error("Error fetching data:", error);
       });
 
-    response.data.forEach((product) => {
-      fetchTotalQty(product.product_id);
-    });
+    console.log(response.data);
+
+    response.data.length > 0 &&
+      response.data.forEach((product) => {
+        fetchTotalQty(product.product_id);
+      });
   };
 
   const fetchCategories = () => {

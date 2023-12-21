@@ -31,7 +31,9 @@ const ManageDetailCommunity = () => {
   const handleDeleteComment = async (commentId) => {
     try {
       // Mengirim request DELETE ke server
-      await axios.delete(`https://petcommerce-backend.onrender.com/admin/comment/${commentId}`);
+      await axios.delete(
+        `https://petcommerce-backend.onrender.com/admin/comment/${commentId}`
+      );
       navigate(0);
     } catch (error) {
       // Tangani error jika terjadi
@@ -228,59 +230,61 @@ const ManageDetailCommunity = () => {
                     </div>
                     <div style={{ width: "100%" }}>
                       <h3 className="text-xl text-right font-semibold mb-2">
-                        {`Latest Comment : ${new Date(
-                          postData.comments[
-                            postData.comments.length - 1
-                          ].comment_time
-                        ).toLocaleString("en-GB", {
-                          day: "2-digit",
-                          month: "2-digit",
-                          year: "numeric",
-                          hour: "2-digit",
-                          minute: "2-digit",
-                          second: "2-digit",
-                        })}`}
+                        {postData.comments.length > 0 &&
+                          `Latest Comment : ${new Date(
+                            postData.comments[
+                              postData.comments.length - 1
+                            ].comment_time
+                          ).toLocaleString("en-GB", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            second: "2-digit",
+                          })}`}
                       </h3>
                     </div>
                   </div>
-                  {postData.comments.map((comment) => (
-                    <div
-                      key={comment.comment_id}
-                      className="mb-4 p-3 px-4 border border-primary rounded-lg"
-                    >
-                      <div className="row">
-                        <div className="col-11">
-                          <span className="mb-2">
-                            <b>{comment.user.name}</b>
-                          </span>
-                          <p>{comment.comment_text}</p>
-                          <p>
-                            {new Date(comment.comment_time).toLocaleString(
-                              "en-GB",
-                              {
-                                day: "2-digit",
-                                month: "2-digit",
-                                year: "numeric",
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                second: "2-digit",
+                  {postData.comments.length > 0 &&
+                    postData.comments.map((comment) => (
+                      <div
+                        key={comment.comment_id}
+                        className="mb-4 p-3 px-4 border border-primary rounded-lg"
+                      >
+                        <div className="row">
+                          <div className="col-11">
+                            <span className="mb-2">
+                              <b>{comment.user.name}</b>
+                            </span>
+                            <p>{comment.comment_text}</p>
+                            <p>
+                              {new Date(comment.comment_time).toLocaleString(
+                                "en-GB",
+                                {
+                                  day: "2-digit",
+                                  month: "2-digit",
+                                  year: "numeric",
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                  second: "2-digit",
+                                }
+                              )}
+                            </p>
+                          </div>
+                          <div className="col-1 my-auto">
+                            <button
+                              onClick={() =>
+                                handleDeleteComment(comment.comment_id)
                               }
-                            )}
-                          </p>
-                        </div>
-                        <div className="col-1 my-auto">
-                          <button
-                            onClick={() =>
-                              handleDeleteComment(comment.comment_id)
-                            }
-                            className="text-white-500 btn btn-danger"
-                          >
-                            Delete
-                          </button>
+                              className="text-white-500 btn btn-danger"
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               </div>
             )}

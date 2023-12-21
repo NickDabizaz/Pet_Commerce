@@ -67,15 +67,21 @@ function ProductDetail() {
     // console.log( data );
 
     axios
-      .get(`https://petcommerce-backend.onrender.com/cart/${data.user_id}/${data.product_id}`)
+      .get(
+        `https://petcommerce-backend.onrender.com/cart/${data.user_id}/${data.product_id}`
+      )
       .then((response) => {
         console.log(response.data);
         if (response.data.available == true) {
-            axios
-            .put(`https://petcommerce-backend.onrender.com/cart/${cookie.user_id}`, {
-              product_id: data.product_id,
-              qty: response.data.qty + data.qty,
-            }).then((response) => {
+          axios
+            .put(
+              `https://petcommerce-backend.onrender.com/cart/${cookie.user_id}`,
+              {
+                product_id: data.product_id,
+                qty: response.data.qty + data.qty,
+              }
+            )
+            .then((response) => {
               console.log(response.data);
               Swal.fire({
                 icon: "success",
@@ -92,9 +98,8 @@ function ProductDetail() {
                 title: "Gagal menambahkan ke keranjang",
                 text: "Terjadi kesalahan saat menambahkan ke keranjang",
               });
-            });            
-        }
-        else {
+            });
+        } else {
           axios
             .post("https://petcommerce-backend.onrender.com/cart", data)
             .then((response) => {

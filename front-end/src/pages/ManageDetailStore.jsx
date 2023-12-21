@@ -20,7 +20,9 @@ const ManageDetailStore = () => {
         setStoreData(response.data);
 
         axios
-          .get(`https://petcommerce-backend.onrender.com/sellers/store/pic/${store_id}`)
+          .get(
+            `https://petcommerce-backend.onrender.com/sellers/store/pic/${store_id}`
+          )
           .then((res) => {
             setStorePic(res.data);
           })
@@ -159,15 +161,6 @@ const ManageDetailStore = () => {
         style={{ backgroundColor: "#F3F0F0", height: "88vh" }}
       >
         <div
-          className="btn p-0"
-          style={{ fontSize: "2rem" }}
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          ⬅️
-        </div>
-        <div
           className="container-fluid pt-2 overflow-y-auto"
           style={{
             backgroundColor: "#FFFFFF",
@@ -176,6 +169,15 @@ const ManageDetailStore = () => {
             overflow: "hidden",
           }}
         >
+          <div
+            className="btn p-0"
+            style={{ fontSize: "2rem" }}
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            ⬅️
+          </div>
           <div className="container mx-auto mt-2">
             {storeData ? (
               <div>

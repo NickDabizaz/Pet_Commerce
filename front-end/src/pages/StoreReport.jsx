@@ -17,8 +17,12 @@ export const StoreReport = () => {
     const fetchData = async () => {
       try {
         const [storeResponse, reportResponse] = await Promise.all([
-          axios.get(`https://petcommerce-backend.onrender.com/sellers/store/${store_id}`),
-          axios.get(`https://petcommerce-backend.onrender.com/order/report/${store_id}`),
+          axios.get(
+            `https://petcommerce-backend.onrender.com/sellers/store/${store_id}`
+          ),
+          axios.get(
+            `https://petcommerce-backend.onrender.com/order/report/${store_id}`
+          ),
         ]);
 
         setStoreData(storeResponse.data);
@@ -91,7 +95,9 @@ export const StoreReport = () => {
                         <thead>
                           <tr className="bg-gray-200">
                             <th className="py-2 px-4 border">Product Name</th>
-                            <th className="py-2 px-4 border">Total Penjualan</th>
+                            <th className="py-2 px-4 border">
+                              Total Penjualan
+                            </th>
                           </tr>
                         </thead>
                         <tbody>

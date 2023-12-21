@@ -70,6 +70,9 @@ function HomePage() {
                 src={filter}
                 width={"20rem"}
                 style={{ display: "initial" }}
+                onClick={() => {
+                  navigate("/search/products");
+                }}
               />
               Filter
             </span>

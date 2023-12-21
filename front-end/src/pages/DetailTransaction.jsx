@@ -14,6 +14,8 @@ function DetailTransaction() {
       .catch((error) => console.error("Error fetching order details:", error));
   }, [order_id]);
 
+  console.log(orderDetails);
+
   if (!orderDetails) {
     return <div>Loading...</div>;
   }

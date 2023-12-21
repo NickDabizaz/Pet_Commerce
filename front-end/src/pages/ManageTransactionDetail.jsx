@@ -153,15 +153,6 @@ const ManageTransactionDetail = () => {
           style={{ backgroundColor: "#F3F0F0", height: "88vh" }}
         >
           <div
-            className="btn p-0"
-            style={{ fontSize: "2rem" }}
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            ⬅️
-          </div>
-          <div
             className="container-fluid pt-2 overflow-y-auto custom-scrollbar"
             style={{
               backgroundColor: "#FFFFFF",
@@ -170,6 +161,15 @@ const ManageTransactionDetail = () => {
               overflow: "hidden",
             }}
           >
+            <div
+              className="btn p-0"
+              style={{ fontSize: "2rem" }}
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              ⬅️
+            </div>
             <div className="container mx-auto my-8">
               {loading ? (
                 <div className="flex justify-center items-center h-16">

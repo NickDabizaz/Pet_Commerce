@@ -41,11 +41,14 @@ const DetailPost = () => {
   const handleSendChat = async () => {
     console.log(commentText);
     try {
-      const response = await axios.post("https://petcommerce-backend.onrender.com/comments", {
-        comment_text: commentText,
-        user_id: cookies.user_id,
-        post_id: post_id,
-      });
+      const response = await axios.post(
+        "https://petcommerce-backend.onrender.com/comments",
+        {
+          comment_text: commentText,
+          user_id: cookies.user_id,
+          post_id: post_id,
+        }
+      );
 
       console.log(response.data);
       navigate(0);
@@ -302,12 +305,15 @@ const DetailPost = () => {
                       onClick={() => {
                         if (like) {
                           axios
-                            .delete(`https://petcommerce-backend.onrender.com/like/`, {
-                              data: {
-                                post_id: post_id,
-                                user_id: cookies.user_id,
-                              },
-                            })
+                            .delete(
+                              `https://petcommerce-backend.onrender.com/like/`,
+                              {
+                                data: {
+                                  post_id: post_id,
+                                  user_id: cookies.user_id,
+                                },
+                              }
+                            )
                             .then((response) => {
                               console.log(response.data);
                               setLike(false);
@@ -315,10 +321,13 @@ const DetailPost = () => {
                             .catch((error) => console.log(error));
                         } else {
                           axios
-                            .post("https://petcommerce-backend.onrender.com/like", {
-                              user_id: cookies.user_id,
-                              post_id: post_id,
-                            })
+                            .post(
+                              "https://petcommerce-backend.onrender.com/like",
+                              {
+                                user_id: cookies.user_id,
+                                post_id: post_id,
+                              }
+                            )
                             .then((response) => {
                               console.log(response.data);
                               setLike(true);

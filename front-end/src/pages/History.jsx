@@ -11,40 +11,42 @@ function History() {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    setIsLoading(true);
-    axios
-      .get(`https://petcommerce-backend.onrender.com/users/${cookies.user_id}`)
-      .then((res) => {
-        setUserData(res.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setIsLoading(false);
-      });
-  }, [cookies.user_id]);
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const userResponse = await axios.get(
+          `https://petcommerce-backend.onrender.com/users/${cookies.user_id}`
+        );
+        console.log("User Data:", userResponse.data);
+        setUserData(userResponse.data);
 
-  useEffect(() => {
-    setIsLoading(true);
-    axios
-      .get(`https://petcommerce-backend.onrender.com/order/${cookies.user_id}`)
-      .then((res) => {
-        setData(res.data);
+        const orderResponse = await axios.get(
+          `https://petcommerce-backend.onrender.com/order/${cookies.user_id}`
+        );
+        console.log("Order Data:", orderResponse.data);
+        setData(orderResponse.data);
+
         setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
+      } catch (error) {
+        console.error("Error:", error);
         setIsLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, [cookies.user_id]);
 
   return (
     <>
-      {
-        isLoading?"Loading...":
+      {console.log(data)}
+      {isLoading ? (
+        "Loading..."
+      ) : (
         <div className="bg-gray-100 min-h-screen">
           <MainLayout />
-          <p className="text-center mt-4 font-bold text-3xl">Transaction History</p>
+          <p className="text-center mt-4 font-bold text-3xl">
+            Transaction History
+          </p>
           <div className="mx-4 mt-4">
             {isLoading ? (
               <p>Loading...</p>
@@ -58,9 +60,12 @@ function History() {
                     <h5 className="text-xl font-semibold mb-2">
                       Order ID: {item.order_id}
                     </h5>
-                    <h6 className="text-gray-600 mb-4">Name: {userData.name}</h6>
+                    <h6 className="text-gray-600 mb-4">
+                      Name: {userData.name}
+                    </h6>
                     <p className="text-sm">
-                      Order Date: {new Date(item.order_date).toLocaleDateString()}
+                      Order Date:{" "}
+                      {new Date(item.order_date).toLocaleDateString()}
                       <br />
                       Total Price: Rp{" "}
                       {item.total_price.toLocaleString("id-ID", {
@@ -81,7 +86,7 @@ function History() {
             )}
           </div>
         </div>
-      }
+      )}
     </>
   );
 }

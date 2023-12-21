@@ -29,7 +29,9 @@ export default function FormAddProduct() {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await axios.get("https://petcommerce-backend.onrender.com/categories");
+      const response = await axios.get(
+        "https://petcommerce-backend.onrender.com/categories"
+      );
       setCategories(response.data);
       setLoading(false);
     };

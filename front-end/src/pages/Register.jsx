@@ -9,7 +9,7 @@ import { useCookies } from "react-cookie";
 
 const Register = () => {
   const [cookie, setCookie] = useCookies("user_id");
-  
+
   const {
     register,
     handleSubmit,
@@ -41,13 +41,12 @@ const Register = () => {
       }
     }
   };
-  
+
   useEffect(() => {
-    if (cookie.user_id) navigate("/")
-  }, [])
+    if (cookie.user_id) navigate("/");
+  }, []);
 
   return (
-    
     <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>
       <div className="pt-20 pb-20">
         <div

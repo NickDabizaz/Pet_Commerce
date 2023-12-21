@@ -33,7 +33,7 @@ export function ErrorElement() {
 export function MainLayout() {
   const navigate = useNavigate();
   const [cookie, setCookie, removeCookie] = useCookies(["user_id"]);
-  const [profpic, setProfPic] = useState()
+  const [profpic, setProfPic] = useState();
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -43,14 +43,16 @@ export function MainLayout() {
 
   useEffect(() => {
     axios
-      .get(`https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}`)
+      .get(
+        `https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}`
+      )
       .then((res) => {
         setProfPic(res.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [])
+  }, []);
 
   return (
     <>
@@ -161,10 +163,20 @@ export function MainLayout() {
             ) : (
               <>
                 <div className="nav-item dropdown">
-                  <a className="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <a
+                    className="nav-link"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
                     <img
                       className="mx-auto"
-                      src={profpic ? `https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}` : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"}
+                      src={
+                        profpic
+                          ? `https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}`
+                          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
+                      }
                       style={{
                         height: "3rem",
                         width: "3rem",
@@ -173,15 +185,44 @@ export function MainLayout() {
                       }}
                     />
                   </a>
-                  <ul className="dropdown-menu" style={{ position: "absolute", minWidth: "auto", left: -20 }}>
-                    <NavLink to="/profile"><li><a className="dropdown-item" href="#">Profile</a></li></NavLink>
-                    <li><hr className="dropdown-divider" /></li>
-                    <NavLink to="/History"><li><a className="dropdown-item" href="#">History</a></li></NavLink>
-                    <li><hr className="dropdown-divider" /></li>
-                    <li onClick={() => {
-                      removeCookie("user_id");
-                      navigate("/");
-                    }}><a className="dropdown-item" href="#">Logout</a></li>
+                  <ul
+                    className="dropdown-menu"
+                    style={{
+                      position: "absolute",
+                      minWidth: "auto",
+                      left: -20,
+                    }}
+                  >
+                    <NavLink to="/profile">
+                      <li>
+                        <a className="dropdown-item" href="#">
+                          Profile
+                        </a>
+                      </li>
+                    </NavLink>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <NavLink to="/History">
+                      <li>
+                        <a className="dropdown-item" href="#">
+                          History
+                        </a>
+                      </li>
+                    </NavLink>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li
+                      onClick={() => {
+                        removeCookie("user_id");
+                        navigate("/");
+                      }}
+                    >
+                      <a className="dropdown-item" href="#">
+                        Logout
+                      </a>
+                    </li>
                   </ul>
                 </div>
                 {/* <div className="pt-2 rounded border border-black" style={{ position: "absolute", left: "82.5rem", top: "5.5rem", marginTop: "", width: "5.3rem", height: "5.3rem", zIndex: 1000, backgroundColor: "white" }}>
@@ -192,8 +233,8 @@ export function MainLayout() {
               </>
             )}
           </div>
-        </nav >
-      </div >
+        </nav>
+      </div>
       <div
         className="container-fluid"
         style={{

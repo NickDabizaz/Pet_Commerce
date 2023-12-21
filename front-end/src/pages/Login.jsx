@@ -43,8 +43,8 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (cookies.user_id) navigate("/")
-  }, [])
+    if (cookies.user_id) navigate("/");
+  }, []);
 
   return (
     <div className="container-fluid" style={{ backgroundColor: "#1286CE" }}>

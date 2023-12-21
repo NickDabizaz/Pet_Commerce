@@ -14,7 +14,9 @@ const ManageStore = () => {
     // Fetch data from the endpoint using axios
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://petcommerce-backend.onrender.com/admin/store/");
+        const response = await axios.get(
+          "https://petcommerce-backend.onrender.com/admin/store/"
+        );
         setStores(response.data);
         setLoading(false);
       } catch (error) {
@@ -168,48 +170,49 @@ const ManageStore = () => {
                 <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
               </div>
             ) : (
-            <table className="table" style={{ margin: "0 auto" }}>
-              <thead
-                className="text-center"
-                style={{ verticalAlign: "middle" }}
-              >
-                <tr style={{ fontSize: "14pt" }}>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Owner</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody
-                className="text-center"
-                style={{ verticalAlign: "middle" }}
-              >
-                {stores.map((store) => (
-                  <tr key={store.store_id}>
-                    <td>{store.store_id}</td>
-                    <td>{store.store_name}</td>
-                    <td>{store.store_description}</td>
-                    <td>{store.owner}</td>
-                    <td>
-                      <button
-                        className="btn btn-info"
-                        style={{
-                          backgroundColor: "#C46E85",
-                          borderColor: "#C46E85",
-                          color: "white",
-                          fontFamily: "Literata",
-                          fontWeight: 700,
-                        }}
-                        onClick={() => handleViewDetail(store.store_id)}
-                      >
-                        View
-                      </button>
-                    </td>
+              <table className="table" style={{ margin: "0 auto" }}>
+                <thead
+                  className="text-center"
+                  style={{ verticalAlign: "middle" }}
+                >
+                  <tr style={{ fontSize: "14pt" }}>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Owner</th>
+                    <th>Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>)}
+                </thead>
+                <tbody
+                  className="text-center"
+                  style={{ verticalAlign: "middle" }}
+                >
+                  {stores.map((store) => (
+                    <tr key={store.store_id}>
+                      <td>{store.store_id}</td>
+                      <td>{store.store_name}</td>
+                      <td>{store.store_description}</td>
+                      <td>{store.owner}</td>
+                      <td>
+                        <button
+                          className="btn btn-info"
+                          style={{
+                            backgroundColor: "#C46E85",
+                            borderColor: "#C46E85",
+                            color: "white",
+                            fontFamily: "Literata",
+                            fontWeight: 700,
+                          }}
+                          onClick={() => handleViewDetail(store.store_id)}
+                        >
+                          View
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
       </div>

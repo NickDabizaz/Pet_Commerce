@@ -13,47 +13,49 @@ function Profile() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [profpic, setProfPic] = useState();
   const navigate = useNavigate();
-  const [nama, setNama] = useState()
-  const [email, setEmail] = useState()
-  const [address, setAddress] = useState()
-  const [phone_number, setPhone_number] = useState()
-  const [edit, setEdit] = useState(false)
+  const [nama, setNama] = useState();
+  const [email, setEmail] = useState();
+  const [address, setAddress] = useState();
+  const [phone_number, setPhone_number] = useState();
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     axios
       .get(`https://petcommerce-backend.onrender.com/users/${cookie.user_id}`)
       .then((res) => {
         setResponse(res.data);
-        setNama(res.data.name)
-        setEmail(res.data.email)
-        setAddress(res.data.address)
-        setPhone_number(res.data.phone_number)
+        setNama(res.data.name);
+        setEmail(res.data.email);
+        setAddress(res.data.address);
+        setPhone_number(res.data.phone_number);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
 
     axios
-      .get(`https://petcommerce-backend.onrender.com/users/store/${cookie.user_id}`)
+      .get(
+        `https://petcommerce-backend.onrender.com/users/store/${cookie.user_id}`
+      )
       .then((res) => {
         setToko(res.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-      setEdit(false)
+    setEdit(false);
   }, [edit]);
 
   const handleOnSubmit = async (event) => {
     try {
-      event.preventDefault()
+      event.preventDefault();
       const formData = new FormData(event.target);
       const data = {
         name: formData.get("nama"),
         email: formData.get("email"),
         address: formData.get("address"),
-        phone_number: formData.get("phone_number")
-      }
+        phone_number: formData.get("phone_number"),
+      };
       if (selectedFile) {
         formData.append("file", selectedFile);
       }
@@ -76,9 +78,9 @@ function Profile() {
             "Content-Type": "multipart/form-data",
           },
         }
-      )
-      console.log({result});
-      setEdit(true)
+      );
+      console.log({ result });
+      setEdit(true);
     } catch (error) {
       console.log(error);
     }
@@ -86,7 +88,9 @@ function Profile() {
 
   useEffect(() => {
     axios
-      .get(`https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}`)
+      .get(
+        `https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}`
+      )
       .then((res) => {
         setProfPic(res.data);
       })
@@ -115,7 +119,9 @@ function Profile() {
                       type="text"
                       name="nama"
                       value={nama}
-                      onChange={(e) => {setNama(e.target.value)}}                
+                      onChange={(e) => {
+                        setNama(e.target.value);
+                      }}
                     ></input>
                   </td>
                 </tr>
@@ -128,7 +134,9 @@ function Profile() {
                       type="text"
                       name="email"
                       value={email}
-                      onChange={(e) => {setEmail(e.target.value)}} 
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
                     ></input>
                   </td>
                 </tr>
@@ -141,7 +149,9 @@ function Profile() {
                       type="text"
                       name="address"
                       value={address}
-                      onChange={(e) => {setAddress(e.target.value)}} 
+                      onChange={(e) => {
+                        setAddress(e.target.value);
+                      }}
                     ></input>
                   </td>
                 </tr>
@@ -154,7 +164,9 @@ function Profile() {
                       type="text"
                       name="phone_number"
                       value={phone_number}
-                      onChange={(e) => {setPhone_number(e.target.value)}} 
+                      onChange={(e) => {
+                        setPhone_number(e.target.value);
+                      }}
                     ></input>
                   </td>
                 </tr>
@@ -268,7 +280,13 @@ function Profile() {
                   >
                     <img
                       src={`https://petcommerce-backend.onrender.com/sellers/store/pic/${toko.store_id}`}
-                      style={{ borderRadius: "50%", height: "8rem", width: "8rem", maxWidth: "100%", marginLeft: "-20"}}
+                      style={{
+                        borderRadius: "50%",
+                        height: "8rem",
+                        width: "8rem",
+                        maxWidth: "100%",
+                        marginLeft: "-20",
+                      }}
                     />
                   </div>
                   <div className="col-auto pt-4">

@@ -44,7 +44,9 @@ function StoreDetail() {
     setCategories(response1.data);
 
     setProductName(response.data.product_name);
-    setProductDescription(response.data.product_description);
+    setProductDescription(
+      decodeURIComponent(response.data.product_description)
+    );
     setProductPrice(response.data.price);
     setProductRating(response.data.rating);
     setProductQuantity(response.data.quantity);
@@ -60,7 +62,7 @@ function StoreDetail() {
 
   const handleProductDescriptionChange = (e) => {
     setProductDescription(e.target.value);
-    console.log(encodeURIComponent(productDescription));
+    console.log(productDescription);
   };
 
   const handleProductPriceChange = (e) => {
@@ -173,6 +175,7 @@ function StoreDetail() {
           data: {
             user_id: cookie.user_id,
             product_name: productName,
+            product_description: encodeURIComponent(productDescription),
             price: productPrice,
             quantity: productQuantity,
             rating: productRating,
@@ -189,7 +192,7 @@ function StoreDetail() {
   return (
     <>
       <MainLayout />
-      <div className="max-w-2xl mx-auto mt-4 p-4 bg-white shadow">
+      <div className="max-w-2xl mx-auto mt-4 p-4 bg-white shadow-lg">
         <div
           className="btn p-0"
           style={{ fontSize: "2rem" }}
@@ -223,6 +226,9 @@ function StoreDetail() {
           <button
             onClick={() => navigate(`/store/report/${store_id}`)}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            style={{
+              display: `${storeData.owner_id === cookie.user_id ? "" : "none"}`,
+            }}
           >
             Lihat Report
           </button>
@@ -312,6 +318,9 @@ function StoreDetail() {
         <div
           className="btn btn-primary"
           onClick={() => navigate(`/store/${store_id}/form-add-product`)}
+          style={{
+            display: `${storeData.owner_id === cookie.user_id ? "" : "none"}`,
+          }}
         >
           Add new Product
         </div>
@@ -346,7 +355,7 @@ function StoreDetail() {
               className="form-control"
               id="description"
               rows={3}
-              value={decodeURIComponent(productDescription)}
+              value={productDescription}
               onChange={handleProductDescriptionChange}
             />
 
