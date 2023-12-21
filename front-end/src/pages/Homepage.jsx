@@ -71,16 +71,16 @@ function HomePage() {
                 width={"20rem"}
                 style={{ display: "initial" }}
                 onClick={() => {
-                  navigate("/search/products?q=");
+                  navigate("/products?q=");
                 }}
               />
-              <div
+              <span
                 onClick={() => {
-                  navigate("/search/products?q=");
+                  navigate("/products?q=");
                 }}
               >
                 Filter
-              </div>
+              </span>
             </span>
             <div className="grid grid-cols-4 gap-4 mb-4">
               {products.map((product) => (
