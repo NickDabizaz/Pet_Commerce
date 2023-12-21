@@ -311,8 +311,12 @@ const ShoppingCart = () => {
                         backgroundColor: "#E5E5E5",
                         width: "30px",
                         color: "#777777",
+                        opacity: `${
+                          item.qty == item.quantity ? "50%" : "100%"
+                        }`,
                       }}
                       onClick={() => updateCart(item.product_id, item.qty + 1)}
+                      disabled={item.qty == item.quantity}
                     >
                       +
                     </button>
