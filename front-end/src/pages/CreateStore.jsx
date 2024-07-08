@@ -34,7 +34,7 @@ function CreateStore() {
       formData.append("store_description", data.store_description);
 
       const response = await axios.post(
-        "https://petcommerce-backend.onrender.com/sellers/create-store/store",
+        "http://localhost:3000/sellers/create-store/store",
         formData,
         {
           headers: {

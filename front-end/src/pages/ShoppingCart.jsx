@@ -20,7 +20,7 @@ const ShoppingCart = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `https://petcommerce-backend.onrender.com/cart/${cookies.user_id}`
+        `http://localhost:3000/cart/${cookies.user_id}`
       );
       setCartData(response.data);
     } catch (error) {
@@ -36,7 +36,7 @@ const ShoppingCart = () => {
         qty = 1; // Jika qty kurang dari 1, set qty menjadi 1
       }
       await axios.put(
-        `https://petcommerce-backend.onrender.com/cart/${cookies.user_id}`,
+        `http://localhost:3000/cart/${cookies.user_id}`,
         {
           product_id: productId,
           qty,
@@ -52,7 +52,7 @@ const ShoppingCart = () => {
     try {
       console.log({ productId });
       await axios.delete(
-        `https://petcommerce-backend.onrender.com/cart/${productId}/${cookies.user_id}`
+        `http://localhost:3000/cart/${productId}/${cookies.user_id}`
       );
       fetchCart();
     } catch (error) {
@@ -89,7 +89,7 @@ const ShoppingCart = () => {
         user_id: cookies.user_id,
       };
       const response = await axios.post(
-        "https://petcommerce-backend.onrender.com/create-payment",
+        "http://localhost:3000/create-payment",
         paymentBody
       );
       setToken(response.data);
@@ -99,7 +99,7 @@ const ShoppingCart = () => {
           cartData.cartItems.map(async (cart) => {
             console.log(cart);
             await axios.post(
-              `https://petcommerce-backend.onrender.com/order/add/${cookies.user_id}`,
+              `http://localhost:3000/order/add/${cookies.user_id}`,
               {
                 product_id: cart.product_id,
                 qty: cart.qty,
@@ -107,12 +107,12 @@ const ShoppingCart = () => {
             );
 
             let curProduct = await axios.get(
-              `https://petcommerce-backend.onrender.com/sellers/product/${cart.product_id}`
+              `http://localhost:3000/sellers/product/${cart.product_id}`
             );
             console.log(curProduct);
 
             await axios.put(
-              `https://petcommerce-backend.onrender.com/sellers/${curProduct.data.store_id}/edit-product/${cart.product_id}`,
+              `http://localhost:3000/sellers/${curProduct.data.store_id}/edit-product/${cart.product_id}`,
               {
                 data: {
                   user_id: cookies.user_id,
@@ -131,7 +131,7 @@ const ShoppingCart = () => {
       }
 
       await axios.delete(
-        `https://petcommerce-backend.onrender.com/cart/${cookies.user_id}`
+        `http://localhost:3000/cart/${cookies.user_id}`
       );
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
@@ -209,7 +209,7 @@ const ShoppingCart = () => {
               <div className="rounded-start" style={{ width: "auto" }}>
                 <img
                   className="h-full m-auto object-contain"
-                  src={`https://petcommerce-backend.onrender.com/sellers/product/pic/${item.product_id}`}
+                  src={`http://localhost:3000/sellers/product/pic/${item.product_id}`}
                   style={{
                     minHeight: "8rem",
                     maxHeight: "8rem",

@@ -21,13 +21,13 @@ const Register = () => {
   const onSubmit = async (data) => {
     try {
       const response = await axios.post(
-        "https://petcommerce-backend.onrender.com/users/register",
+        "http://localhost:3000/users/register",
         data
       );
       const responseData = response.data;
       console.log(responseData);
 
-      // const user = await axios.get("https://petcommerce-backend.onrender.com/users");
+      // const user = await axios.get("http://localhost:3000/users");
 
       setCookie("user_id", responseData.user_id);
       navigate("/"); // Navigasi ke halaman muka setelah registrasi berhasil

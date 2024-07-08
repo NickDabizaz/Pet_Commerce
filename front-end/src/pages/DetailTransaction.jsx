@@ -8,7 +8,7 @@ function DetailTransaction() {
 
   useEffect(() => {
     // Fetch data from the API endpoint
-    fetch(`https://petcommerce-backend.onrender.com/order/details/${order_id}`)
+    fetch(`http://localhost:3000/order/details/${order_id}`)
       .then((response) => response.json())
       .then((data) => setOrderDetails(data))
       .catch((error) => console.error("Error fetching order details:", error));

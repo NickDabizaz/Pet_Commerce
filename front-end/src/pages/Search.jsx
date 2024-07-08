@@ -36,7 +36,7 @@ function Search() {
   const fetchTotalQty = async (productId) => {
     try {
       const response = await axios.get(
-        `https://petcommerce-backend.onrender.com/order/count/${productId}`
+        `http://localhost:3000/order/count/${productId}`
       );
       setTotalQtyMap((prevTotalQtyMap) => ({
         ...prevTotalQtyMap,
@@ -50,7 +50,7 @@ function Search() {
   const fetchData = async () => {
     await axios
       .get(
-        `https://petcommerce-backend.onrender.com/sellers/products?q=${queryParam}`
+        `http://localhost:3000/sellers/products?q=${queryParam}`
       )
       .then((res) => {
         setResponse(res.data);
@@ -69,7 +69,7 @@ function Search() {
 
   const fetchCategories = () => {
     axios
-      .get(`https://petcommerce-backend.onrender.com/categories`)
+      .get(`http://localhost:3000/categories`)
       .then((res) => {
         setCategories(res.data);
       })
@@ -154,7 +154,7 @@ function Search() {
                 }}
               >
                 <img
-                  src={`https://petcommerce-backend.onrender.com/sellers/product/pic/${product.product_id}`}
+                  src={`http://localhost:3000/sellers/product/pic/${product.product_id}`}
                   alt={product.product_name}
                   className="h-72 max-h-72 m-auto w-full object-contain"
                 ></img>

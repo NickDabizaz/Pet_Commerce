@@ -17,7 +17,7 @@ function HomePage() {
     const fetchTotalQty = async (productId) => {
       try {
         const response = await axios.get(
-          `https://petcommerce-backend.onrender.com/order/count/${productId}`
+          `http://localhost:3000/order/count/${productId}`
         );
         setTotalQtyMap((prevTotalQtyMap) => ({
           ...prevTotalQtyMap,
@@ -35,7 +35,7 @@ function HomePage() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://petcommerce-backend.onrender.com/sellers/get-all-products"
+          "http://localhost:3000/sellers/get-all-products"
         );
         setProducts(response.data);
 
@@ -93,7 +93,7 @@ function HomePage() {
                 >
                   <div className="h-72 max-h-72 border-b-2">
                     <img
-                      src={`https://petcommerce-backend.onrender.com/sellers/product/pic/${product.product_id}`}
+                      src={`http://localhost:3000/sellers/product/pic/${product.product_id}`}
                       alt={product.product_name}
                       className="h-full m-auto w-full object-contain"
                     ></img>

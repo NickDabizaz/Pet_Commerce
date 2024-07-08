@@ -7,7 +7,7 @@ function ListProduct() {
 
   useEffect(() => {
     axios
-      .get("https://petcommerce-backend.onrender.com/sellers/get-all-products")
+      .get("http://localhost:3000/sellers/get-all-products")
       .then((response) => {
         setProducts(response.data);
       })

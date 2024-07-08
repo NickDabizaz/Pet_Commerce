@@ -15,13 +15,13 @@ function History() {
       try {
         setIsLoading(true);
         const userResponse = await axios.get(
-          `https://petcommerce-backend.onrender.com/users/${cookies.user_id}`
+          `http://localhost:3000/users/${cookies.user_id}`
         );
         console.log("User Data:", userResponse.data);
         setUserData(userResponse.data);
 
         const orderResponse = await axios.get(
-          `https://petcommerce-backend.onrender.com/order/${cookies.user_id}`
+          `http://localhost:3000/order/${cookies.user_id}`
         );
         console.log("Order Data:", orderResponse.data);
         setData(orderResponse.data);

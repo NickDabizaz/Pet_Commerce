@@ -15,13 +15,13 @@ const ManageDetailStore = () => {
     const fetchStoreData = async () => {
       try {
         const response = await axios.get(
-          `https://petcommerce-backend.onrender.com/admin/store/${store_id}`
+          `http://localhost:3000/admin/store/${store_id}`
         );
         setStoreData(response.data);
 
         axios
           .get(
-            `https://petcommerce-backend.onrender.com/sellers/store/pic/${store_id}`
+            `http://localhost:3000/sellers/store/pic/${store_id}`
           )
           .then((res) => {
             setStorePic(res.data);
@@ -195,7 +195,7 @@ const ManageDetailStore = () => {
                   }}
                   src={
                     storepic
-                      ? `https://petcommerce-backend.onrender.com/sellers/store/pic/${store_id}`
+                      ? `http://localhost:3000/sellers/store/pic/${store_id}`
                       : "https://static.vecteezy.com/system/resources/previews/002/267/032/non_2x/simple-store-icon-free-vector.jpg"
                   }
                   alt="pp-store"
@@ -217,7 +217,7 @@ const ManageDetailStore = () => {
                       style={{ width: "300px", height: "auto" }}
                     >
                       <img
-                        src={`https://petcommerce-backend.onrender.com/sellers/product/pic/${product.product_id}`}
+                        src={`http://localhost:3000/sellers/product/pic/${product.product_id}`}
                         style={{ maxWidth: "300px" }}
                       />
                     </div>

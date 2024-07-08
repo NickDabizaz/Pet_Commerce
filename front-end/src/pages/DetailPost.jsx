@@ -23,7 +23,7 @@ const DetailPost = () => {
     const fetchLikeStatus = async () => {
       try {
         const response = await axios.get(
-          `https://petcommerce-backend.onrender.com/like/user/${cookies.user_id}/${post_id}`
+          `http://localhost:3000/like/user/${cookies.user_id}/${post_id}`
         );
         setLike(response.data);
       } catch (error) {
@@ -42,7 +42,7 @@ const DetailPost = () => {
     console.log(commentText);
     try {
       const response = await axios.post(
-        "https://petcommerce-backend.onrender.com/comments",
+        "http://localhost:3000/comments",
         {
           comment_text: commentText,
           user_id: cookies.user_id,
@@ -62,7 +62,7 @@ const DetailPost = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `https://petcommerce-backend.onrender.com/post/${post_id}`
+          `http://localhost:3000/post/${post_id}`
         );
         setPost(response.data);
       } catch (error) {
@@ -124,14 +124,14 @@ const DetailPost = () => {
                 <div
                   className="bg-white"
                   style={{
-                    backgroundImage: `url(https://petcommerce-backend.onrender.com/post/pic/${post_id})`,
+                    backgroundImage: `url(http://localhost:3000/post/pic/${post_id})`,
                     backgroundRepeat: "repeat",
                     backgroundSize: "cover",
                   }}
                 >
                   <img
                     className="bg-dark bg-opacity-75"
-                    src={`https://petcommerce-backend.onrender.com/post/pic/${post_id}`}
+                    src={`http://localhost:3000/post/pic/${post_id}`}
                     alt="post-image"
                     style={{
                       height: "40rem",
@@ -306,7 +306,7 @@ const DetailPost = () => {
                         if (like) {
                           axios
                             .delete(
-                              `https://petcommerce-backend.onrender.com/like/`,
+                              `http://localhost:3000/like/`,
                               {
                                 data: {
                                   post_id: post_id,
@@ -322,7 +322,7 @@ const DetailPost = () => {
                         } else {
                           axios
                             .post(
-                              "https://petcommerce-backend.onrender.com/like",
+                              "http://localhost:3000/like",
                               {
                                 user_id: cookies.user_id,
                                 post_id: post_id,

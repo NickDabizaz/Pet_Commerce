@@ -44,7 +44,7 @@ export function MainLayout() {
   useEffect(() => {
     axios
       .get(
-        `https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}`
+        `http://localhost:3000/users/pic/${cookie.user_id}`
       )
       .then((res) => {
         setProfPic(res.data);
@@ -174,7 +174,7 @@ export function MainLayout() {
                       className="mx-auto"
                       src={
                         profpic
-                          ? `https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}`
+                          ? `http://localhost:3000/users/pic/${cookie.user_id}`
                           : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
                       }
                       style={{

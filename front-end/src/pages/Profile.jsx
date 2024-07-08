@@ -22,7 +22,7 @@ function Profile() {
 
   useEffect(() => {
     axios
-      .get(`https://petcommerce-backend.onrender.com/users/${cookie.user_id}`)
+      .get(`http://localhost:3000/users/${cookie.user_id}`)
       .then((res) => {
         setResponse(res.data);
         setNama(res.data.name);
@@ -36,7 +36,7 @@ function Profile() {
 
     axios
       .get(
-        `https://petcommerce-backend.onrender.com/users/store/${cookie.user_id}`
+        `http://localhost:3000/users/store/${cookie.user_id}`
       )
       .then((res) => {
         setToko(res.data);
@@ -62,7 +62,7 @@ function Profile() {
       }
       console.log({ data });
       const response = await axios.post(
-        `https://petcommerce-backend.onrender.com/users/profilpic/${cookie.user_id}`,
+        `http://localhost:3000/users/profilpic/${cookie.user_id}`,
         formData,
         {
           headers: {
@@ -71,7 +71,7 @@ function Profile() {
         }
       );
       const result = await axios.put(
-        `https://petcommerce-backend.onrender.com/users/${cookie.user_id}`,
+        `http://localhost:3000/users/${cookie.user_id}`,
         {
           name: data.name,
           email: data.email,
@@ -95,7 +95,7 @@ function Profile() {
   useEffect(() => {
     axios
       .get(
-        `https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}`
+        `http://localhost:3000/users/pic/${cookie.user_id}`
       )
       .then((res) => {
         setProfPic(res.data);
@@ -214,7 +214,7 @@ function Profile() {
                   className="mx-auto"
                   src={
                     profpic
-                      ? `https://petcommerce-backend.onrender.com/users/pic/${cookie.user_id}`
+                      ? `http://localhost:3000/users/pic/${cookie.user_id}`
                       : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlETyc4RCQOt5YVtW2mbRuR3wdxFVDD8R6BA&usqp=CAU"
                   }
                   style={{
@@ -285,7 +285,7 @@ function Profile() {
                     }}
                   >
                     <img
-                      src={`https://petcommerce-backend.onrender.com/sellers/store/pic/${toko.store_id}`}
+                      src={`http://localhost:3000/sellers/store/pic/${toko.store_id}`}
                       style={{
                         borderRadius: "50%",
                         height: "8rem",
